@@ -357,7 +357,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 /* 全屏：一屏收紧 */
 .cp-shell:fullscreen{background:linear-gradient(180deg,#f5f8fd,#e9eff8)}
 .cp-shell:fullscreen #cpViz svg{max-height:none}
-.cp-shell:fullscreen .cp-detail{max-height:30vh;overflow-y:auto;scrollbar-width:thin}
+/* 全屏项目信息面板：自适应高度——按内容自然高度完整呈现，不设固定上限、不内滚动；
+   地图本体 flex 收缩让位（见下方全屏布局段），保证一屏内看得全 */
+.cp-shell:fullscreen .cp-detail{max-height:none;overflow:visible;height:auto}
 .cp-shell:fullscreen .cp-kpi .val{font-size:34px}
 @media(max-width:560px){
   .cp-title h2{font-size:18px;white-space:normal}
@@ -384,10 +386,6 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .theme-switch button{border:none;background:transparent;color:var(--ink2);padding:9px 20px;font-size:14.5px;font-weight:800;cursor:pointer;min-height:42px;font-family:inherit;letter-spacing:.3px}
 .theme-switch button[aria-pressed="true"]{background:var(--blue);color:#fff}
 .theme-label{font-size:13.5px;font-weight:800;vertical-align:middle;margin-right:8px}
-.topbar .theme-label{color:#fff}
-.topbar .theme-switch{border-color:#ffffff;background:#ffffff}
-.topbar .theme-switch button{color:#33415c}
-.topbar .theme-switch button[aria-pressed="true"]{background:#1449a8;color:#fff}
 /* 明暗模式切换只在驾驶舱全屏（含伪全屏）时显示；非全屏的驾驶舱头屏不放切换按钮，页眉也不放 */
 .cp-fs-theme{display:none;align-items:center}
 .cp-shell:fullscreen .cp-fs-theme,.cp-shell.cp-pseudo .cp-fs-theme{display:inline-flex}
@@ -441,12 +439,12 @@ body.cp-locked{overflow:hidden}
 .cp-shell:fullscreen #cpViz svg,.cp-shell.cp-pseudo #cpViz svg{width:100%;height:100%;max-height:none}
 .cp-shell:fullscreen .legend,.cp-shell.cp-pseudo .legend{flex:none}
 .cp-shell:fullscreen .cp-dest,.cp-shell.cp-pseudo .cp-dest{flex:none}
-.cp-shell.cp-pseudo .cp-detail{max-height:30vh;overflow-y:auto;scrollbar-width:thin}
+.cp-shell.cp-pseudo .cp-detail{max-height:none;overflow:visible;height:auto}
 .cp-shell.cp-pseudo .cp-col{overflow-y:auto;scrollbar-width:thin}
 .cp-shell.cp-pseudo .cp-col-map{overflow:hidden}
 /* 全屏项目信息防裁切：中栏网格行高必须受外壳剩余高度约束（minmax(0,1fr)），
    否则行高按内容撑开、地图列底部（图例 / 目的地 / 项目信息面板 / 口径注）被 overflow:hidden 裁掉；
-   地图列内除地图本体外全部 flex:none 不参与挤压，项目信息面板按自身高度（上限 30vh 内滚）完整呈现，
+   地图列内除地图本体外全部 flex:none 不参与挤压，项目信息面板按内容自适应高度完整呈现（不设上限、不内滚动），
    地图本体 flex 收缩让位，保证全屏一屏内项目信息看得全。 */
 .cp-shell:fullscreen .cp-main,.cp-shell.cp-pseudo .cp-main{grid-template-rows:minmax(0,1fr)}
 .cp-shell:fullscreen .cp-col,.cp-shell.cp-pseudo .cp-col{min-height:0}
