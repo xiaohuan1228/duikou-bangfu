@@ -324,8 +324,11 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-citybar button b{color:var(--blue)}
 .cp-citybar button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .cp-citybar button[aria-pressed="true"] b{color:#fff}
-/* 城市高亮态：未选中的城市按钮弱化，选中城市保持实色 */
-.cp-citybar.has-hi button:not([aria-pressed="true"]){opacity:.5}
+/* 城市高亮态：未选中的城市按钮弱化（降透明 + 降饱和），选中城市保持实色 */
+.cp-citybar.has-hi button:not([aria-pressed="true"]){opacity:.45;filter:saturate(.5)}
+/* 城市过滤态下右栏列表顶部的恢复入口：与再点一次城市按钮等效，取消高亮恢复全部 */
+.cp-city-clear{margin-top:8px;width:100%;border:1px dashed var(--blue-line);background:var(--blue-soft);color:var(--blue);border-radius:8px;padding:6px 10px;font-size:12.5px;font-weight:700;cursor:pointer;min-height:32px;font-family:inherit}
+.cp-city-clear:hover{border-color:var(--blue)}
 .cp-pt{cursor:pointer}
 /* 右栏重点项目列表区（替代原右下地区排行）：固定列表不切详情，点列表项与地图联动定位 + 悬浮框 */
 .cp-detail{margin-top:8px;border:1px solid var(--blue-line);background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(22,45,90,.07)}
@@ -1283,9 +1286,20 @@ function cpRenderDetail(){
   var box=document.getElementById("cpDetail"); if(!box) return;
   /* 项目详情只走地图悬浮框：每次渲染先同步悬浮框（选中态变化 / 视窗变化都由它跟随点位） */
   cpRenderPopup();
-  /* 右栏固定为重点项目列表：不因点选 / 下钻 / 城市过滤切换成详情或下钻列表；
-     列表随当前筛选范围取重点项目（CP_FOCUS），选中行高亮，与地图点选双向同步 */
-  if(CP_FOCUS.length){
+  /* 右栏固定为项目列表（不切详情页）：无城市高亮时列重点项目（CP_FOCUS）；
+     城市高亮时与地图同口径过滤——只列该城市的项目，其他城市项目不出现，见下方分支 */
+  if(cpCityHi){
+    /* 城市过滤分支：行数据取当前筛选范围全量（CP_LAST_LIST），不限于重点项目子集，
+       保证该城市的项目一个不漏、其他城市的项目一个不留；标题 / 计数同步切到城市口径，
+       底部给恢复入口（与再点一次城市按钮等效）。行样式与联动仍走 cpProjRow / cpFocusFromList */
+    var cityRows=(CP_LAST_LIST||[]).filter(function(p){ return cpPrefOf(p)===cpCityHi; });
+    box.innerHTML='<div class="dh"><h4>'+esc(cpCityHi)+' · 项目</h4><span class="m" style="margin:0">共 '+cityRows.length+' 个 · 已过滤其他城市</span></div>'
+      +'<p class="m" style="margin:1px 0 3px">地图只显示该城市项目 · 点行看地图悬浮框详情</p>'
+      +(cityRows.length?cityRows.map(function(p){return cpProjRow(p,cpSel===p.id);}).join(""):'<p class="m">该城市在当前筛选下暂无项目。</p>')
+      +'<button type="button" class="cp-city-clear" id="cpCityClear">✕ 取消城市过滤 · 恢复全部项目</button>';
+    var clr=document.getElementById("cpCityClear");
+    if(clr) clr.addEventListener("click",function(){ cpCityHi=null; cpSel=null; renderCpViz(CP_LAST_LIST); cpRenderDetail(); cpRenderMapChrome(); });
+  } else if(CP_FOCUS.length){
     box.innerHTML='<div class="dh"><h4>重点项目</h4><span class="m" style="margin:0">共 '+CP_FOCUS.length+' 个 · ★ 已在地图上标出</span></div><p class="m" style="margin:1px 0 3px">点列表项定位点位 · 详情看地图悬浮框</p>'
       +CP_FOCUS.map(function(p){return cpProjRow(p,cpSel===p.id);}).join("");
   } else {
@@ -1372,9 +1386,12 @@ function cpRenderMapChrome(){
       var c=b.getAttribute("data-city");
       cpCityHi=(cpCityHi===c)?null:c;
       cpSel=null;
-      /* 点城市：高亮该城市（按钮实色、其余按钮弱化），地图只保留该城市的项目点，
-         其余城市的项目点过滤掉不显示；地图保持当前缩放级别与视窗不变，不自动放大，
-         取消高亮恢复全部点、也不跳回省份框。右栏固定重点项目列表不受城市过滤影响 */
+      /* 点城市（本次需求的完整口径）：
+         ① 高亮——该城市按钮实色、地图上该城市项目点加高亮环 + 标签强调 + 城市级虚线光晕；
+         ② 弱化——其余城市按钮降透明降饱和，下钻省以外的省份面进一步变淡；
+         ③ 过滤——地图只渲染该城市的项目点（其余城市点不进 SVG），右栏项目列表同步只列该城市项目；
+         ④ 不缩放——全程不写 cpVB，地图缩放级别与视窗与点击前完全一致；
+         再点一次同一城市按钮（或右栏「取消城市过滤」）恢复全部点与固定重点项目列表，同样不动视窗 */
       renderCpViz(CP_LAST_LIST); cpRenderDetail(); cpRenderMapChrome();
     });
   });
@@ -1401,7 +1418,11 @@ function renderCpViz(list){
     var fill=a?cpFillScale()[Math.min(a.n,5)-1]:(isl?pal.islandFill:(i%2?pal.lightA:pal.lightB));
     var stk=a?"#ffffff":(isl?pal.islandStroke:pal.stroke);
     var sw=a?"1.1":(isl?"1.4":"0.7");
-    var dim=(cpDrill&&pv.n!==cpDrill&&!a)?' opacity="0.45"':'';
+    /* 弱化口径：下钻时无项目的其他省份变淡；城市高亮时下钻省以外的全部省份进一步变淡，
+       让高亮城市所在的省与城市点位成为图上唯一的视觉焦点 */
+    var dim='';
+    if(cpCityHi){ dim=(pv.n!==cpDrill)?' opacity="0.38"':''; }
+    else if(cpDrill&&pv.n!==cpDrill&&!a){ dim=' opacity="0.45"'; }
     s+='<path d="'+pv.d+'" fill="'+fill+'" stroke="'+stk+'" stroke-width="'+sw+'" stroke-linejoin="round"'+dim+(a?' class="cp-prov-path" data-prov="'+pv.n+'"><title>'+pv.n+' · '+a.n+' 个项目 · 点击下钻到城市</title></path>':'/>');
   });
   /* 南海诸岛附图框（标准地图附图）：白底描边框 + 九段线（断续线，走向据 DataV 同源南海断续线数据点）+ 岛礁点 + 标题 */
@@ -1552,8 +1573,16 @@ function renderCpViz(list){
         +'</g>';
     });
   }
-  /* 绘制顺序：省份小卡（下层）→ 省名 → 飞线 → 枢纽 → 锚点引线 → 圆点 + 标签（最上层） */
+  /* 绘制顺序：省份小卡（下层）→ 省名 → 城市高亮光晕 → 飞线 → 枢纽 → 锚点引线 → 圆点 + 标签（最上层） */
   s+=pillStr+provLblStr;
+  /* 城市高亮光晕：城市高亮时在该城市全部项目点的外包范围画一圈强调色虚线光晕（地图坐标层），
+     把「这个城市被高亮」做成城市级的整体视觉，而不只是单个圆点加环；
+     光晕画在飞线与圆点之下，不遮挡任何点位与标签 */
+  if(cpCityHi&&shownPts.length){
+    var hx=0,hy=0; shownPts.forEach(function(pt){ hx+=pt.x; hy+=pt.y; }); hx/=shownPts.length; hy/=shownPts.length;
+    var hr=30; shownPts.forEach(function(pt){ var dd=Math.sqrt((pt.x-hx)*(pt.x-hx)+(pt.y-hy)*(pt.y-hy))+26; if(dd>hr) hr=dd; });
+    s+='<circle cx="'+hx.toFixed(0)+'" cy="'+hy.toFixed(0)+'" r="'+hr.toFixed(0)+'" fill="'+pal.sel+'" fill-opacity="0.10" stroke="'+pal.sel+'" stroke-width="1.6" stroke-opacity="0.55" stroke-dasharray="5 4"/>';
+  }
   /* 枢纽飞线：北京技术输出（蓝）+ 深圳结算连接（橙虚线） */
   var bj=cpXY(116.4,39.9), sz=cpXY(114.05,22.55), cd=cpXY(104.07,30.67);
   shownPts.forEach(function(pt){
