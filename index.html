@@ -235,48 +235,46 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-rank:last-child{border-bottom:none}
 .cp-rank .r1{display:flex;gap:8px;align-items:center;font-size:13px}
 .cp-rank .no{width:20px;height:20px;border-radius:50%;background:var(--amber-soft);color:var(--amber);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;flex:none}
-.cp-bottom{padding:10px 14px 12px;background:var(--card);border-top:1px solid var(--line);flex:none}
-.cp-shell:fullscreen .cp-bottom{max-height:168px;overflow-y:auto;scrollbar-width:thin}
 .cp-proj{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--card)}
 .cp-proj h4{margin:0;font-size:13.5px}
 .cp-proj .m{font-size:12px;color:var(--ink2)}
 .cp-fs-hint{font-size:11.5px;color:var(--ink3)}
 
-/* ---------- 驾驶舱视觉：明亮农业主题（白底头屏 + 深绿主色 + 琥珀点缀，去深蓝） ---------- */
+/* ---------- 驾驶舱视觉：与全站统一的蓝色体系（白底头屏 + 蓝色主色 + 琥珀点缀） ---------- */
 .cp-shell{
-  --ink:#1c2a22; --ink2:#43584c; --ink3:#71857a; --card:#ffffff; --line:#dce5dc;
+  --ink:#16233a; --ink2:#43536e; --ink3:#71809a; --card:#ffffff; --line:#dde4ef;
   --blue:#1d5fd6; --blue-dark:#1449a8; --blue-soft:#eaf1fd; --blue-line:#c9dbf7;
   --green:#1a7f4b; --green-soft:#e6f4ec; --amber:#b26a00; --amber-soft:#fdf1de; --red:#b3362b;
-  background:linear-gradient(180deg,#f6f8f4 0%,#e9efe7 100%);
-  border:1px solid #c2d2bf; border-radius:16px;
-  box-shadow:0 16px 40px rgba(23,58,38,.14),0 3px 8px rgba(23,58,38,.07);
+  background:linear-gradient(180deg,#f5f8fd 0%,#e9eff8 100%);
+  border:1px solid #c3d2e8; border-radius:12px;
+  box-shadow:0 16px 40px rgba(22,45,90,.13),0 3px 8px rgba(22,45,90,.07);
 }
-/* 头屏：白色明亮带 + 深绿下边线 */
-.cp-head{background:#ffffff;border-bottom:3px solid #1a7f4b;padding:14px 18px}
-.cp-logo{width:44px;height:44px;border-radius:10px;background:#1a7f4b;border:1px solid #146c3c;box-shadow:0 4px 12px rgba(23,90,50,.28);font-size:21px}
-.cp-title h2{color:#17301f;font-size:22px;letter-spacing:1px}
-.cp-title p{color:#5a6f61;font-size:12.5px}
-.cp-clock{color:#71857a}
-.cp-clock b{color:#1c2a22}
-.cp-fs-hint{color:#93a69b}
-.cp-livechip{display:inline-flex;align-items:center;gap:6px;background:#e6f4ec;border:1px solid #8fceac;color:#146c3c;border-radius:999px;padding:1px 10px;font-size:11.5px;font-weight:700;margin-right:8px;vertical-align:1px}
-.cp-livechip i{width:7px;height:7px;border-radius:50%;background:#22a35c;display:inline-block;animation:cpBlink 1.8s ease-in-out infinite}
+/* 头屏：白色明亮带 + 蓝色下边线，与页眉同色系 */
+.cp-head{background:#ffffff;border-bottom:3px solid #1d5fd6;padding:14px 18px}
+.cp-logo{width:44px;height:44px;border-radius:10px;background:#1d5fd6;border:1px solid #1449a8;box-shadow:0 4px 12px rgba(29,95,214,.28);font-size:21px}
+.cp-title h2{color:#16233a;font-size:22px;letter-spacing:1px}
+.cp-title p{color:#5b6b84;font-size:12.5px}
+.cp-clock{color:#71809a}
+.cp-clock b{color:#16233a}
+.cp-fs-hint{color:#93a5c0}
+.cp-livechip{display:inline-flex;align-items:center;gap:6px;background:#eaf1fd;border:1px solid #a9c6ee;color:#1449a8;border-radius:999px;padding:1px 10px;font-size:11.5px;font-weight:700;margin-right:8px;vertical-align:1px}
+.cp-livechip i{width:7px;height:7px;border-radius:50%;background:#1d5fd6;display:inline-block;animation:cpBlink 1.8s ease-in-out infinite}
 @keyframes cpBlink{0%,100%{opacity:1}50%{opacity:.35}}
-.cp-fs-btn{background:#177a46;color:#fff;border-color:#177a46;font-size:14.5px;padding:10px 20px;box-shadow:0 4px 12px rgba(23,90,50,.30)}
-.cp-fs-btn:hover{background:#12653a}
+.cp-fs-btn{background:#1d5fd6;color:#fff;border-color:#1d5fd6;font-size:14.5px;padding:10px 20px;box-shadow:0 4px 12px rgba(29,95,214,.30)}
+.cp-fs-btn:hover{background:#1449a8}
 /* 筛选条 */
-.cp-filters{background:#f7faf6;padding:10px 14px}
-.cp-filters select{border-color:#bfd4ba;font-weight:600;color:var(--ink)}
-.cp-total{background:#177a46;border-radius:999px;padding:8px 16px;font-size:13.5px;box-shadow:0 3px 10px rgba(23,90,50,.25)}
+.cp-filters{background:#f5f8fd;padding:10px 14px}
+.cp-filters select{border-color:#c9dbf7;font-weight:600;color:var(--ink)}
+.cp-total{background:#1d5fd6;border-radius:999px;padding:8px 16px;font-size:13.5px;box-shadow:0 3px 10px rgba(29,95,214,.25)}
 /* KPI：大数字 + 顶部色带，首卡深绿主卡 */
 .cp-kpis{gap:10px;padding:12px 12px 2px}
-.cp-kpi{border-radius:12px;padding:12px 14px 11px;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(23,58,38,.07);border:1px solid #d3dfd2}
+.cp-kpi{border-radius:12px;padding:12px 14px 11px;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(22,45,90,.07);border:1px solid #d5e0f2}
 .cp-kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--acc,#1d5fd6)}
 .cp-kpi .lab{font-size:12.5px;font-weight:700;color:var(--ink2)}
 .cp-kpi .val{font-size:31px;letter-spacing:-.5px;margin:2px 0 1px;color:var(--ink)}
 .cp-kpi .val small{color:var(--ink3)}
 .cp-kpi .note2{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5}
-.cp-kpi.hero{background:#14532d;border-color:#14532d}
+.cp-kpi.hero{background:#1449a8;border-color:#1449a8}
 .cp-kpi.hero::before{background:#e8a33d}
 .cp-kpi.hero .lab{color:rgba(255,255,255,.75)}
 .cp-kpi.hero .val{color:#fff}
@@ -284,18 +282,18 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-kpi.hero .note2{color:rgba(255,255,255,.6)}
 /* 三栏卡片 */
 .cp-main{gap:10px;padding:10px 12px}
-.cp-col{border-radius:12px;padding:14px 15px;box-shadow:0 3px 10px rgba(23,58,38,.06);border-color:#d3dfd2}
+.cp-col{border-radius:12px;padding:14px 15px;box-shadow:0 3px 10px rgba(22,45,90,.06);border-color:#d5e0f2}
 .cp-col h3{font-size:15px;border-left:4px solid var(--blue);padding-left:9px;letter-spacing:.3px}
 .cp-col h3.cp-h3g{border-left-color:var(--green)}
 .cp-bar{height:7px;background:#e3eaf3}
 .cp-row .r1{font-size:13.5px}
 /* 分布图容器 */
-.cp-viz-wrap{background:linear-gradient(180deg,#f7faf6,#e9f1e7);border:1px solid #c6d8c2;border-radius:12px;padding:12px 12px 8px;box-shadow:inset 0 1px 0 #fff}
-.cp-viz-head b{font-size:14px;color:#14532d}
-.cp-dest span{border-color:#bfd4ba;box-shadow:0 1px 4px rgba(23,58,38,.06);font-size:12px;padding:2px 11px}
+.cp-viz-wrap{background:linear-gradient(180deg,#f7faff,#e9eff8);border:1px solid #c3d2e8;border-radius:12px;padding:12px 12px 8px;box-shadow:inset 0 1px 0 #fff}
+.cp-viz-head b{font-size:14px;color:#1449a8}
+.cp-dest span{border-color:#c9dbf7;box-shadow:0 1px 4px rgba(22,45,90,.06);font-size:12px;padding:2px 11px}
 /* 流向节点 */
-.cp-fnode{background:#fff;border:1px solid var(--blue-line);border-top:4px solid var(--blue);border-radius:10px;padding:8px 10px;box-shadow:0 2px 6px rgba(23,58,38,.06)}
-.cp-fnode b{white-space:normal;overflow:visible;font-size:13px;color:#14532d}
+.cp-fnode{background:#fff;border:1px solid var(--blue-line);border-top:4px solid var(--blue);border-radius:10px;padding:8px 10px;box-shadow:0 2px 6px rgba(22,45,90,.06)}
+.cp-fnode b{white-space:normal;overflow:visible;font-size:13px;color:#1449a8}
 .cp-fnode.money{border-top-color:#e8a33d}
 .cp-fnode.money b{color:#8a5a00}
 /* 环图与排行 */
@@ -306,11 +304,43 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 #cpRank .cp-rank:nth-child(2) .no{background:#8fa5c0;color:#fff}
 #cpRank .cp-rank:nth-child(3) .no{background:#cf8a4e;color:#fff}
 .cp-rank .no{width:22px;height:22px;font-size:12.5px}
-/* 底部项目卡 */
-.cp-bottom{background:#f0f4ee;padding:12px 14px 14px}
-.cp-proj{border-radius:12px;padding:12px 13px;box-shadow:0 2px 8px rgba(23,58,38,.06);border-color:#d3dfd2;transition:transform .18s ease,box-shadow .18s ease}
-.cp-proj:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(23,58,38,.13)}
-.cp-proj .cp-bar{height:8px}
+/* 地图工具条：面包屑下钻 + 缩放控制 */
+.cp-map-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.cp-crumb{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink2)}
+.cp-crumb button{border:1px solid var(--blue-line);background:var(--card);color:var(--blue);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;cursor:pointer;min-height:28px;font-family:inherit}
+.cp-crumb button:hover{background:var(--blue-soft)}
+.cp-crumb .cur{color:var(--ink)}
+.cp-zoom{margin-left:auto;display:inline-flex;gap:6px;align-items:center}
+.cp-zoom button{width:32px;height:32px;min-height:32px;border:1px solid var(--blue-line);background:var(--card);color:var(--blue-dark);border-radius:8px;font-size:16px;font-weight:800;cursor:pointer;line-height:1;font-family:inherit}
+.cp-zoom button:hover{background:var(--blue-soft)}
+.cp-zoom button.wide{width:auto;padding:0 12px;font-size:12.5px}
+.cp-map-hint{font-size:11.5px;color:var(--ink3)}
+/* 城市下钻条 */
+.cp-citybar{display:none;flex-wrap:wrap;gap:6px;margin-top:8px}
+.cp-citybar.on{display:flex}
+.cp-citybar button{border:1px solid var(--blue-line);background:var(--card);color:var(--ink2);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:600;cursor:pointer;min-height:30px;font-family:inherit}
+.cp-citybar button b{color:var(--blue)}
+.cp-citybar button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.cp-citybar button[aria-pressed="true"] b{color:#fff}
+/* 地图详情面板：重点项目与点选项目都在地图内呈现，不再单独成列 */
+.cp-detail{margin-top:8px;border:1px solid var(--blue-line);background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(22,45,90,.07)}
+.cp-detail:empty{display:none}
+.cp-detail .dh{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cp-detail h4{margin:0;font-size:14px}
+.cp-detail .m{font-size:12.5px;color:var(--ink2);margin:3px 0 0;line-height:1.6}
+.cp-detail .x{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:7px;width:28px;height:28px;min-height:28px;cursor:pointer;font-size:14px;line-height:1;flex:none;font-family:inherit}
+.cp-detail .x:hover{color:var(--blue);border-color:var(--blue-line)}
+.cp-prow{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;margin-top:6px;cursor:pointer;font-family:inherit;color:var(--ink);font-size:13px}
+.cp-prow:hover{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-line)}
+.cp-prow .star{color:#d97706;font-size:13px;flex:none}
+.cp-prow .pg{margin-left:auto;font-weight:800;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
+.cp-prow .bar2{flex:0 0 74px}
+#cpViz svg{touch-action:none}
+#cpViz svg.cp-grabbing{cursor:grabbing!important}
+.cp-prov-path{cursor:pointer}
+.cp-prov-path:hover{stroke:var(--blue-dark);stroke-width:1.8}
+.cp-pill{cursor:pointer}
+.cp-pill:hover rect:first-of-type{stroke:var(--blue)}
 /* 地图脉冲点（运营中） */
 .cp-pulse-ring{transform-box:fill-box;transform-origin:center;animation:cpPulse 2.2s ease-out infinite}
 @keyframes cpPulse{0%{opacity:.55;transform:scale(.55)}100%{opacity:0;transform:scale(1.9)}}
@@ -319,9 +349,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
   .cp-proj{transition:none}
 }
 /* 全屏：一屏收紧 */
-.cp-shell:fullscreen{background:linear-gradient(180deg,#f6f8f4,#e9efe7)}
+.cp-shell:fullscreen{background:linear-gradient(180deg,#f5f8fd,#e9eff8)}
 .cp-shell:fullscreen #cpViz svg{max-height:none}
-.cp-shell:fullscreen .cp-bottom{max-height:196px}
+.cp-shell:fullscreen .cp-detail{max-height:30vh;overflow-y:auto;scrollbar-width:thin}
 .cp-shell:fullscreen .cp-kpi .val{font-size:34px}
 @media(max-width:560px){
   .cp-title h2{font-size:18px;white-space:normal}
@@ -349,42 +379,40 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .topbar .theme-switch{border-color:#ffffff;background:#ffffff}
 .topbar .theme-switch button{color:#33415c}
 .topbar .theme-switch button[aria-pressed="true"]{background:#1449a8;color:#fff}
-.cp-head .theme-label{color:#43584c}
-.cp-head .theme-switch{border-color:#9db8a2;background:#eef3ee}
-.cp-head .theme-switch button{color:#43584c}
-.cp-head .theme-switch button[aria-pressed="true"]{background:#177a46;color:#fff}
+.cp-head .theme-label{color:#43536e}
+.cp-head .theme-switch{border-color:#b9cdec;background:#eef3fb}
+.cp-head .theme-switch button{color:#43536e}
+.cp-head .theme-switch button[aria-pressed="true"]{background:#1d5fd6;color:#fff}
 [data-theme="dark"] .cp-shell{
-  --ink:#e9f2ea; --ink2:#b3c8b8; --ink3:#84a08c; --card:#1a2620; --line:#2f4a3a;
+  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0; --card:#17202f; --line:#2a3648;
   --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
   --green:#4cc07f; --green-soft:#173527; --amber:#e0a44a; --amber-soft:#3a2c14; --red:#e07a6e;
-  background:linear-gradient(180deg,#16211b 0%,#101713 100%);
-  border-color:#2f4a3a; box-shadow:0 16px 40px rgba(0,0,0,.5);
+  background:linear-gradient(180deg,#141e30 0%,#0e1420 100%);
+  border-color:#2c4a80; box-shadow:0 16px 40px rgba(0,0,0,.5);
 }
-[data-theme="dark"] .cp-head{background:#1c2a22;border-bottom-color:#2f9e5f}
-[data-theme="dark"] .cp-title h2{color:#eef7ee}
-[data-theme="dark"] .cp-title p{color:rgba(230,242,230,.72)}
-[data-theme="dark"] .cp-clock{color:rgba(230,242,230,.68)}
+[data-theme="dark"] .cp-head{background:#17202f;border-bottom-color:#1d5fd6}
+[data-theme="dark"] .cp-title h2{color:#eef3fb}
+[data-theme="dark"] .cp-title p{color:rgba(220,232,248,.72)}
+[data-theme="dark"] .cp-clock{color:rgba(220,232,248,.68)}
 [data-theme="dark"] .cp-clock b{color:#ffffff}
-[data-theme="dark"] .cp-fs-hint{color:rgba(230,242,230,.48)}
-[data-theme="dark"] .cp-livechip{background:rgba(26,127,75,.35);border-color:rgba(92,220,160,.55);color:#a7f3cd}
-[data-theme="dark"] .cp-head .theme-label{color:rgba(230,242,230,.8)}
+[data-theme="dark"] .cp-fs-hint{color:rgba(220,232,248,.48)}
+[data-theme="dark"] .cp-livechip{background:rgba(29,95,214,.30);border-color:rgba(110,160,240,.55);color:#bcd6fb}
+[data-theme="dark"] .cp-head .theme-label{color:rgba(220,232,248,.8)}
 [data-theme="dark"] .cp-head .theme-switch{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.10)}
 [data-theme="dark"] .cp-head .theme-switch button{color:rgba(255,255,255,.88)}
-[data-theme="dark"] .cp-head .theme-switch button[aria-pressed="true"]{background:#2f9e5f;color:#fff}
-[data-theme="dark"] .cp-filters{background:#16211b}
-[data-theme="dark"] .cp-filters select{border-color:#33523f}
-[data-theme="dark"] .cp-kpi{border-color:#2f4a3a;box-shadow:none}
-[data-theme="dark"] .cp-col{border-color:#2f4a3a;box-shadow:none}
-[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#1a2620,#131c16);border-color:#33523f;box-shadow:none}
-[data-theme="dark"] .cp-viz-head b{color:#cfe7d2}
-[data-theme="dark"] .cp-viz-head span{color:#84a08c}
-[data-theme="dark"] .cp-fnode{background:#1a2620;box-shadow:none}
-[data-theme="dark"] .cp-fnode b{color:#8fd0a8}
+[data-theme="dark"] .cp-head .theme-switch button[aria-pressed="true"]{background:#1d5fd6;color:#fff}
+[data-theme="dark"] .cp-filters{background:#131c2c}
+[data-theme="dark"] .cp-filters select{border-color:#2c4a80}
+[data-theme="dark"] .cp-kpi{border-color:#2a3648;box-shadow:none}
+[data-theme="dark"] .cp-col{border-color:#2a3648;box-shadow:none}
+[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#182236,#111a2a);border-color:#2c4a80;box-shadow:none}
+[data-theme="dark"] .cp-viz-head b{color:#bcd6fb}
+[data-theme="dark"] .cp-viz-head span{color:#8494b0}
+[data-theme="dark"] .cp-fnode{background:#17202f;box-shadow:none}
+[data-theme="dark"] .cp-fnode b{color:#8db4f7}
 [data-theme="dark"] .cp-fnode.money b{color:#e0a44a}
-[data-theme="dark"] .cp-bottom{background:#131c16}
-[data-theme="dark"] .cp-proj{border-color:#2f4a3a;box-shadow:none}
-[data-theme="dark"] .cp-bar{background:#2a3d31}
-[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#16211b,#101713)}
+[data-theme="dark"] .cp-bar{background:#22314d}
+[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#141e30,#0e1420)}
 .cp-shell.cp-pseudo{position:fixed;inset:0;z-index:300;width:100%;height:100%;height:100dvh;border-radius:0;border:none;overflow:hidden}
 body.cp-locked{overflow:hidden}
 
@@ -400,13 +428,9 @@ body.cp-locked{overflow:hidden}
 .cp-shell:fullscreen #cpViz svg,.cp-shell.cp-pseudo #cpViz svg{width:100%;height:100%;max-height:none}
 .cp-shell:fullscreen .legend,.cp-shell.cp-pseudo .legend{flex:none}
 .cp-shell:fullscreen .cp-dest,.cp-shell.cp-pseudo .cp-dest{flex:none}
-.cp-shell:fullscreen .cp-bottom,.cp-shell.cp-pseudo .cp-bottom{max-height:196px}
+.cp-shell.cp-pseudo .cp-detail{max-height:30vh;overflow-y:auto;scrollbar-width:thin}
 .cp-shell.cp-pseudo .cp-col{overflow-y:auto;scrollbar-width:thin}
 .cp-shell.cp-pseudo .cp-col-map{overflow:hidden}
-.cp-shell.cp-pseudo .cp-bottom{overflow-y:auto;scrollbar-width:thin}
-@media(min-width:1280px){
-  .cp-shell:fullscreen #cpProjGrid,.cp-shell.cp-pseudo #cpProjGrid{grid-template-columns:repeat(6,1fr)}
-}
 /* 窄屏全屏：整列可滚动，地图保持自然比例在最前，不做高度压缩 */
 @media(max-width:1020px){
   .cp-shell:fullscreen .cp-col-map,.cp-shell.cp-pseudo .cp-col-map{display:block;overflow:visible}
@@ -490,10 +514,21 @@ body.cp-locked{overflow:hidden}
         </div>
         <div class="cp-col cp-col-map">
           <div class="cp-viz-wrap">
-            <div class="cp-viz-head"><b>全国项目分布图</b><span>省份着色 = 项目落点 · 小卡 = 项目数 / 平均进度 · 圆点 = 状态与进度% · 随筛选联动</span></div>
-            <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点"></div>
+            <div class="cp-viz-head"><b>全国项目分布图</b><span>点省份或小卡下钻到城市 · 滚轮 / 按钮缩放 · 拖拽平移 · 点圆点看项目详情 · ★ = 重点项目</span></div>
+            <div class="cp-map-tools">
+              <span class="cp-crumb" id="cpCrumb"><button type="button" id="cpCrumbHome">全国</button><span class="cur" id="cpCrumbCur"></span></span>
+              <span class="cp-zoom" role="group" aria-label="地图缩放">
+                <button type="button" id="cpZoomOut" aria-label="缩小地图">−</button>
+                <button type="button" id="cpZoomIn" aria-label="放大地图">＋</button>
+                <button type="button" class="wide" id="cpZoomReset">复位</button>
+              </span>
+            </div>
+            <div class="cp-citybar" id="cpCityBar" aria-label="下钻城市"></div>
+            <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点，支持缩放与省份下钻"></div>
             <div class="legend" id="cpLegend"></div>
             <div class="cp-dest" id="cpDest"></div>
+            <div class="cp-detail" id="cpDetail" aria-live="polite"></div>
+            <p class="small" style="margin:8px 0 2px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
           </div>
         </div>
         <div class="cp-col">
@@ -504,12 +539,6 @@ body.cp-locked{overflow:hidden}
           <p class="sub2">按项目数排序，同数按平均进度排序。</p>
           <div id="cpRank"></div>
         </div>
-      </div>
-      <div class="cp-bottom">
-        <h3 style="margin:0 0 3px;font-size:14.5px">重点项目 · 对口地方用了什么</h3>
-        <p class="sub2" style="font-size:11.5px;color:var(--ink3);margin:0 0 10px" id="cpProjNote"></p>
-        <div class="grid g3" id="cpProjGrid"></div>
-        <p class="small" style="margin-top:10px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
       </div>
     </div>
   </section>
@@ -1020,21 +1049,21 @@ function renderCockpit(){
     var avgp=Math.round(rank[r].prog/rank[r].n);
     return '<div class="cp-rank"><div class="r1"><span class="no">'+(i+1)+'</span><b>'+r+'</b><span style="margin-left:auto">'+rank[r].n+' 个项目 · '+avgp+'%</span></div><div class="cp-bar"><i style="width:'+avgp+'%;background:var(--blue)"></i></div></div>';
   }).join(""):'<div class="empty">当前筛选下暂无项目</div>';
-  /* 下：重点项目（筛选范围内按阶段优先级 + 进度排序，最多 6 个，卡片只保留技术与资金两行） */
+  /* 重点项目（筛选范围内按阶段优先级 + 进度排序，最多 6 个）：不再单独成列，
+     改为在地图上以 ★ 金标呈现，并在地图详情面板中列出，点选与地图双向联动 */
   var stageRank={"运营中":0,"试点实施":1,"绩效评估":2,"技术对接":3,"方案论证":4,"需求诊断":5};
-  var focus=list.slice().sort(function(a,b){return (stageRank[a.status]-stageRank[b.status])||(b.progress-a.progress);}).slice(0,6);
-  document.getElementById("cpProjNote").textContent="当前筛选范围内共 "+list.length+" 个项目，下方按阶段与进度列出重点项目（最多 6 个）。";
-  document.getElementById("cpProjGrid").innerHTML=focus.length?focus.map(function(p){
-    return '<div class="cp-proj"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>'+esc(p.name)+'</h4><span class="stag" style="background:'+pStatusColor(p.status)+'">'+p.status+'</span></div>'+
-    '<p class="m">'+esc(p.loc)+' · '+esc(sceneShort(p.scene))+' · 进度 '+p.progress+'%</p>'+
-    '<div class="cp-bar"><i style="width:'+p.progress+'%;background:'+pStatusColor(p.status)+'"></i></div>'+
-    '<p class="m" style="margin-top:8px"><b style="color:var(--ink)">用了什么技术：</b>'+p.techs.map(function(d){return esc(TECHS[d.t].team.split(" ")[0])+"（"+d.s+"）";}).join("、")+'</p>'+
-    '<p class="m"><b style="color:var(--ink)">钱走哪条线：</b>'+esc(p.fund)+'</p></div>';
-  }).join(""):'<div class="empty">当前筛选组合下暂无在途项目，点「重置」查看全部。</div>';
+  CP_FOCUS=list.slice().sort(function(a,b){return (stageRank[a.status]-stageRank[b.status])||(b.progress-a.progress);}).slice(0,6);
+  CP_KEYSET={}; CP_FOCUS.forEach(function(p){CP_KEYSET[p.id]=1;});
+  CP_LAST_LIST=list;
+  /* 联动一致性：筛选变化后，下钻省份 / 选中项目 / 高亮城市若已不在当前范围内，自动清除 */
+  if(cpDrill && !list.some(function(p){return cpProvince(p)===cpDrill;})){ cpDrill=null; cpVB=null; cpCityHi=null; }
+  if(cpSel && !list.some(function(p){return p.id===cpSel;})) cpSel=null;
   renderCpViz(list);
+  cpRenderDetail();
 }
 [cpRegionSel,cpStatusSel2,cpSceneSel2,cpFundSel2].forEach(function(sel){sel.addEventListener("change",renderCockpit);});
 document.getElementById("cpReset").addEventListener("click",function(){
+  cpDrill=null; cpSel=null; cpCityHi=null; cpVB=null;
   [cpRegionSel,cpStatusSel2,cpSceneSel2,cpFundSel2].forEach(function(sel){sel.value="-1";});
   renderCockpit();
 });
@@ -1057,6 +1086,148 @@ function cpPal(){
   if(dark) return {lightA:"#26382c",lightB:"#213228",stroke:"#55755f",label:"#a9c4ae",halo:"#101713",city:"#ddefdd",pillFill:"#1c2a21",pillStroke:"#55755f",pillInk:"#e9f2ea",pillSub:"#b3c8b8",insetBg:"#182720",note:"#75907c",track:"#2a3d31",aggLabel:"#cfe7d2",islandFill:"#3d6b4a",islandStroke:"#9fd0ab",scsLine:"#e08a6d"};
   return {lightA:"#dce8f4",lightB:"#c9daf0",stroke:"#7e97b8",label:"#546e92",halo:"#eef6ee",city:"#33415c",pillFill:"#ffffff",pillStroke:"#c3d2e8",pillInk:"#16233a",pillSub:"#43536e",insetBg:"#ffffff",note:"#8494b0",track:"#e3eaf3",aggLabel:"#33507a",islandFill:"#9dbfe8",islandStroke:"#3f6391",scsLine:"#b04a32"};
 }
+/* ===== 地图交互状态：缩放视图框 / 省份下钻 / 选中项目 / 城市高亮（本次打开期间的内存状态） ===== */
+var CP_FOCUS=[], CP_KEYSET={}, CP_LAST_LIST=[];
+var cpVB=null;          /* 当前 viewBox {x,y,w,h}，null = 全国全图 */
+var cpDrill=null;       /* 已下钻省份名，null = 全国层级 */
+var cpSel=null;         /* 选中的项目 id */
+var cpCityHi=null;      /* 下钻后高亮的城市名 */
+function cpFullVB(){ return {x:0,y:0,w:CP_W,h:CP_H}; }
+function cpApplyVB(){
+  var svg=document.querySelector("#cpViz svg"); if(!svg) return;
+  var vb=cpVB||cpFullVB();
+  svg.setAttribute("viewBox",vb.x+" "+vb.y+" "+vb.w+" "+vb.h);
+  svg.style.cursor=(cpVB&&cpVB.w<CP_W-1)?"grab":"default";
+}
+function cpZoomBy(f,cx,cy){
+  var vb=cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:cpFullVB();
+  var nw=Math.max(110,Math.min(CP_W,vb.w*f));
+  var nh=nw*CP_H/CP_W;
+  var px=(typeof cx==="number")?cx:vb.x+vb.w/2, py=(typeof cy==="number")?cy:vb.y+vb.h/2;
+  var rx=(px-vb.x)/vb.w, ry=(py-vb.y)/vb.h;
+  vb.x=px-rx*nw; vb.y=py-ry*nh; vb.w=nw; vb.h=nh;
+  cpClampVB(vb);
+  cpVB=(vb.w>=CP_W-1&&!cpDrill)?null:vb;
+  cpApplyVB();
+}
+function cpClampVB(vb){
+  vb.x=Math.max(-60,Math.min(CP_W-vb.w+60,vb.x));
+  vb.y=Math.max(-40,Math.min(CP_H-vb.h+40,vb.y));
+}
+function cpProvBBox(name){
+  for(var i=0;i<CP_GEO.length;i++){
+    if(CP_GEO[i].n!==name) continue;
+    var nums=CP_GEO[i].d.match(/-?\d+\.?\d*/g)||[];
+    var minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;
+    for(var j=0;j+1<nums.length;j+=2){
+      var x=parseFloat(nums[j]),y=parseFloat(nums[j+1]);
+      if(x<minx)minx=x; if(x>maxx)maxx=x; if(y<miny)miny=y; if(y>maxy)maxy=y;
+    }
+    var pad=26, w=(maxx-minx)+pad*2, h=(maxy-miny)+pad*2;
+    var ar=CP_W/CP_H;
+    if(w/h<ar){ var nw=h*ar; minx-=(nw-w)/2; w=nw; } else { var nh=w/ar; miny-=(nh-h)/2; h=nh; }
+    return {x:minx,y:miny,w:w,h:h};
+  }
+  return null;
+}
+function cpCityOf(p){ return p.name.split(" · ")[0]; }
+function cpDrillTo(prov){
+  cpDrill=prov; cpCityHi=null; cpSel=null;
+  var bb=cpProvBBox(prov); if(bb) cpVB=bb;
+  var idx=cpRegions.indexOf(prov);
+  if(idx!==-1 && cpRegionSel.value!==String(idx)) cpRegionSel.value=String(idx);
+  renderCockpit();
+}
+function cpExitDrill(){
+  cpDrill=null; cpCityHi=null; cpSel=null; cpVB=null;
+  if(cpRegionSel.value!=="-1") cpRegionSel.value="-1";
+  renderCockpit();
+}
+function cpSelectProject(id,focusView){
+  cpSel=(cpSel===id&&!focusView)?null:id;
+  if(cpSel&&focusView){
+    var p=null; PROJECTS.forEach(function(q){ if(q.id===cpSel) p=q; });
+    if(p){
+      var lng=p.lng,lat=p.lat;
+      if(typeof lng!=="number"||typeof lat!=="number"){ var fb=CP_FALLBACK_POS[p.id]||[108,28]; lng=fb[0]; lat=fb[1]; }
+      var xy=cpXY(lng,lat), w=250, h=w*CP_H/CP_W;
+      cpVB={x:xy[0]-w/2,y:xy[1]-h/2,w:w,h:h}; cpClampVB(cpVB);
+    }
+  }
+  renderCpViz(CP_LAST_LIST);
+  cpRenderDetail();
+}
+/* 地图下方详情面板：未选中时列重点项目（★），下钻时列该省项目，选中时显示项目全量详情 */
+function cpProjRow(p){
+  return '<button type="button" class="cp-prow" data-sel="'+p.id+'">'
+    +(CP_KEYSET[p.id]?'<span class="star">★</span>':'')
+    +'<i class="sdot" style="background:'+pStatusColor(p.status)+'"></i>'
+    +'<span><b>'+esc(p.name)+'</b> <span style="color:var(--ink3)">'+p.status+' · '+esc(sceneShort(p.scene))+'</span></span>'
+    +'<span class="bar2"><span class="cp-bar" style="display:block"><i style="width:'+p.progress+'%;background:'+pStatusColor(p.status)+'"></i></span></span>'
+    +'<span class="pg">'+p.progress+'%</span></button>';
+}
+function cpRenderDetail(){
+  var box=document.getElementById("cpDetail"); if(!box) return;
+  var list=CP_LAST_LIST||[];
+  box.querySelectorAll("[data-sel]").forEach(function(b){
+    b.addEventListener("click",function(){ cpSelectProject(b.getAttribute("data-sel"),true); });
+  });
+  if(cpSel){
+    var p=null; PROJECTS.forEach(function(q){ if(q.id===cpSel) p=q; });
+    if(p){
+      box.innerHTML='<div class="dh"><h4>'+(CP_KEYSET[p.id]?'<span style="color:#d97706">★ 重点项目 · </span>':'')+esc(p.name)+'</h4>'
+        +'<button type="button" class="x" id="cpDetailX" aria-label="关闭项目详情">✕</button></div>'
+        +'<p class="m"><span class="stag" style="background:'+pStatusColor(p.status)+'">'+p.status+'</span> '+esc(p.loc)+' · '+esc(SCENES[p.scene].name.split(" · ")[1])+' · 承接：'+esc(p.lead)+' · '+esc(p.start)+'</p>'
+        +'<div class="cp-bar" style="margin-top:7px"><i style="width:'+p.progress+'%;background:'+pStatusColor(p.status)+'"></i></div>'
+        +'<p class="m">推进进度 <b style="color:var(--ink)">'+p.progress+'%</b> · 下一步：'+esc(p.next)+'</p>'
+        +'<p class="m">'+esc(p.desc)+'</p>'
+        +'<p class="m"><b style="color:var(--ink)">用了什么技术：</b>'+p.techs.map(function(d){return esc(TECHS[d.t].team)+"（"+d.s+"）";}).join("、")+'</p>'
+        +'<p class="m"><b style="color:var(--ink)">钱走哪条线：</b>'+esc(p.fund)+'</p>';
+      var x=document.getElementById("cpDetailX");
+      if(x) x.addEventListener("click",function(){ cpSel=null; renderCpViz(CP_LAST_LIST); cpRenderDetail(); });
+      return;
+    }
+  }
+  if(cpDrill){
+    var pl=list.filter(function(p){return cpProvince(p)===cpDrill;});
+    var avg=pl.length?Math.round(pl.reduce(function(a,p){return a+p.progress;},0)/pl.length):0;
+    box.innerHTML='<div class="dh"><h4>'+cpDrill+' · 下钻视图</h4><span class="m" style="margin:0">'+pl.length+' 个项目 · 平均进度 '+avg+'% · 点项目行看详情，点「全国」返回</span></div>'
+      +(pl.length?pl.map(cpProjRow).join(""):'<p class="m">当前筛选下该省暂无项目。</p>');
+  } else if(CP_FOCUS.length){
+    box.innerHTML='<div class="dh"><h4>重点项目 · 在地图上看</h4><span class="m" style="margin:0">按阶段与进度取前 '+CP_FOCUS.length+' 个，已在地图上以 ★ 标出 · 点行或点地图圆点联动定位</span></div>'
+      +CP_FOCUS.map(cpProjRow).join("");
+  } else {
+    box.innerHTML='<p class="m">当前筛选组合下暂无在途项目，点「重置」查看全部。</p>';
+  }
+  box.querySelectorAll("[data-sel]").forEach(function(b){
+    b.addEventListener("click",function(){ cpSelectProject(b.getAttribute("data-sel"),true); });
+  });
+}
+/* 面包屑 + 城市下钻条（随下钻状态与筛选联动） */
+function cpRenderMapChrome(){
+  var cur=document.getElementById("cpCrumbCur");
+  if(cur) cur.textContent=cpDrill?(" / "+cpDrill+(cpCityHi?" / "+cpCityHi:"")):"";
+  var bar=document.getElementById("cpCityBar"); if(!bar) return;
+  if(!cpDrill){ bar.className="cp-citybar"; bar.innerHTML=""; return; }
+  var cities={};
+  (CP_LAST_LIST||[]).forEach(function(p){
+    if(cpProvince(p)!==cpDrill) return;
+    var c=cpCityOf(p); cities[c]=cities[c]||0; cities[c]++;
+  });
+  var keys=Object.keys(cities);
+  if(keys.length<2){ bar.className="cp-citybar"; bar.innerHTML=""; return; }
+  bar.className="cp-citybar on";
+  bar.innerHTML=keys.map(function(c){
+    return '<button type="button" data-city="'+esc(c)+'" aria-pressed="'+(cpCityHi===c?"true":"false")+'">'+esc(c)+' <b>'+cities[c]+' 个项目</b></button>';
+  }).join("");
+  bar.querySelectorAll("[data-city]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var c=b.getAttribute("data-city");
+      cpCityHi=(cpCityHi===c)?null:c;
+      renderCpViz(CP_LAST_LIST); cpRenderDetail(); cpRenderMapChrome();
+    });
+  });
+}
 function renderCpViz(list){
   var box=document.getElementById("cpViz"); if(!box) return;
   var pal=cpPal();
@@ -1070,16 +1241,17 @@ function renderCpViz(list){
     agg[r].n++; agg[r].prog+=p.progress; agg[r].lng+=lng; agg[r].lat+=lat;
   });
   var s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
-  s+='<defs><filter id="cpPillSh" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#2f5240" flood-opacity="0.22"/></filter></defs>';
+  s+='<defs><filter id="cpPillSh" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#1c3a6e" flood-opacity="0.22"/></filter></defs>';
   /* 标准省界：34 个省级行政区（DataV GeoJSON），项目省份按项目数着色，其余浅色；
-     台湾、海南为海岛省份，单独用更深的岛屿填色 + 加粗描边，避免与海面底色混在一起看不见 */
+     有项目的省份可点击下钻；台湾、海南为海岛省份，单独用更深的岛屿填色 + 加粗描边 */
   CP_GEO.forEach(function(pv,i){
     var a=agg[pv.n];
     var isl=(pv.n==="台湾"||pv.n==="海南");
     var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:(isl?pal.islandFill:(i%2?pal.lightA:pal.lightB));
     var stk=a?"#ffffff":(isl?pal.islandStroke:pal.stroke);
     var sw=a?"1.1":(isl?"1.4":"0.7");
-    s+='<path d="'+pv.d+'" fill="'+fill+'" stroke="'+stk+'" stroke-width="'+sw+'" stroke-linejoin="round"/>';
+    var dim=(cpDrill&&pv.n!==cpDrill&&!a)?' opacity="0.45"':'';
+    s+='<path d="'+pv.d+'" fill="'+fill+'" stroke="'+stk+'" stroke-width="'+sw+'" stroke-linejoin="round"'+dim+(a?' class="cp-prov-path" data-prov="'+pv.n+'"><title>'+pv.n+' · '+a.n+' 个项目 · 点击下钻到城市</title></path>':'/>');
   });
   /* 南海诸岛附图框（标准地图附图）：白底描边框 + 九段线（断续线，走向据 DataV 同源南海断续线数据点）+ 岛礁点 + 标题 */
   (function(){
@@ -1127,34 +1299,92 @@ function renderCpViz(list){
   hubs.forEach(function(h){
     s+='<g><rect x="'+(h.xy[0]-7).toFixed(0)+'" y="'+(h.xy[1]-7).toFixed(0)+'" width="14" height="14" rx="3" transform="rotate(45 '+h.xy[0].toFixed(0)+' '+h.xy[1].toFixed(0)+')" fill="'+h.c+'" stroke="#fff" stroke-width="2"/><text x="'+(h.xy[0]+h.dx).toFixed(0)+'" y="'+(h.xy[1]+h.dy).toFixed(0)+'" font-size="11.5" font-weight="700" fill="'+h.c+'" text-anchor="'+h.anchor+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px">'+h.n+'</text></g>';
   });
-  /* 项目点 + 城市名 */
+  /* 项目点 + 城市名：重点项目带 ★ 金标，选中点带高亮环，下钻后非高亮城市的点变淡 */
   pts.forEach(function(pt){
     var col=pStatusColor(pt.p.status);
-    var short=pt.p.name.split(" · ")[0];
-    if(pt.p.status==="运营中") s+='<circle class="cp-pulse-ring" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="12" fill="none" stroke="'+col+'" stroke-width="2"/>';
-    s+='<g class="cp-viz-pt"><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%</title>'
-      +'<circle class="core" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="11.5" fill="'+col+'" stroke="#fff" stroke-width="2.5"/>'
-      +'<text x="'+pt.x.toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">'+pt.p.progress+'</text></g>';
+    var short=cpCityOf(pt.p);
+    var isKey=!!CP_KEYSET[pt.p.id], isSel=(cpSel===pt.p.id);
+    var dim=(cpCityHi&&cpCityOf(pt.p)!==cpCityHi)?' opacity="0.30"':'';
+    if(pt.p.status==="运营中") s+='<circle class="cp-pulse-ring" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="12" fill="none" stroke="'+col+'" stroke-width="2"'+dim+'/>';
+    if(isSel) s+='<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="17" fill="none" stroke="#1449a8" stroke-width="2.6"'+dim+'/>';
+    s+='<g class="cp-viz-pt" data-pid="'+pt.p.id+'"'+dim+'><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%（点击看详情）</title>'
+      +'<circle class="core" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="'+(isKey?13:11.5)+'" fill="'+col+'" stroke="'+(isKey?"#e8a33d":"#fff")+'" stroke-width="'+(isKey?3:2.5)+'"/>'
+      +'<text x="'+pt.x.toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">'+pt.p.progress+'</text>'
+      +(isKey?'<text x="'+(pt.x+11).toFixed(0)+'" y="'+(pt.y-9).toFixed(0)+'" font-size="12" fill="#d97706" stroke="#fff" stroke-width="0.6" style="paint-order:stroke">★</text>':'')
+      +'</g>';
     var rightSide=pt.x>W-120;
-    s+='<text x="'+(rightSide?pt.x-15:pt.x+15).toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="10" font-weight="600" fill="'+pal.city+'" text-anchor="'+(rightSide?"end":"start")+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px">'+esc(short)+'</text>';
+    s+='<text x="'+(rightSide?pt.x-16:pt.x+16).toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="10" font-weight="600" fill="'+pal.city+'" text-anchor="'+(rightSide?"end":"start")+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px"'+dim+'>'+esc(short)+'</text>';
   });
   if(!pts.length) s+='<text x="340" y="225" font-size="14" fill="'+pal.label+'" text-anchor="middle">当前筛选下暂无项目落点</text>';
-  /* 省份数据小卡（项目数 / 均进度，随筛选联动） */
+  /* 省份数据小卡（项目数 / 均进度，随筛选联动，点击下钻） */
   Object.keys(agg).forEach(function(r){
     var a=agg[r]; if(!a) return;
     var avg=Math.round(a.prog/a.n);
     var xy=cpXY(a.lng/a.n,a.lat/a.n);
     var off=CP_PILL_OFF[r]||[-48,-58];
     var px=Math.max(4,Math.min(W-102,xy[0]+off[0])), py=Math.max(4,Math.min(H-44,xy[1]+off[1]));
-    s+='<g filter="url(#cpPillSh)"><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
+    s+='<g class="cp-pill" data-prov="'+r+'" filter="url(#cpPillSh)"><title>'+r+' · '+a.n+' 个项目 · 点击下钻到城市</title><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
       +'<text x="'+(px+10).toFixed(0)+'" y="'+(py+16).toFixed(0)+'" font-size="12" font-weight="700" fill="'+pal.pillInk+'">'+r+' · '+a.n+' 个项目</text>'
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="52" height="5" rx="2.5" fill="'+pal.track+'"/>'
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="#1d5fd6"/>'
       +'<text x="'+(px+67).toFixed(0)+'" y="'+(py+29).toFixed(0)+'" font-size="10.5" font-weight="700" fill="'+pal.pillSub+'">'+avg+'%</text></g>';
   });
-  s+='<text x="10" y="'+(H-8)+'" font-size="10" fill="'+pal.note+'">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数</text>';
+  s+='<text x="10" y="'+(H-8)+'" font-size="10" fill="'+pal.note+'">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数 · ★ = 重点项目</text>';
   s+='</svg>';
   box.innerHTML=s;
+  cpApplyVB();
+  /* ---- 交互接线：省份 / 小卡下钻，点选项目，滚轮缩放，拖拽平移 ---- */
+  var svg=box.querySelector("svg");
+  box.querySelectorAll(".cp-pill").forEach(function(elm){
+    elm.addEventListener("click",function(ev){
+      ev.stopPropagation();
+      var prov=elm.getAttribute("data-prov");
+      if(prov&&prov!==cpDrill) cpDrillTo(prov);
+    });
+  });
+  /* 省份面点击下钻在下方 pointerup 中按位移阈值判定，与拖拽平移共存（点 = 下钻，拖 = 平移） */
+  box.querySelectorAll(".cp-viz-pt").forEach(function(elm){
+    elm.addEventListener("click",function(ev){
+      ev.stopPropagation();
+      cpSelectProject(elm.getAttribute("data-pid"),false);
+    });
+  });
+  if(svg){
+    svg.addEventListener("wheel",function(e){
+      e.preventDefault();
+      var rect=svg.getBoundingClientRect(); if(!rect.width) return;
+      var vb=cpVB||cpFullVB();
+      var cx=vb.x+(e.clientX-rect.left)/rect.width*vb.w;
+      var cy=vb.y+(e.clientY-rect.top)/rect.height*vb.h;
+      cpZoomBy(e.deltaY<0?0.82:1.22,cx,cy);
+    },{passive:false});
+    var drag=null;
+    svg.addEventListener("pointerdown",function(e){
+      if(e.target.closest(".cp-viz-pt,.cp-pill")) return;
+      var provEl=e.target.closest?e.target.closest(".cp-prov-path"):null;
+      var rect=svg.getBoundingClientRect(); if(!rect.width) return;
+      drag={x:e.clientX,y:e.clientY,moved:false,prov:provEl?provEl.getAttribute("data-prov"):null,
+            vb:cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:null,
+            sx:(cpVB?cpVB.w:CP_W)/rect.width, sy:(cpVB?cpVB.h:CP_H)/rect.height};
+      if(svg.setPointerCapture) { try{ svg.setPointerCapture(e.pointerId); }catch(err){} }
+    });
+    svg.addEventListener("pointermove",function(e){
+      if(!drag) return;
+      var dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+      if(Math.abs(dx)+Math.abs(dy)>5) drag.moved=true;
+      if(!drag.moved||!drag.vb) return;
+      svg.classList.add("cp-grabbing");
+      var vb={x:drag.vb.x-dx*drag.sx, y:drag.vb.y-dy*drag.sy, w:drag.vb.w, h:drag.vb.h};
+      cpClampVB(vb); cpVB=vb; cpApplyVB();
+    });
+    var endDrag=function(e){
+      if(drag&&!drag.moved&&drag.prov&&drag.prov!==cpDrill){ var pv=drag.prov; drag=null; svg.classList.remove("cp-grabbing"); cpDrillTo(pv); return; }
+      drag=null; svg.classList.remove("cp-grabbing");
+    };
+    svg.addEventListener("pointerup",endDrag);
+    svg.addEventListener("pointercancel",function(){ drag=null; svg.classList.remove("cp-grabbing"); });
+  }
+  cpRenderMapChrome();
 }
 /* 全屏演示：优先 Fullscreen API；被拒绝 / 不可用 / 静默失败时以 CSS 伪全屏兜底，确保演示一定能铺满一屏 */
 (function(){
@@ -1210,6 +1440,16 @@ function cpApplyTheme(t){
     });
   });
   if(mq&&mq.addEventListener){ mq.addEventListener("change",function(e){ if(!cpThemeManual){ cpApplyTheme(e.matches?"dark":"light"); try{ renderCockpit(); }catch(err){} } }); }
+})();
+
+/* 地图工具条接线：缩放按钮 + 面包屑返回全国（下钻 / 选中状态与顶部筛选双向同步） */
+(function(){
+  var zi=document.getElementById("cpZoomIn"), zo=document.getElementById("cpZoomOut"),
+      zr=document.getElementById("cpZoomReset"), home=document.getElementById("cpCrumbHome");
+  if(zi) zi.addEventListener("click",function(){ cpZoomBy(0.7); });
+  if(zo) zo.addEventListener("click",function(){ cpZoomBy(1.45); });
+  if(zr) zr.addEventListener("click",function(){ cpVB=cpDrill?cpProvBBox(cpDrill):null; cpApplyVB(); });
+  if(home) home.addEventListener("click",function(){ if(cpDrill) cpExitDrill(); else { cpSel=null; cpVB=null; renderCpViz(CP_LAST_LIST); cpRenderDetail(); } });
 })();
 
 /* 首次渲染：标准地图边界数据（CP_GEO）已内嵌于本脚本，同步绘制，不依赖网络请求与二次加载；
