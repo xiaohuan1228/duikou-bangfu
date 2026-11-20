@@ -329,7 +329,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 /* 重点项目面板移至右栏后：右栏本身已是卡片，面板去掉嵌套边框 / 阴影，改以分隔线衔接，全屏时随右栏滚动完整呈现 */
 .cp-col>.cp-detail{margin-top:16px;border:none;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:transparent;padding:12px 0 0}
 .cp-detail:empty{display:none}
-.cp-detail .dh{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cp-detail .dh{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.cp-detail .dh h4{flex:none;white-space:nowrap}
+.cp-detail .dh .m{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right}
 .cp-detail h4{margin:0;font-size:14px}
 .cp-detail .m{font-size:12.5px;color:var(--ink2);margin:3px 0 0;line-height:1.6}
 .cp-detail .x{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:7px;width:28px;height:28px;min-height:28px;cursor:pointer;font-size:14px;line-height:1;flex:none;font-family:inherit}
@@ -1071,7 +1073,7 @@ function renderCockpit(){
   var byProv={};
   list.forEach(function(p){var r=cpProvince(p);byProv[r]=byProv[r]||{n:0,prog:0};byProv[r].n++;byProv[r].prog+=p.progress;});
   document.getElementById("cpDest").innerHTML=Object.keys(byProv).sort(function(a,b){return byProv[b].n-byProv[a].n;}).map(function(r){
-    return '<span>'+r+' <b>'+byProv[r].n+' 个项目</b> · 均进度 '+Math.round(byProv[r].prog/byProv[r].n)+'%</span>';
+    return '<span>'+r+' <b>'+byProv[r].n+' 个项目</b></span>';
   }).join("");
   /* 右：对接构成 donut */
   var counts=DOCK_CATS.map(function(c){var n=0;list.forEach(function(p){p.techs.forEach(function(d){if(d.s===c[0])n++;});});return n;});
@@ -1276,7 +1278,7 @@ function cpRenderDetail(){
   /* 右栏固定为重点项目列表：不因点选 / 下钻 / 城市过滤切换成详情或下钻列表；
      列表随当前筛选范围取重点项目（CP_FOCUS），选中行高亮，与地图点选双向同步 */
   if(CP_FOCUS.length){
-    box.innerHTML='<div class="dh"><h4>重点项目 · 在地图上看</h4><span class="m" style="margin:0">按阶段与进度取前 '+CP_FOCUS.length+' 个，已在地图上以 ★ 标出 · 点列表项定位点位，详情在地图悬浮框中看</span></div>'
+    box.innerHTML='<div class="dh"><h4>重点项目</h4><span class="m" style="margin:0">共 '+CP_FOCUS.length+' 个 · ★ 已在地图上标出</span></div><p class="m" style="margin:1px 0 3px">点列表项定位点位 · 详情看地图悬浮框</p>'
       +CP_FOCUS.map(function(p){return cpProjRow(p,cpSel===p.id);}).join("");
   } else {
     box.innerHTML='<p class="m">当前筛选组合下暂无在途项目，点「重置」查看全部。</p>';
