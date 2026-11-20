@@ -9,23 +9,25 @@
 <style>
 :root{
   --blue:#1d5fd6; --blue-dark:#1449a8; --blue-soft:#eaf1fd; --blue-line:#c9dbf7;
-  --ink:#16233a; --ink2:#43536e; --ink3:#71809a;
-  --bg:#f4f6fa; --card:#ffffff; --line:#dde4ef;
+  --ink:#16233a; --ink2:#43536e; --ink3:#67788f;
+  --bg:#f2f5f9; --card:#ffffff; --line:#dde4ef;
   --green:#1a7f4b; --green-soft:#e6f4ec;
   --amber:#b26a00; --amber-soft:#fdf1de;
   --red:#b3362b; --red-soft:#fbeae8;
   --radius:10px;
   --shadow:0 1px 3px rgba(22,45,90,.08);
+  --topbar-bg:linear-gradient(118deg,#0e357c 0%,#1d5fd6 68%,#2e77e8 100%);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
-    --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0;
-    --bg:#0e1420; --card:#17202f; --line:#2a3648;
+    --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8fa1ba;
+    --bg:#0a0f1a; --card:#141e30; --line:#263650;
     --green:#4cc07f; --green-soft:#173527;
     --amber:#e0a44a; --amber-soft:#3a2c14;
     --red:#e07a6e; --red-soft:#3a201c;
     --shadow:0 1px 3px rgba(0,0,0,.4);
+    --topbar-bg:linear-gradient(118deg,#081426 0%,#0f2a52 68%,#163a6e 100%);
   }
 }
 *{box-sizing:border-box}
@@ -36,7 +38,7 @@ a{color:var(--blue)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px 64px}
 
 /* ---------- header ---------- */
-.topbar{background:var(--blue-dark);color:#fff}
+.topbar{background:var(--topbar-bg);color:#fff;box-shadow:0 3px 16px rgba(10,32,74,.28)}
 .topbar .wrap{padding-top:22px;padding-bottom:20px}
 .topbar h1{font-size:23px;margin:0 0 4px;font-weight:700;letter-spacing:.5px}
 .topbar .sub{font-size:13.5px;opacity:.88;margin:0}
@@ -242,7 +244,7 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 
 /* ---------- 驾驶舱视觉：与全站统一的蓝色体系（白底头屏 + 蓝色主色 + 琥珀点缀） ---------- */
 .cp-shell{
-  --ink:#16233a; --ink2:#43536e; --ink3:#71809a; --card:#ffffff; --line:#dde4ef;
+  --ink:#16233a; --ink2:#43536e; --ink3:#67788f; --card:#ffffff; --line:#dde4ef;
   --blue:#1d5fd6; --blue-dark:#1449a8; --blue-soft:#eaf1fd; --blue-line:#c9dbf7;
   --green:#1a7f4b; --green-soft:#e6f4ec; --amber:#b26a00; --amber-soft:#fdf1de; --red:#b3362b;
   background:linear-gradient(180deg,#f5f8fd 0%,#e9eff8 100%);
@@ -274,7 +276,7 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-kpi .val{font-size:31px;letter-spacing:-.5px;margin:2px 0 1px;color:var(--ink)}
 .cp-kpi .val small{color:var(--ink3)}
 .cp-kpi .note2{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5}
-.cp-kpi.hero{background:#1449a8;border-color:#1449a8}
+.cp-kpi.hero{background:linear-gradient(135deg,#0e357c 0%,#1d5fd6 82%);border-color:#0e357c;box-shadow:0 10px 22px rgba(18,63,143,.30)}
 .cp-kpi.hero::before{background:#e8a33d}
 .cp-kpi.hero .lab{color:rgba(255,255,255,.75)}
 .cp-kpi.hero .val{color:#fff}
@@ -332,6 +334,7 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-detail .x:hover{color:var(--blue);border-color:var(--blue-line)}
 .cp-prow{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:7px 10px;margin-top:6px;cursor:pointer;font-family:inherit;color:var(--ink);font-size:13px}
 .cp-prow:hover{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-line)}
+.cp-prow.on{border-color:var(--blue);background:var(--blue-soft);box-shadow:0 0 0 2px var(--blue-line)}
 .cp-prow .star{color:#d97706;font-size:13px;flex:none}
 .cp-prow .pg{margin-left:auto;font-weight:800;color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums}
 .cp-prow .bar2{flex:0 0 74px}
@@ -362,15 +365,18 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 /* ---------- 明亮 / 暗黑模式切换（显式 data-theme 覆盖系统偏好） ---------- */
 :root[data-theme="dark"]{
   --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
-  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0;
-  --bg:#0e1420; --card:#17202f; --line:#2a3648;
+  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8fa1ba;
+  --bg:#0a0f1a; --card:#141e30; --line:#263650;
   --green:#4cc07f; --green-soft:#173527;
   --amber:#e0a44a; --amber-soft:#3a2c14;
   --red:#e07a6e; --red-soft:#3a201c;
   --shadow:0 1px 3px rgba(0,0,0,.4);
+  --topbar-bg:linear-gradient(118deg,#081426 0%,#0f2a52 68%,#163a6e 100%);
   color-scheme:dark;
 }
 :root[data-theme="light"]{color-scheme:light}
+/* 暗色下主按钮 / 选中态用更深一号的蓝承载白字，避免浅蓝底白字发飘 */
+:root[data-theme="dark"] .btn,:root[data-theme="dark"] .tab[aria-selected="true"],:root[data-theme="dark"] .chip[aria-pressed="true"]{background:#2568cc;border-color:#2568cc;color:#fff}
 .theme-switch{display:inline-flex;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card);vertical-align:middle;box-shadow:0 2px 8px rgba(20,40,30,.14)}
 .theme-switch button{border:none;background:transparent;color:var(--ink2);padding:9px 20px;font-size:14.5px;font-weight:800;cursor:pointer;min-height:42px;font-family:inherit;letter-spacing:.3px}
 .theme-switch button[aria-pressed="true"]{background:var(--blue);color:#fff}
@@ -384,13 +390,13 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-head .theme-switch button{color:#43536e}
 .cp-head .theme-switch button[aria-pressed="true"]{background:#1d5fd6;color:#fff}
 [data-theme="dark"] .cp-shell{
-  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0; --card:#17202f; --line:#2a3648;
+  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8fa1ba; --card:#141e30; --line:#263650;
   --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
   --green:#4cc07f; --green-soft:#173527; --amber:#e0a44a; --amber-soft:#3a2c14; --red:#e07a6e;
-  background:linear-gradient(180deg,#141e30 0%,#0e1420 100%);
-  border-color:#2c4a80; box-shadow:0 16px 40px rgba(0,0,0,.5);
+  background:linear-gradient(180deg,#111c30 0%,#0a111f 100%);
+  border-color:#2c4a80; box-shadow:0 16px 40px rgba(0,0,0,.55),0 0 46px rgba(29,95,214,.10);
 }
-[data-theme="dark"] .cp-head{background:#17202f;border-bottom-color:#1d5fd6}
+[data-theme="dark"] .cp-head{background:#141e30;border-bottom-color:#2e6bd8}
 [data-theme="dark"] .cp-title h2{color:#eef3fb}
 [data-theme="dark"] .cp-title p{color:rgba(220,232,248,.72)}
 [data-theme="dark"] .cp-clock{color:rgba(220,232,248,.68)}
@@ -401,18 +407,19 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 [data-theme="dark"] .cp-head .theme-switch{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.10)}
 [data-theme="dark"] .cp-head .theme-switch button{color:rgba(255,255,255,.88)}
 [data-theme="dark"] .cp-head .theme-switch button[aria-pressed="true"]{background:#1d5fd6;color:#fff}
-[data-theme="dark"] .cp-filters{background:#131c2c}
+[data-theme="dark"] .cp-filters{background:#0e1830}
 [data-theme="dark"] .cp-filters select{border-color:#2c4a80}
-[data-theme="dark"] .cp-kpi{border-color:#2a3648;box-shadow:none}
-[data-theme="dark"] .cp-col{border-color:#2a3648;box-shadow:none}
-[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#182236,#111a2a);border-color:#2c4a80;box-shadow:none}
+[data-theme="dark"] .cp-kpi{border-color:#263650;box-shadow:none}
+[data-theme="dark"] .cp-kpi.hero{background:linear-gradient(135deg,#123a75 0%,#1d5fd6 85%);border-color:#2c5aa0;box-shadow:0 10px 24px rgba(29,95,214,.32)}
+[data-theme="dark"] .cp-col{border-color:#263650;box-shadow:none}
+[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#152238,#0c1626);border-color:#2c4a80;box-shadow:none}
 [data-theme="dark"] .cp-viz-head b{color:#bcd6fb}
-[data-theme="dark"] .cp-viz-head span{color:#8494b0}
-[data-theme="dark"] .cp-fnode{background:#17202f;box-shadow:none}
+[data-theme="dark"] .cp-viz-head span{color:#8fa1ba}
+[data-theme="dark"] .cp-fnode{background:#141e30;box-shadow:none}
 [data-theme="dark"] .cp-fnode b{color:#8db4f7}
 [data-theme="dark"] .cp-fnode.money b{color:#e0a44a}
 [data-theme="dark"] .cp-bar{background:#22314d}
-[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#141e30,#0e1420)}
+[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#111c30,#0a111f)}
 .cp-shell.cp-pseudo{position:fixed;inset:0;z-index:300;width:100%;height:100%;height:100dvh;border-radius:0;border:none;overflow:hidden}
 body.cp-locked{overflow:hidden}
 
@@ -905,29 +912,29 @@ var PSTATUS=[
  {name:"方案论证",color:"#1d5fd6"},
  {name:"技术对接",color:"#b26a00"},
  {name:"试点实施",color:"#0e7c86"},
- {name:"运营中",color:"#1a7f4b"},
- {name:"绩效评估",color:"#1449a8"}
+ {name:"运营中",color:"#1e9e5a"},
+ {name:"绩效评估",color:"#2f6fd0"}
 ];
 function pStatusColor(name){for(var i=0;i<PSTATUS.length;i++)if(PSTATUS[i].name===name)return PSTATUS[i].color;return "#64748b";}
 var DOCK_COLORS={"已交付":"var(--green)","已签约":"#0e7c86","对接中":"var(--amber)","待对接":"var(--ink3)"};
 /* lat/lng 为所在县（市）参考坐标（Meta 地点图谱解析）；null 表示点位待核准，不落图 */
 var PROJECTS=[
- {id:"P01",name:"文山 · 天麻智能方舱",loc:"云南省文山州",lat:24.05,lng:104.2,scene:0,status:"运营中",progress:92,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"二期方舱扩容，产销数据与圳品渠道对账",desc:"智能方舱种植运营：环境控制＋智能体管理，把天麻种植从靠天吃饭变成可复制的工厂化生产，为深农科创在营样本。",techs:[{t:10,s:"已交付"},{t:24,s:"已签约"}]},
- {id:"P02",name:"双河 · 10 万㎡智能温室（串番茄）",loc:"新疆双河市（博尔塔拉州）",lat:44.9833,lng:81.95,scene:0,status:"运营中",progress:88,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"冬季光照补强方案评估与品种轮换",desc:"串番茄智能温室种植运营：设施农业成套方案在边疆地区落地，验证工具箱的跨气候带适配能力，为深农科创在营样本。",techs:[{t:10,s:"已交付"},{t:1,s:"已交付"},{t:6,s:"对接中"}]},
- {id:"P03",name:"红河 · 约 600 亩蓝莓产业园",loc:"云南省红河州蒙自市",lat:23.37,lng:103.402,scene:0,status:"运营中",progress:85,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"采收季分拣线扩容与湾区渠道锁价",desc:"高标准设施蓝莓种植产业园：品种、设施、农艺标准与渠道一体化导入的整园运营样本。",techs:[{t:11,s:"已交付"},{t:3,s:"已签约"},{t:21,s:"对接中"}]},
- {id:"P04",name:"喀什 · 干果冷链与多式联运枢纽",loc:"新疆喀什市",lat:39.4547,lng:75.9797,scene:4,status:"技术对接",progress:45,fund:"东西部协作资金（乡村振兴局）",lead:"喀什地区平台公司（属地承接）",start:"2026 年 6 月立项",next:"超级冷链方案比选与枢纽选址确认",desc:"依托喀什 5G 数字化物流园与 TIR 集结中心，为南疆干果、鲜果建预冷—冷藏—多式联运一体化枢纽。",techs:[{t:13,s:"对接中"},{t:17,s:"对接中"},{t:14,s:"待对接"}]},
- {id:"P05",name:"乐业 · 高山蔬菜预冷集配中心",loc:"广西百色市乐业县",lat:24.8,lng:106.567,scene:4,status:"试点实施",progress:62,fund:"东西部协作资金（乡村振兴局）",lead:"乐业县平台公司（属地承接）",start:"2026 年 3 月立项",next:"预冷库设备进场与首批蔬菜试运行",desc:"针对采后无预冷、损耗三成以上的痛点，建产地预冷＋冷链集配中心，直供湾区渠道。",techs:[{t:15,s:"已签约"},{t:11,s:"已签约"},{t:13,s:"对接中"}]},
- {id:"P06",name:"田阳 · 芒果智能分拣与溯源",loc:"广西百色市田阳区",lat:23.7386,lng:106.906,scene:3,status:"技术对接",progress:40,fund:"东西部协作资金（乡村振兴局）",lead:"田阳区农业投资主体",start:"2026 年 5 月立项",next:"无损检测分级线样机到场联调",desc:"芒果采后分级长期靠人工经验，拟导入无损检测分级装备与区块链溯源，把分等定价前置到产地。",techs:[{t:7,s:"对接中"},{t:9,s:"对接中"},{t:21,s:"待对接"}]},
- {id:"P07",name:"龙川 · 稻米智慧仓储与溯源",loc:"广东河源市龙川县",lat:24.1122,lng:115.265,scene:5,status:"方案论证",progress:25,fund:"省内帮扶资金（乡村振兴局）",lead:"龙川县粮食收储主体",start:"2026 年 8 月立项",next:"仓储规模测算与方案评审",desc:"稻米仓储损耗与品质追溯两头弱，拟以智慧粮仓远程监测＋全链条追溯平台做整体改造论证。",techs:[{t:26,s:"待对接"},{t:22,s:"待对接"}]},
- {id:"P08",name:"澄海 · 蔬菜产地加工与预制菜保鲜",loc:"广东汕头市澄海区",lat:23.463,lng:116.735,scene:3,status:"试点实施",progress:58,fund:"工信局数字化转型奖补",lead:"澄海区食品加工企业联合体",start:"2026 年 2 月立项",next:"鲜切产线验收与圳品现场定等",desc:"依托汕头食品加工基础，建鲜切蔬菜与预制菜保鲜产线，执行主导团队参与制定的鲜切果蔬国家标准。",techs:[{t:12,s:"已签约"},{t:9,s:"已签约"},{t:27,s:"对接中"}]},
- {id:"P09",name:"陆丰 · 水产预冷与冰鲜物流",loc:"广东汕尾市陆丰市",lat:22.95,lng:115.633,scene:4,status:"技术对接",progress:38,fund:"省内帮扶资金（乡村振兴局）",lead:"陆丰市渔港运营主体",start:"2026 年 6 月立项",next:"冰鲜保活工艺参数确认",desc:"渔获上岸无预冷、冰鲜品质不稳，拟导入冰鲜保活物流与超级冷链预冷模块，对接深圳海吉星渠道。",techs:[{t:10,s:"对接中"},{t:13,s:"待对接"},{t:20,s:"待对接"}]},
- {id:"P10",name:"赣州 · 赣南脐橙无损检测分级线",loc:"江西省赣州市",lat:25.829,lng:114.934,scene:3,status:"需求诊断",progress:12,fund:"对口合作专项（赣州口径）",lead:"赣州市果业平台（待确认）",start:"2026 年 10 月需求征集",next:"产地分拣现状调研与损耗基线摸底",desc:"赣南脐橙分选以人工为主，拟先做产地分拣现状诊断，再决定无损检测分级线的规模与点位。",techs:[{t:7,s:"待对接"},{t:9,s:"待对接"}]},
- {id:"P11",name:"五常 · 大米可信溯源与共同配送",loc:"黑龙江哈尔滨市五常市",lat:44.919,lng:127.153,scene:5,status:"方案论证",progress:22,fund:"对口合作专项（哈尔滨口径）",lead:"五常市大米产业主体（待确认）",start:"2026 年 9 月立项",next:"批次混合追溯模型适配评审",desc:"针对五常大米掺混与溯源难题，做智能柔性追溯模型与“源头净菜＋共同配送”模式的适配论证。",techs:[{t:24,s:"对接中"},{t:25,s:"待对接"},{t:22,s:"待对接"}]},
- {id:"P12",name:"龙胜 · 山地轻简农机社会化服务站",loc:"广西桂林市龙胜各族自治县",lat:25.267,lng:110.283,scene:2,status:"技术对接",progress:35,fund:"东西部协作资金（乡村振兴局）",lead:"龙胜县农机服务合作社联合社",start:"2026 年 7 月立项",next:"山地轨道车样机山地实测",desc:"山地地形突出、大型农机下不了地，拟以山地轨道车与轻简装备建耕种管收社会化服务站。点位为桂林市参考坐标。",techs:[{t:3,s:"对接中"},{t:4,s:"对接中"},{t:1,s:"待对接"}]},
- {id:"P13",name:"建水 · 果蔬采后减损示范点",loc:"云南省红河州建水县",lat:23.6164,lng:102.827,scene:3,status:"绩效评估",progress:96,fund:"科技局可持续发展专项",lead:"建水县供销合作主体",start:"2025 年 4 月立项",next:"完整生产周期绩效评估与工具包沉淀",desc:"果蔬采后减损保鲜技术已完成一个生产周期运行，正在做绩效评价，评估后形成标准工具包向同类县复制。",techs:[{t:11,s:"已交付"},{t:27,s:"已交付"},{t:15,s:"已交付"}]},
- {id:"P14",name:"察隅 · 高原农产品数字化运营",loc:"西藏林芝市察隅县",lat:null,lng:null,scene:6,status:"需求诊断",progress:8,fund:"对口支援资金（乡村振兴局）",lead:"察隅县平台公司（待确认）",start:"2026 年 10 月需求征集",next:"属地需求清单回收与点位坐标核准",desc:"援藏民生工程基础较好，拟先摸清茶叶、中药材等品类的生产与销售数据底数，再定数字化运营方案。点位待核准，未落图。",techs:[{t:0,s:"待对接"},{t:23,s:"待对接"}]},
- {id:"P15",name:"巴马 · 长寿食品冷链仓储",loc:"广西河池市巴马瑶族自治县",lat:null,lng:null,scene:4,status:"需求诊断",progress:10,fund:"东西部协作资金（乡村振兴局）",lead:"巴马县平台公司（待确认）",start:"2026 年 10 月需求征集",next:"仓储缺口调研与点位坐标核准",desc:"长寿食品品牌强但冷链仓储薄弱，拟先完成仓储缺口与品类流量调研。点位待核准，未落图。",techs:[{t:15,s:"待对接"},{t:14,s:"待对接"}]},
- {id:"P16",name:"巫山 · 脆李智能分选与品牌营销",loc:"重庆市巫山县",lat:null,lng:null,scene:5,status:"试点实施",progress:55,fund:"东西部协作资金（乡村振兴局）",lead:"巫山县果品运营主体",start:"2026 年 3 月立项",next:"分选线旺季满负荷验证与点位坐标核准",desc:"脆李季短量大，智能分选线已签约进场，同步做品牌溯源与电商物流算法优化。点位待核准，未落图。",techs:[{t:7,s:"已签约"},{t:21,s:"对接中"},{t:23,s:"对接中"}]}
+ {id:"P01",name:"文山 · 天麻智能方舱",loc:"云南省文山州",city:"文山州",lat:24.05,lng:104.2,scene:0,status:"运营中",progress:92,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"二期方舱扩容，产销数据与圳品渠道对账",desc:"智能方舱种植运营：环境控制＋智能体管理，把天麻种植从靠天吃饭变成可复制的工厂化生产，为深农科创在营样本。",techs:[{t:10,s:"已交付"},{t:24,s:"已签约"}]},
+ {id:"P02",name:"双河 · 10 万㎡智能温室（串番茄）",loc:"新疆双河市（博尔塔拉州）",city:"双河市",lat:44.9833,lng:81.95,scene:0,status:"运营中",progress:88,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"冬季光照补强方案评估与品种轮换",desc:"串番茄智能温室种植运营：设施农业成套方案在边疆地区落地，验证工具箱的跨气候带适配能力，为深农科创在营样本。",techs:[{t:10,s:"已交付"},{t:1,s:"已交付"},{t:6,s:"对接中"}]},
+ {id:"P03",name:"红河 · 约 600 亩蓝莓产业园",loc:"云南省红河州蒙自市",city:"红河州",lat:23.37,lng:103.402,scene:0,status:"运营中",progress:85,fund:"国资委线 · 深农科创运营导入",lead:"深农科创运营团队",start:"2025 年立项（在营样本）",next:"采收季分拣线扩容与湾区渠道锁价",desc:"高标准设施蓝莓种植产业园：品种、设施、农艺标准与渠道一体化导入的整园运营样本。",techs:[{t:11,s:"已交付"},{t:3,s:"已签约"},{t:21,s:"对接中"}]},
+ {id:"P04",name:"喀什 · 干果冷链与多式联运枢纽",loc:"新疆喀什市",city:"喀什地区",lat:39.4547,lng:75.9797,scene:4,status:"技术对接",progress:45,fund:"东西部协作资金（乡村振兴局）",lead:"喀什地区平台公司（属地承接）",start:"2026 年 6 月立项",next:"超级冷链方案比选与枢纽选址确认",desc:"依托喀什 5G 数字化物流园与 TIR 集结中心，为南疆干果、鲜果建预冷—冷藏—多式联运一体化枢纽。",techs:[{t:13,s:"对接中"},{t:17,s:"对接中"},{t:14,s:"待对接"}]},
+ {id:"P05",name:"乐业 · 高山蔬菜预冷集配中心",loc:"广西百色市乐业县",city:"百色市",lat:24.8,lng:106.567,scene:4,status:"试点实施",progress:62,fund:"东西部协作资金（乡村振兴局）",lead:"乐业县平台公司（属地承接）",start:"2026 年 3 月立项",next:"预冷库设备进场与首批蔬菜试运行",desc:"针对采后无预冷、损耗三成以上的痛点，建产地预冷＋冷链集配中心，直供湾区渠道。",techs:[{t:15,s:"已签约"},{t:11,s:"已签约"},{t:13,s:"对接中"}]},
+ {id:"P06",name:"田阳 · 芒果智能分拣与溯源",loc:"广西百色市田阳区",city:"百色市",lat:23.7386,lng:106.906,scene:3,status:"技术对接",progress:40,fund:"东西部协作资金（乡村振兴局）",lead:"田阳区农业投资主体",start:"2026 年 5 月立项",next:"无损检测分级线样机到场联调",desc:"芒果采后分级长期靠人工经验，拟导入无损检测分级装备与区块链溯源，把分等定价前置到产地。",techs:[{t:7,s:"对接中"},{t:9,s:"对接中"},{t:21,s:"待对接"}]},
+ {id:"P07",name:"龙川 · 稻米智慧仓储与溯源",loc:"广东河源市龙川县",city:"河源市",lat:24.1122,lng:115.265,scene:5,status:"方案论证",progress:25,fund:"省内帮扶资金（乡村振兴局）",lead:"龙川县粮食收储主体",start:"2026 年 8 月立项",next:"仓储规模测算与方案评审",desc:"稻米仓储损耗与品质追溯两头弱，拟以智慧粮仓远程监测＋全链条追溯平台做整体改造论证。",techs:[{t:26,s:"待对接"},{t:22,s:"待对接"}]},
+ {id:"P08",name:"澄海 · 蔬菜产地加工与预制菜保鲜",loc:"广东汕头市澄海区",city:"汕头市",lat:23.463,lng:116.735,scene:3,status:"试点实施",progress:58,fund:"工信局数字化转型奖补",lead:"澄海区食品加工企业联合体",start:"2026 年 2 月立项",next:"鲜切产线验收与圳品现场定等",desc:"依托汕头食品加工基础，建鲜切蔬菜与预制菜保鲜产线，执行主导团队参与制定的鲜切果蔬国家标准。",techs:[{t:12,s:"已签约"},{t:9,s:"已签约"},{t:27,s:"对接中"}]},
+ {id:"P09",name:"陆丰 · 水产预冷与冰鲜物流",loc:"广东汕尾市陆丰市",city:"汕尾市",lat:22.95,lng:115.633,scene:4,status:"技术对接",progress:38,fund:"省内帮扶资金（乡村振兴局）",lead:"陆丰市渔港运营主体",start:"2026 年 6 月立项",next:"冰鲜保活工艺参数确认",desc:"渔获上岸无预冷、冰鲜品质不稳，拟导入冰鲜保活物流与超级冷链预冷模块，对接深圳海吉星渠道。",techs:[{t:10,s:"对接中"},{t:13,s:"待对接"},{t:20,s:"待对接"}]},
+ {id:"P10",name:"赣州 · 赣南脐橙无损检测分级线",loc:"江西省赣州市",city:"赣州市",lat:25.829,lng:114.934,scene:3,status:"需求诊断",progress:12,fund:"对口合作专项（赣州口径）",lead:"赣州市果业平台（待确认）",start:"2026 年 10 月需求征集",next:"产地分拣现状调研与损耗基线摸底",desc:"赣南脐橙分选以人工为主，拟先做产地分拣现状诊断，再决定无损检测分级线的规模与点位。",techs:[{t:7,s:"待对接"},{t:9,s:"待对接"}]},
+ {id:"P11",name:"五常 · 大米可信溯源与共同配送",loc:"黑龙江哈尔滨市五常市",city:"哈尔滨市",lat:44.919,lng:127.153,scene:5,status:"方案论证",progress:22,fund:"对口合作专项（哈尔滨口径）",lead:"五常市大米产业主体（待确认）",start:"2026 年 9 月立项",next:"批次混合追溯模型适配评审",desc:"针对五常大米掺混与溯源难题，做智能柔性追溯模型与“源头净菜＋共同配送”模式的适配论证。",techs:[{t:24,s:"对接中"},{t:25,s:"待对接"},{t:22,s:"待对接"}]},
+ {id:"P12",name:"龙胜 · 山地轻简农机社会化服务站",loc:"广西桂林市龙胜各族自治县",city:"桂林市",lat:25.267,lng:110.283,scene:2,status:"技术对接",progress:35,fund:"东西部协作资金（乡村振兴局）",lead:"龙胜县农机服务合作社联合社",start:"2026 年 7 月立项",next:"山地轨道车样机山地实测",desc:"山地地形突出、大型农机下不了地，拟以山地轨道车与轻简装备建耕种管收社会化服务站。点位为桂林市参考坐标。",techs:[{t:3,s:"对接中"},{t:4,s:"对接中"},{t:1,s:"待对接"}]},
+ {id:"P13",name:"建水 · 果蔬采后减损示范点",loc:"云南省红河州建水县",city:"红河州",lat:23.6164,lng:102.827,scene:3,status:"绩效评估",progress:96,fund:"科技局可持续发展专项",lead:"建水县供销合作主体",start:"2025 年 4 月立项",next:"完整生产周期绩效评估与工具包沉淀",desc:"果蔬采后减损保鲜技术已完成一个生产周期运行，正在做绩效评价，评估后形成标准工具包向同类县复制。",techs:[{t:11,s:"已交付"},{t:27,s:"已交付"},{t:15,s:"已交付"}]},
+ {id:"P14",name:"察隅 · 高原农产品数字化运营",loc:"西藏林芝市察隅县",city:"林芝市",lat:null,lng:null,scene:6,status:"需求诊断",progress:8,fund:"对口支援资金（乡村振兴局）",lead:"察隅县平台公司（待确认）",start:"2026 年 10 月需求征集",next:"属地需求清单回收与点位坐标核准",desc:"援藏民生工程基础较好，拟先摸清茶叶、中药材等品类的生产与销售数据底数，再定数字化运营方案。点位待核准，未落图。",techs:[{t:0,s:"待对接"},{t:23,s:"待对接"}]},
+ {id:"P15",name:"巴马 · 长寿食品冷链仓储",loc:"广西河池市巴马瑶族自治县",city:"河池市",lat:null,lng:null,scene:4,status:"需求诊断",progress:10,fund:"东西部协作资金（乡村振兴局）",lead:"巴马县平台公司（待确认）",start:"2026 年 10 月需求征集",next:"仓储缺口调研与点位坐标核准",desc:"长寿食品品牌强但冷链仓储薄弱，拟先完成仓储缺口与品类流量调研。点位待核准，未落图。",techs:[{t:15,s:"待对接"},{t:14,s:"待对接"}]},
+ {id:"P16",name:"巫山 · 脆李智能分选与品牌营销",loc:"重庆市巫山县",city:"重庆市",lat:null,lng:null,scene:5,status:"试点实施",progress:55,fund:"东西部协作资金（乡村振兴局）",lead:"巫山县果品运营主体",start:"2026 年 3 月立项",next:"分选线旺季满负荷验证与点位坐标核准",desc:"脆李季短量大，智能分选线已签约进场，同步做品牌溯源与电商物流算法优化。点位待核准，未落图。",techs:[{t:7,s:"已签约"},{t:21,s:"对接中"},{t:23,s:"对接中"}]}
 ];
 var plotted=PROJECTS.filter(function(p){return typeof p.lat==="number"&&typeof p.lng==="number";});
 plotted.forEach(function(p,i){p.pinNo=i+1;});
@@ -970,7 +977,7 @@ function cpFiltered(){
     return true;
   });
 }
-var DOCK_CATS=[["已交付","#1a7f4b"],["已签约","#0e7c86"],["对接中","#b26a00"],["待对接","#94a3b8"]];
+var DOCK_CATS=[["已交付","#1e9e5a"],["已签约","#0e7c86"],["对接中","#c07f14"],["待对接","#94a3b8"]];
 function cpDonutSVG(counts,total){
   var R=56,C=2*Math.PI*R,off=0,segs="";
   counts.forEach(function(c,i){
@@ -1057,6 +1064,7 @@ function renderCockpit(){
   CP_LAST_LIST=list;
   /* 联动一致性：筛选变化后，下钻省份 / 选中项目 / 高亮城市若已不在当前范围内，自动清除 */
   if(cpDrill && !list.some(function(p){return cpProvince(p)===cpDrill;})){ cpDrill=null; cpVB=null; cpCityHi=null; }
+  if(cpCityHi && !list.some(function(p){return cpPrefOf(p)===cpCityHi;})) cpCityHi=null;
   if(cpSel && !list.some(function(p){return p.id===cpSel;})) cpSel=null;
   renderCpViz(list);
   cpRenderDetail();
@@ -1079,12 +1087,14 @@ var CP_GEO=[{"n": "北京", "d": "M477.5 178.9L479.2 178.0L473.6 177.4L471.0 174
 var CP_SCS_D="M605.5 445.5L605.5 445.5ZM611.1 425.6L611.7 424.8L611.1 425.6ZM604.4 445.7L604.4 445.7ZM601.6 383.5L602.1 383.5L601.6 383.5ZM634.7 392.4L635.3 392.8L634.7 392.4ZM605.7 445.2L605.7 445.2ZM603.0 387.7L603.4 387.4L603.0 387.7ZM602.5 387.4L602.1 387.8L602.5 387.4ZM614.5 428.0L617.0 427.9L617.9 426.4L614.5 428.0ZM614.9 422.1L615.2 422.5L614.9 422.1ZM614.8 422.2L614.8 422.2ZM604.3 387.1L604.8 387.0L604.3 387.1ZM603.0 386.5L603.0 386.5ZM605.5 422.1L605.5 422.1ZM613.9 429.1L613.9 429.1ZM616.0 422.6L616.0 422.6ZM605.6 383.9L605.6 383.9ZM618.7 415.2L618.7 415.2ZM624.7 418.1L625.2 417.8L624.7 418.1ZM618.3 416.9L618.3 416.9ZM613.8 427.9L613.8 427.9ZM591.0 429.3L593.5 428.4L592.0 428.2L591.0 429.3ZM627.0 422.0L627.0 422.0ZM606.9 388.6L607.6 388.4L606.9 388.6ZM607.2 422.2L607.8 422.3L607.2 422.2ZM617.5 412.9L618.1 412.5L617.5 412.9ZM606.6 387.2L607.2 387.1L606.6 387.2ZM628.2 414.9L629.0 415.2L628.2 414.9ZM606.2 384.3L606.2 384.3ZM601.8 386.5L601.8 386.5ZM623.0 417.3L623.0 417.3ZM618.6 425.2L618.6 425.2ZM617.7 425.6L618.3 425.5L617.7 425.6ZM621.2 424.4L622.0 424.5L621.2 424.4ZM614.4 426.2L614.4 426.2ZM622.6 419.6L622.6 419.6ZM628.0 420.7L628.0 420.7ZM613.1 421.6L613.6 421.5L613.1 421.6ZM618.7 412.1L619.2 411.6L618.7 412.1ZM618.3 410.1L618.3 410.1ZM619.8 412.7L619.8 412.7ZM602.1 386.4L602.1 386.4ZM614.7 422.1L614.7 422.1ZM593.5 426.9L594.2 426.4L593.5 426.9ZM629.5 409.7L629.5 409.7ZM602.8 385.8L602.8 385.8ZM607.1 386.4L607.5 386.1L607.1 386.4ZM603.1 388.3L603.1 388.3ZM614.2 416.7L614.3 416.2L614.2 416.7ZM619.2 425.4L619.2 425.4ZM628.6 418.0L628.6 418.0ZM621.8 415.9L621.8 415.9ZM630.0 414.5L630.0 414.5ZM618.7 387.8L619.3 387.7L618.7 387.8ZM625.5 420.0L625.5 420.0ZM613.2 420.4L613.2 420.4ZM618.5 428.1L618.5 428.1ZM617.6 413.4L617.6 413.4ZM635.0 413.2L635.0 413.2ZM616.3 415.6L616.3 415.6ZM618.7 409.9L618.7 409.9ZM629.0 414.4L629.0 414.4ZM596.2 425.6L597.0 425.4L596.2 425.6ZM601.6 423.7L601.6 423.7ZM621.7 423.8L621.7 423.8ZM610.9 425.8L610.9 425.8ZM615.4 412.4L615.4 412.4ZM632.3 415.3L632.3 415.3ZM616.1 388.4L616.7 388.4L616.1 388.4ZM597.0 426.1L597.0 426.1ZM623.0 423.9L623.0 423.9ZM602.0 428.3L602.0 428.3ZM602.6 423.0L602.6 423.0ZM596.2 427.1L596.2 427.1ZM606.2 421.8L606.2 421.8ZM628.1 417.7L628.1 417.7ZM604.0 425.8L604.0 425.8ZM617.4 390.5L617.4 390.5ZM620.2 411.7L620.2 411.7ZM615.6 388.6L615.6 388.6ZM625.8 416.3L625.8 416.3ZM632.3 413.5L633.1 413.5L632.3 413.5ZM619.5 429.7L619.5 429.7ZM608.8 421.9L608.8 421.9ZM602.7 427.8L602.7 427.8ZM605.5 422.3L605.5 422.3ZM607.2 436.5L607.2 436.5ZM618.2 422.2L618.2 422.2ZM619.6 426.3L619.6 426.3ZM609.4 424.2L609.4 424.2ZM612.9 431.0L612.9 431.0ZM629.3 387.0L629.3 387.0ZM632.7 416.4L632.7 416.4ZM617.4 388.4L617.4 388.4ZM607.8 439.8L607.8 439.8ZM602.5 426.6L602.5 426.6ZM605.7 422.1L605.7 422.1ZM609.1 426.9L609.1 426.9ZM607.5 437.6L607.5 437.6ZM607.2 437.2L607.2 437.2ZM622.2 398.2L622.2 398.2ZM612.9 415.7L612.9 415.7ZM614.3 391.1L614.3 391.1ZM609.2 440.3L609.2 440.3ZM607.4 439.7L607.4 439.7ZM606.3 437.3L606.3 437.3ZM605.6 385.0L605.6 385.0ZM605.6 390.0L605.6 390.0ZM607.6 438.5L607.6 438.5ZM606.9 436.8L606.9 436.8ZM610.9 434.1L610.9 434.1ZM626.4 418.8L626.4 418.8ZM620.0 428.5L620.0 428.5ZM602.0 427.1L602.0 427.1ZM614.7 389.4L614.7 389.4ZM619.9 388.4L619.9 388.4ZM629.6 421.2L629.6 421.2ZM607.8 386.8L607.8 386.8ZM624.3 414.6L624.3 414.6ZM632.0 413.3L632.0 413.3ZM608.0 387.1L608.0 387.1ZM624.4 414.2L624.4 414.2ZM607.1 418.9L607.1 418.9ZM618.2 390.3L618.2 390.3ZM632.5 411.7L632.5 411.7ZM634.6 411.9L634.6 411.9ZM615.9 419.7L615.9 419.7ZM618.8 418.0L618.8 418.0ZM607.3 435.7L607.3 435.7ZM660.1 353.6L661.6 348.3L660.1 353.6ZM653.0 366.0L656.9 361.8L653.0 366.0ZM644.0 379.2L646.9 374.3L644.0 379.2ZM641.9 393.1L641.8 388.4L641.9 393.1ZM639.8 411.2L639.0 412.5L641.4 407.4L639.8 411.2ZM623.2 430.2L626.9 426.2L623.2 430.2ZM606.0 447.1L603.2 447.8L608.9 446.1L606.0 447.1ZM584.6 435.1L584.4 430.5L584.6 435.1ZM594.5 410.4L594.1 411.0L595.2 409.2L595.5 406.2L594.5 410.4ZM592.9 392.2L590.1 387.6L592.9 392.2Z";
 var CP_INSET={x:562,y:344,w:106,h:108};
 var CP_FILL_SCALE=["#a9c6ee","#7ea9e4","#4f86d4","#2f6fd0","#1d5fd6"];
+var CP_FILL_SCALE_DARK=["#274f86","#2f66ad","#3a7cc4","#4d8fd8","#67a5ea"];
+function cpFillScale(){return document.documentElement.getAttribute("data-theme")==="dark"?CP_FILL_SCALE_DARK:CP_FILL_SCALE;}
 var CP_PILL_OFF={"新疆":[-52,-64],"西藏":[-64,-16],"云南":[-76,-58],"广西":[-100,44],"广东":[20,-60],"江西":[18,-54],"黑龙江":[12,-58],"重庆":[24,-50]};
 var CP_SMALL_LBL={"北京":1,"天津":1,"上海":1,"香港":1,"澳门":1,"海南":1,"台湾":1,"宁夏":1};
 function cpPal(){
   var dark=document.documentElement.getAttribute("data-theme")==="dark";
-  if(dark) return {lightA:"#26382c",lightB:"#213228",stroke:"#55755f",label:"#a9c4ae",halo:"#101713",city:"#ddefdd",pillFill:"#1c2a21",pillStroke:"#55755f",pillInk:"#e9f2ea",pillSub:"#b3c8b8",insetBg:"#182720",note:"#75907c",track:"#2a3d31",aggLabel:"#cfe7d2",islandFill:"#3d6b4a",islandStroke:"#9fd0ab",scsLine:"#e08a6d"};
-  return {lightA:"#dce8f4",lightB:"#c9daf0",stroke:"#7e97b8",label:"#546e92",halo:"#eef6ee",city:"#33415c",pillFill:"#ffffff",pillStroke:"#c3d2e8",pillInk:"#16233a",pillSub:"#43536e",insetBg:"#ffffff",note:"#8494b0",track:"#e3eaf3",aggLabel:"#33507a",islandFill:"#9dbfe8",islandStroke:"#3f6391",scsLine:"#b04a32"};
+  if(dark) return {lightA:"#1b2a44",lightB:"#16233a",stroke:"#46638c",label:"#8fa8c8",halo:"#0b1524",city:"#d7e6fa",pillFill:"#1a2947",pillStroke:"#3d5a8a",pillInk:"#eaf2fd",pillSub:"#a9bedd",insetBg:"#14223c",note:"#7188ab",track:"#2a3d5f",aggLabel:"#cfe1fa",islandFill:"#2f5d96",islandStroke:"#7aa7dd",scsLine:"#e08a6d",sel:"#9dc2ff",acc:"#6ea8ff"};
+  return {lightA:"#e0eaf4",lightB:"#cfdeed",stroke:"#8298b5",label:"#546e92",halo:"#f2f7fc",city:"#33415c",pillFill:"#ffffff",pillStroke:"#c3d2e8",pillInk:"#16233a",pillSub:"#43536e",insetBg:"#ffffff",note:"#8494b0",track:"#e3eaf3",aggLabel:"#33507a",islandFill:"#9dbfe8",islandStroke:"#3f6391",scsLine:"#b04a32",sel:"#1449a8",acc:"#1d5fd6"};
 }
 /* ===== 地图交互状态：缩放视图框 / 省份下钻 / 选中项目 / 城市高亮（本次打开期间的内存状态） ===== */
 var CP_FOCUS=[], CP_KEYSET={}, CP_LAST_LIST=[];
@@ -1109,6 +1119,9 @@ function cpZoomBy(f,cx,cy){
   cpClampVB(vb);
   cpVB=(vb.w>=CP_W-1&&!cpDrill)?null:vb;
   cpApplyVB();
+  /* 缩放跨过小卡显示阈值时重绘一次，让省份小卡随缩放收起 / 恢复 */
+  var wantPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.72);
+  if(wantPills!==CP_PILLS_SHOWN){ renderCpViz(CP_LAST_LIST); }
 }
 function cpClampVB(vb){
   vb.x=Math.max(-60,Math.min(CP_W-vb.w+60,vb.x));
@@ -1131,6 +1144,11 @@ function cpProvBBox(name){
   return null;
 }
 function cpCityOf(p){ return p.name.split(" · ")[0]; }
+/* 下钻层级口径：统一按地级（州 / 市 / 地区）归组，县级项目归入所属地级，
+   如建水县项目归「红河州」，不与州级并列。city 字段缺失时回退到项目名前缀。 */
+function cpPrefOf(p){ return p.city||p.name.split(" · ")[0]; }
+var CP_PT_POS={}; /* 每次渲染时各项目圆点的真实坐标（含簇内错位），点选定位一律以此为准 */
+var CP_PILLS_SHOWN=true; /* 省份小卡当前是否在图上（与缩放阈值联动） */
 function cpDrillTo(prov){
   cpDrill=prov; cpCityHi=null; cpSel=null;
   var bb=cpProvBBox(prov); if(bb) cpVB=bb;
@@ -1144,22 +1162,32 @@ function cpExitDrill(){
   renderCockpit();
 }
 function cpSelectProject(id,focusView){
-  cpSel=(cpSel===id&&!focusView)?null:id;
+  /* 带定位的点选（地图圆点 / 列表行）每次都稳定执行：不做开关切换，
+     一律按圆点在图上的真实渲染坐标（含簇内错位）居中到固定窗口，
+     避免出现「第一次能放大、第二次不放大」或中心偏离圆点。 */
+  if(cpSel===id&&!focusView){ cpSel=null; }
+  else{ cpSel=id; }
   if(cpSel&&focusView){
-    var p=null; PROJECTS.forEach(function(q){ if(q.id===cpSel) p=q; });
-    if(p){
-      var lng=p.lng,lat=p.lat;
-      if(typeof lng!=="number"||typeof lat!=="number"){ var fb=CP_FALLBACK_POS[p.id]||[108,28]; lng=fb[0]; lat=fb[1]; }
-      var xy=cpXY(lng,lat), w=250, h=w*CP_H/CP_W;
-      cpVB={x:xy[0]-w/2,y:xy[1]-h/2,w:w,h:h}; cpClampVB(cpVB);
+    var pos=CP_PT_POS[cpSel];
+    if(!pos){
+      var p=null; PROJECTS.forEach(function(q){ if(q.id===cpSel) p=q; });
+      if(p){
+        var lng=p.lng,lat=p.lat;
+        if(typeof lng!=="number"||typeof lat!=="number"){ var fb=CP_FALLBACK_POS[p.id]||[108,28]; lng=fb[0]; lat=fb[1]; }
+        var xy=cpXY(lng,lat); pos={x:xy[0],y:xy[1]};
+      }
+    }
+    if(pos){
+      var w=240, h=w*CP_H/CP_W;
+      cpVB={x:pos.x-w/2,y:pos.y-h/2,w:w,h:h}; cpClampVB(cpVB);
     }
   }
   renderCpViz(CP_LAST_LIST);
   cpRenderDetail();
 }
 /* 地图下方详情面板：未选中时列重点项目（★），下钻时列该省项目，选中时显示项目全量详情 */
-function cpProjRow(p){
-  return '<button type="button" class="cp-prow" data-sel="'+p.id+'">'
+function cpProjRow(p,on){
+  return '<button type="button" class="cp-prow'+(on?" on":"")+'" data-sel="'+p.id+'">'
     +(CP_KEYSET[p.id]?'<span class="star">★</span>':'')
     +'<i class="sdot" style="background:'+pStatusColor(p.status)+'"></i>'
     +'<span><b>'+esc(p.name)+'</b> <span style="color:var(--ink3)">'+p.status+' · '+esc(sceneShort(p.scene))+'</span></span>'
@@ -1190,12 +1218,14 @@ function cpRenderDetail(){
   }
   if(cpDrill){
     var pl=list.filter(function(p){return cpProvince(p)===cpDrill;});
+    var cityMode=!!cpCityHi;
+    if(cityMode) pl=pl.filter(function(p){return cpPrefOf(p)===cpCityHi;});
     var avg=pl.length?Math.round(pl.reduce(function(a,p){return a+p.progress;},0)/pl.length):0;
-    box.innerHTML='<div class="dh"><h4>'+cpDrill+' · 下钻视图</h4><span class="m" style="margin:0">'+pl.length+' 个项目 · 平均进度 '+avg+'% · 点项目行看详情，点「全国」返回</span></div>'
-      +(pl.length?pl.map(cpProjRow).join(""):'<p class="m">当前筛选下该省暂无项目。</p>');
+    box.innerHTML='<div class="dh"><h4>'+(cityMode?(cpDrill+" · "+esc(cpCityHi)):cpDrill+" · 下钻视图")+'</h4><span class="m" style="margin:0">'+pl.length+' 个项目 · 平均进度 '+avg+'% · '+(cityMode?'已按城市过滤并高亮，点城市按钮可取消':'点项目行看详情，点「全国」返回')+'</span></div>'
+      +(pl.length?pl.map(function(p){return cpProjRow(p,cityMode);}).join(""):'<p class="m">当前筛选下该城市暂无项目。</p>');
   } else if(CP_FOCUS.length){
     box.innerHTML='<div class="dh"><h4>重点项目 · 在地图上看</h4><span class="m" style="margin:0">按阶段与进度取前 '+CP_FOCUS.length+' 个，已在地图上以 ★ 标出 · 点行或点地图圆点联动定位</span></div>'
-      +CP_FOCUS.map(cpProjRow).join("");
+      +CP_FOCUS.map(function(p){return cpProjRow(p,false);}).join("");
   } else {
     box.innerHTML='<p class="m">当前筛选组合下暂无在途项目，点「重置」查看全部。</p>';
   }
@@ -1212,7 +1242,7 @@ function cpRenderMapChrome(){
   var cities={};
   (CP_LAST_LIST||[]).forEach(function(p){
     if(cpProvince(p)!==cpDrill) return;
-    var c=cpCityOf(p); cities[c]=cities[c]||0; cities[c]++;
+    var c=cpPrefOf(p); cities[c]=cities[c]||0; cities[c]++;
   });
   var keys=Object.keys(cities);
   if(keys.length<2){ bar.className="cp-citybar"; bar.innerHTML=""; return; }
@@ -1224,6 +1254,18 @@ function cpRenderMapChrome(){
     b.addEventListener("click",function(){
       var c=b.getAttribute("data-city");
       cpCityHi=(cpCityHi===c)?null:c;
+      cpSel=null;
+      if(cpCityHi){
+        /* 选中城市：地图居中到该市项目簇，列表同步过滤高亮 */
+        var sx=0,sy=0,nn=0;
+        (CP_LAST_LIST||[]).forEach(function(p){
+          if(cpProvince(p)!==cpDrill||cpPrefOf(p)!==cpCityHi) return;
+          var pos=CP_PT_POS[p.id]; if(pos){ sx+=pos.x; sy+=pos.y; nn++; }
+        });
+        if(nn){ var w=250,h=w*CP_H/CP_W; cpVB={x:sx/nn-w/2,y:sy/nn-h/2,w:w,h:h}; cpClampVB(cpVB); }
+      } else if(cpDrill){
+        var bb=cpProvBBox(cpDrill); if(bb) cpVB=bb;
+      }
       renderCpViz(CP_LAST_LIST); cpRenderDetail(); cpRenderMapChrome();
     });
   });
@@ -1247,7 +1289,7 @@ function renderCpViz(list){
   CP_GEO.forEach(function(pv,i){
     var a=agg[pv.n];
     var isl=(pv.n==="台湾"||pv.n==="海南");
-    var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:(isl?pal.islandFill:(i%2?pal.lightA:pal.lightB));
+    var fill=a?cpFillScale()[Math.min(a.n,5)-1]:(isl?pal.islandFill:(i%2?pal.lightA:pal.lightB));
     var stk=a?"#ffffff":(isl?pal.islandStroke:pal.stroke);
     var sw=a?"1.1":(isl?"1.4":"0.7");
     var dim=(cpDrill&&pv.n!==cpDrill&&!a)?' opacity="0.45"':'';
@@ -1284,11 +1326,12 @@ function renderCpViz(list){
     if(p.id==="P05"){jx=-13;} if(p.id==="P06"){jx=13;jy=13;}
     return {p:p,x:Math.max(24,Math.min(W-24,xy[0]+jx)),y:Math.max(20,Math.min(H-16,xy[1]+jy))};
   });
+  CP_PT_POS={}; pts.forEach(function(pt){ CP_PT_POS[pt.p.id]={x:pt.x,y:pt.y}; });
   /* 枢纽飞线：北京技术输出（蓝）+ 深圳结算连接（橙虚线） */
   var bj=cpXY(116.4,39.9), sz=cpXY(114.05,22.55), cd=cpXY(104.07,30.67);
   pts.forEach(function(pt){
     var mx1=(bj[0]+pt.x)/2, my1=Math.min(bj[1],pt.y)-26;
-    s+='<path d="M'+bj[0].toFixed(0)+' '+bj[1].toFixed(0)+' Q'+mx1.toFixed(0)+' '+my1.toFixed(0)+' '+pt.x.toFixed(0)+' '+pt.y.toFixed(0)+'" fill="none" stroke="#1d5fd6" stroke-width="1.1" stroke-opacity="0.20"/>';
+    s+='<path d="M'+bj[0].toFixed(0)+' '+bj[1].toFixed(0)+' Q'+mx1.toFixed(0)+' '+my1.toFixed(0)+' '+pt.x.toFixed(0)+' '+pt.y.toFixed(0)+'" fill="none" stroke="'+pal.acc+'" stroke-width="1.1" stroke-opacity="0.22"/>';
     var mx2=(sz[0]+pt.x)/2, my2=Math.max(sz[1],pt.y)+20;
     s+='<path d="M'+sz[0].toFixed(0)+' '+sz[1].toFixed(0)+' Q'+mx2.toFixed(0)+' '+my2.toFixed(0)+' '+pt.x.toFixed(0)+' '+pt.y.toFixed(0)+'" fill="none" stroke="#d97706" stroke-width="1" stroke-opacity="0.20" stroke-dasharray="4 4"/>';
   });
@@ -1304,9 +1347,9 @@ function renderCpViz(list){
     var col=pStatusColor(pt.p.status);
     var short=cpCityOf(pt.p);
     var isKey=!!CP_KEYSET[pt.p.id], isSel=(cpSel===pt.p.id);
-    var dim=(cpCityHi&&cpCityOf(pt.p)!==cpCityHi)?' opacity="0.30"':'';
+    var dim=(cpCityHi&&cpPrefOf(pt.p)!==cpCityHi)?' opacity="0.30"':'';
     if(pt.p.status==="运营中") s+='<circle class="cp-pulse-ring" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="12" fill="none" stroke="'+col+'" stroke-width="2"'+dim+'/>';
-    if(isSel) s+='<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="17" fill="none" stroke="#1449a8" stroke-width="2.6"'+dim+'/>';
+    if(isSel) s+='<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="17" fill="none" stroke="'+pal.sel+'" stroke-width="2.6"'+dim+'/>';
     s+='<g class="cp-viz-pt" data-pid="'+pt.p.id+'"'+dim+'><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%（点击看详情）</title>'
       +'<circle class="core" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="'+(isKey?13:11.5)+'" fill="'+col+'" stroke="'+(isKey?"#e8a33d":"#fff")+'" stroke-width="'+(isKey?3:2.5)+'"/>'
       +'<text x="'+pt.x.toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">'+pt.p.progress+'</text>'
@@ -1316,9 +1359,13 @@ function renderCpViz(list){
     s+='<text x="'+(rightSide?pt.x-16:pt.x+16).toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="10" font-weight="600" fill="'+pal.city+'" text-anchor="'+(rightSide?"end":"start")+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px"'+dim+'>'+esc(short)+'</text>';
   });
   if(!pts.length) s+='<text x="340" y="225" font-size="14" fill="'+pal.label+'" text-anchor="middle">当前筛选下暂无项目落点</text>';
-  /* 省份数据小卡（项目数 / 均进度，随筛选联动，点击下钻） */
+  /* 省份数据小卡（项目数 / 均进度，随筛选联动，点击下钻）：
+     仅在全国总览态显示；已下钻、已选中项目或放大超过阈值时收起，
+     避免小卡压住圆点与地名标签（省份信息改由详情面板与下钻条承载） */
+  var showPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.72);
+  CP_PILLS_SHOWN=showPills;
   Object.keys(agg).forEach(function(r){
-    var a=agg[r]; if(!a) return;
+    var a=agg[r]; if(!a||!showPills) return;
     var avg=Math.round(a.prog/a.n);
     var xy=cpXY(a.lng/a.n,a.lat/a.n);
     var off=CP_PILL_OFF[r]||[-48,-58];
@@ -1326,7 +1373,7 @@ function renderCpViz(list){
     s+='<g class="cp-pill" data-prov="'+r+'" filter="url(#cpPillSh)"><title>'+r+' · '+a.n+' 个项目 · 点击下钻到城市</title><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
       +'<text x="'+(px+10).toFixed(0)+'" y="'+(py+16).toFixed(0)+'" font-size="12" font-weight="700" fill="'+pal.pillInk+'">'+r+' · '+a.n+' 个项目</text>'
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="52" height="5" rx="2.5" fill="'+pal.track+'"/>'
-      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="#1d5fd6"/>'
+      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="'+pal.acc+'"/>'
       +'<text x="'+(px+67).toFixed(0)+'" y="'+(py+29).toFixed(0)+'" font-size="10.5" font-weight="700" fill="'+pal.pillSub+'">'+avg+'%</text></g>';
   });
   s+='<text x="10" y="'+(H-8)+'" font-size="10" fill="'+pal.note+'">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数 · ★ = 重点项目</text>';
@@ -1346,7 +1393,7 @@ function renderCpViz(list){
   box.querySelectorAll(".cp-viz-pt").forEach(function(elm){
     elm.addEventListener("click",function(ev){
       ev.stopPropagation();
-      cpSelectProject(elm.getAttribute("data-pid"),false);
+      cpSelectProject(elm.getAttribute("data-pid"),true);
     });
   });
   if(svg){
