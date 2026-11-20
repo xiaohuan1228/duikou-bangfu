@@ -324,6 +324,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-citybar button b{color:var(--blue)}
 .cp-citybar button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .cp-citybar button[aria-pressed="true"] b{color:#fff}
+/* 城市高亮态：未选中的城市按钮弱化，选中城市保持实色 */
+.cp-citybar.has-hi button:not([aria-pressed="true"]){opacity:.5}
+.cp-pt{cursor:pointer}
 /* 右栏重点项目列表区（替代原右下地区排行）：固定列表不切详情，点列表项与地图联动定位 + 悬浮框 */
 .cp-detail{margin-top:8px;border:1px solid var(--blue-line);background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(22,45,90,.07)}
 /* 重点项目面板移至右栏后：右栏本身已是卡片，面板去掉嵌套边框 / 阴影，改以分隔线衔接，全屏时随右栏滚动完整呈现 */
@@ -1223,6 +1226,7 @@ function cpCityOf(p){ return p.name.split(" · ")[0]; }
    如建水县项目归「红河州」，不与州级并列。city 字段缺失时回退到项目名前缀。 */
 function cpPrefOf(p){ return p.city||p.name.split(" · ")[0]; }
 var CP_PT_POS={}; /* 每次渲染时各项目圆点的真实坐标（含簇内错位），点选定位一律以此为准 */
+var CP_LBL_BOX={}; /* 每次渲染时各城市标签的落位框（地图坐标，未反向缩放前），点选几何命中用 */
 var CP_PILLS_SHOWN=true; /* 省份小卡当前是否在图上（与缩放阈值联动） */
 function cpDrillTo(prov){
   cpDrill=prov; cpCityHi=null; cpSel=null;
@@ -1260,6 +1264,10 @@ function cpProjRow(p,on){
    详情不在右栏展示，由贴着点位的地图悬浮框弹出呈现（cpRenderPopup） */
 function cpFocusFromList(id){
   cpSel=id;
+  /* 若正处城市高亮过滤中、而点选的是别的城市的项目，先解除城市过滤，
+     否则该点已被过滤出图，悬浮框会无点可贴 */
+  var selP=null; PROJECTS.forEach(function(q){ if(q.id===id) selP=q; });
+  if(cpCityHi&&selP&&cpPrefOf(selP)!==cpCityHi) cpCityHi=null;
   var pos=CP_PT_POS[id];
   if(pos&&cpVB){
     var inside=pos.x>=cpVB.x&&pos.x<=cpVB.x+cpVB.w&&pos.y>=cpVB.y&&pos.y<=cpVB.y+cpVB.h;
@@ -1355,7 +1363,7 @@ function cpRenderMapChrome(){
   });
   var keys=Object.keys(cities);
   if(keys.length<2){ bar.className="cp-citybar"; bar.innerHTML=""; return; }
-  bar.className="cp-citybar on";
+  bar.className="cp-citybar on"+(cpCityHi?" has-hi":"");
   bar.innerHTML=keys.map(function(c){
     return '<button type="button" data-city="'+esc(c)+'" aria-pressed="'+(cpCityHi===c?"true":"false")+'">'+esc(c)+' <b>'+cities[c]+' 个项目</b></button>';
   }).join("");
@@ -1364,8 +1372,9 @@ function cpRenderMapChrome(){
       var c=b.getAttribute("data-city");
       cpCityHi=(cpCityHi===c)?null:c;
       cpSel=null;
-      /* 点城市只做过滤 / 高亮（该市圆点保持亮、其余变淡，右栏列表同步过滤），
-         地图保持当前缩放级别与视窗不变，不自动放大定位、取消高亮也不跳回省份框 */
+      /* 点城市：高亮该城市（按钮实色、其余按钮弱化），地图只保留该城市的项目点，
+         其余城市的项目点过滤掉不显示；地图保持当前缩放级别与视窗不变，不自动放大，
+         取消高亮恢复全部点、也不跳回省份框。右栏固定重点项目列表不受城市过滤影响 */
       renderCpViz(CP_LAST_LIST); cpRenderDetail(); cpRenderMapChrome();
     });
   });
@@ -1503,6 +1512,10 @@ function renderCpViz(list){
       lblPlace[pt.p.id]=best; placed.push(best.box); pt.lblBox=best.box;
     });
   })();
+  CP_LBL_BOX={}; Object.keys(lblPlace).forEach(function(id){ CP_LBL_BOX[id]=lblPlace[id].box; });
+  /* 城市高亮（下钻后点城市）：地图只渲染该城市的项目点，其余城市的项目点过滤掉、不显示（不是变淡）；
+     避让坐标 CP_PT_POS 仍按全量计算，切换 / 取消城市时各点位置不跳动；点城市不动 viewBox，地图不缩放 */
+  var shownPts=cpCityHi?pts.filter(function(pt){ return cpPrefOf(pt.p)===cpCityHi; }):pts;
   /* 省份小卡避让定位：旧逻辑是每省一个写死偏移，云南 / 广西 / 广东的小卡正落在圆点簇与标签上。
      现在围绕省份质心试 13 个候选位（原偏移优先），按「压圆点 / 压标签 / 压枢纽 / 压南海附图 / 压已放小卡 / 出界」
      打分取最空的一处；且小卡改为在圆点与标签之前拼入（绘制在下层），万一仍有交叠，圆点和文字永远在上层可见 */
@@ -1543,7 +1556,7 @@ function renderCpViz(list){
   s+=pillStr+provLblStr;
   /* 枢纽飞线：北京技术输出（蓝）+ 深圳结算连接（橙虚线） */
   var bj=cpXY(116.4,39.9), sz=cpXY(114.05,22.55), cd=cpXY(104.07,30.67);
-  pts.forEach(function(pt){
+  shownPts.forEach(function(pt){
     var mx1=(bj[0]+pt.x)/2, my1=Math.min(bj[1],pt.y)-26;
     s+='<path d="M'+bj[0].toFixed(0)+' '+bj[1].toFixed(0)+' Q'+mx1.toFixed(0)+' '+my1.toFixed(0)+' '+pt.x.toFixed(0)+' '+pt.y.toFixed(0)+'" fill="none" stroke="'+pal.acc+'" stroke-width="1.1" stroke-opacity="0.22" vector-effect="non-scaling-stroke"/>';
     var mx2=(sz[0]+pt.x)/2, my2=Math.max(sz[1],pt.y)+20;
@@ -1558,23 +1571,23 @@ function renderCpViz(list){
   });
   /* 锚点引线：被避让推离真实落位较远（>13）的点，在真实投影点留小圆点 + 虚线引线连到圆点，
      既疏开拥挤、又不丢地理真实性（引线画在地理坐标层，不随反向缩放变形） */
-  pts.forEach(function(pt){
+  shownPts.forEach(function(pt){
     var dx=pt.x-pt.ax, dy=pt.y-pt.ay;
     if(Math.sqrt(dx*dx+dy*dy)<=13) return;
     var col=pStatusColor(pt.p.status);
     s+='<g opacity="0.5"><line x1="'+pt.ax.toFixed(0)+'" y1="'+pt.ay.toFixed(0)+'" x2="'+pt.x.toFixed(0)+'" y2="'+pt.y.toFixed(0)+'" stroke="'+col+'" stroke-width="1" stroke-dasharray="2 2.4"/><circle cx="'+pt.ax.toFixed(0)+'" cy="'+pt.ay.toFixed(0)+'" r="2.2" fill="'+col+'"/></g>';
   });
-  /* 项目点 + 城市名：重点项目带 ★ 金标，选中点带高亮环，下钻后非高亮城市的点变淡。
-     每个点（脉冲环 / 选中环 / 圆点 / ★ / 标签）整体包进 .cp-pt 锚点组：缩放 / 下钻时由 cpApplyVB
-     绕圆心反向缩放，圆点大小与标签字号在屏幕上恒定、只随位置移动——放大后圆心距拉开而圆不变大，密簇自然疏开。
+  /* 项目点 + 城市名：重点项目带 ★ 金标，选中点带高亮环；城市高亮时只渲染 shownPts（该城市的点），
+     其余城市的点根本不进 SVG。每个点（脉冲环 / 选中环 / 圆点 / ★ / 标签）整体包进 .cp-pt 锚点组：
+     缩放 / 下钻时由 cpApplyVB 绕圆心反向缩放，圆点大小与标签字号在屏幕上恒定、只随位置移动——
+     放大后圆心距拉开而圆不变大，密簇自然疏开。
      圆点半径同时略收（普通 11.5→10、重点 13→11.5），标签位置用前面四向打分择位的结果（lblPlace），不再左右二选一 */
-  pts.forEach(function(pt){
+  shownPts.forEach(function(pt){
     var col=pStatusColor(pt.p.status);
     var short=cpCityOf(pt.p);
     var isKey=!!CP_KEYSET[pt.p.id], isSel=(cpSel===pt.p.id);
-    var dim=(cpCityHi&&cpPrefOf(pt.p)!==cpCityHi)?' opacity="0.30"':'';
     var lp=lblPlace[pt.p.id];
-    s+='<g class="cp-pt" data-ax="'+pt.x.toFixed(0)+'" data-ay="'+pt.y.toFixed(0)+'"'+dim+'>'
+    s+='<g class="cp-pt" data-ax="'+pt.x.toFixed(0)+'" data-ay="'+pt.y.toFixed(0)+'">'
       +(pt.p.status==="运营中"?'<circle class="cp-pulse-ring" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="11" fill="none" stroke="'+col+'" stroke-width="2"/>':'')
       +(isSel?'<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="15" fill="none" stroke="'+pal.sel+'" stroke-width="2.6"/>':'')
       +'<g class="cp-viz-pt" data-pid="'+pt.p.id+'"><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%（点击看详情）</title>'
@@ -1606,6 +1619,15 @@ function renderCpViz(list){
       cpSelectProject(elm.getAttribute("data-pid"),true);
     });
   });
+  /* 点组整体也可点：脉冲环 / ★ 金标在 .cp-viz-pt 之外，点到它们同样是点这个项目——
+     选中看悬浮框详情，绝不落到下方省份面上去触发下钻放大（圆点圆心由上面的监听处理，不会重复触发） */
+  box.querySelectorAll(".cp-pt").forEach(function(elm){
+    elm.addEventListener("click",function(ev){
+      ev.stopPropagation();
+      var inner=elm.querySelector(".cp-viz-pt");
+      if(inner) cpSelectProject(inner.getAttribute("data-pid"));
+    });
+  });
   if(svg){
     svg.addEventListener("wheel",function(e){
       e.preventDefault();
@@ -1617,9 +1639,32 @@ function renderCpViz(list){
     },{passive:false});
     var drag=null;
     svg.addEventListener("pointerdown",function(e){
-      if(e.target.closest(".cp-viz-pt,.cp-pill")) return;
-      var provEl=e.target.closest?e.target.closest(".cp-prov-path"):null;
+      if(e.target.closest(".cp-viz-pt,.cp-pill,.cp-pt")) return;
       var rect=svg.getBoundingClientRect(); if(!rect.width) return;
+      /* 几何命中兜底：城市标签设了 pointer-events:none、圆点边缘也可能让落点穿透到省份面，
+         若不拦截，pointerup 会把「点项目」误判成「点省份」而下钻放大。按地图坐标判断落点是否
+         命中某个圆点（屏幕半径口径，随缩放反算）或其标签框：命中即记为待点选项目，
+         pointerup 未拖动时只选中弹悬浮框，不下钻、不缩放 */
+      var vb0=cpVB||cpFullVB();
+      var mx=vb0.x+(e.clientX-rect.left)/rect.width*vb0.w;
+      var my=vb0.y+(e.clientY-rect.top)/rect.height*vb0.h;
+      var kk=vb0.w/CP_W, hitId=null;
+      Object.keys(CP_PT_POS).forEach(function(id){
+        if(hitId) return;
+        var q=CP_PT_POS[id], dx=mx-q.x, dy=my-q.y;
+        if(Math.sqrt(dx*dx+dy*dy)<=18*kk+2){ hitId=id; return; }
+        var lb=CP_LBL_BOX[id];
+        if(lb){
+          var ex1=q.x+(lb.x1-q.x)*kk, ex2=q.x+(lb.x2-q.x)*kk, ey1=q.y+(lb.y1-q.y)*kk, ey2=q.y+(lb.y2-q.y)*kk;
+          if(mx>=ex1-2&&mx<=ex2+2&&my>=ey1-2&&my<=ey2+2) hitId=id;
+        }
+      });
+      if(hitId){
+        drag={x:e.clientX,y:e.clientY,moved:false,prov:null,vb:null,pointId:hitId,sx:1,sy:1};
+        if(svg.setPointerCapture) { try{ svg.setPointerCapture(e.pointerId); }catch(err){} }
+        return;
+      }
+      var provEl=e.target.closest?e.target.closest(".cp-prov-path"):null;
       drag={x:e.clientX,y:e.clientY,moved:false,prov:provEl?provEl.getAttribute("data-prov"):null,
             vb:cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:null,
             sx:(cpVB?cpVB.w:CP_W)/rect.width, sy:(cpVB?cpVB.h:CP_H)/rect.height};
@@ -1635,6 +1680,7 @@ function renderCpViz(list){
       cpClampVB(vb); cpContainPoints(vb); cpVB=vb; cpApplyVB();
     });
     var endDrag=function(e){
+      if(drag&&!drag.moved&&drag.pointId){ var pid=drag.pointId; drag=null; svg.classList.remove("cp-grabbing"); cpSelectProject(pid); return; }
       if(drag&&!drag.moved&&drag.prov&&drag.prov!==cpDrill){ var pv=drag.prov; drag=null; svg.classList.remove("cp-grabbing"); cpDrillTo(pv); return; }
       drag=null; svg.classList.remove("cp-grabbing");
     };
