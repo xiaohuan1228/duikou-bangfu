@@ -1590,11 +1590,15 @@ function renderCpViz(list){
     s+='<g class="cp-pt" data-ax="'+pt.x.toFixed(0)+'" data-ay="'+pt.y.toFixed(0)+'">'
       +(pt.p.status==="运营中"?'<circle class="cp-pulse-ring" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="11" fill="none" stroke="'+col+'" stroke-width="2"/>':'')
       +(isSel?'<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="15" fill="none" stroke="'+pal.sel+'" stroke-width="2.6"/>':'')
+      /* 城市高亮态：该城市的每个项目点再加一圈高亮环，与「只是剩下的点」区分开——
+         点本身就是被高亮的对象；已选中点已有选中环，不重复套环 */
+      +(cpCityHi&&!isSel?'<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="15.5" fill="none" stroke="'+pal.sel+'" stroke-width="2.2" stroke-opacity="0.9"/>':'')
       +'<g class="cp-viz-pt" data-pid="'+pt.p.id+'"><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%（点击看详情）</title>'
       +'<circle class="core" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="'+(isKey?11.5:10)+'" fill="'+col+'" stroke="'+(isKey?"#e8a33d":"#fff")+'" stroke-width="'+(isKey?2.6:2.2)+'"/>'
       +(isKey?'<text x="'+(pt.x+10).toFixed(0)+'" y="'+(pt.y-8).toFixed(0)+'" font-size="11" fill="#d97706" stroke="#fff" stroke-width="0.6" style="paint-order:stroke">★</text>':'')
       +'</g>'
-      +(lp?'<text class="cp-city-lbl" x="'+lp.tx.toFixed(0)+'" y="'+lp.ty.toFixed(0)+'" font-size="10" font-weight="600" fill="'+pal.city+'" text-anchor="'+lp.anchor+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px">'+esc(short)+'</text>':'')
+      /* 城市高亮态下该城市标签同步强调：强调色 + 加粗 + 略放大，与圆点高亮环成套 */
+      +(lp?'<text class="cp-city-lbl" x="'+lp.tx.toFixed(0)+'" y="'+lp.ty.toFixed(0)+'" font-size="'+(cpCityHi?11:10)+'" font-weight="'+(cpCityHi?800:600)+'" fill="'+(cpCityHi?pal.sel:pal.city)+'" text-anchor="'+lp.anchor+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px">'+esc(short)+'</text>':'')
       +'</g>';
   });
   if(!pts.length) s+='<text x="340" y="225" font-size="14" fill="'+pal.label+'" text-anchor="middle">当前筛选下暂无项目落点</text>';
@@ -1651,6 +1655,9 @@ function renderCpViz(list){
       var kk=vb0.w/CP_W, hitId=null;
       Object.keys(CP_PT_POS).forEach(function(id){
         if(hitId) return;
+        /* 城市高亮过滤中：被过滤掉的其他城市项目点不在图上，其原位置也不得命中——
+           否则点地图空白处会选中一个看不见的项目并弹出悬浮框，与过滤口径矛盾 */
+        if(cpCityHi){ var hp=null; PROJECTS.forEach(function(q){ if(q.id===id) hp=q; }); if(!hp||cpPrefOf(hp)!==cpCityHi) return; }
         var q=CP_PT_POS[id], dx=mx-q.x, dy=my-q.y;
         if(Math.sqrt(dx*dx+dy*dy)<=18*kk+2){ hitId=id; return; }
         var lb=CP_LBL_BOX[id];
