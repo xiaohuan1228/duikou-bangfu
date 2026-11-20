@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>对口帮扶应用 · 深圳农业科技与产业帮扶促进中心</title>
+<style>
+:root{
+  --blue:#1d5fd6; --blue-dark:#1449a8; --blue-soft:#eaf1fd; --blue-line:#c9dbf7;
+  --ink:#16233a; --ink2:#43536e; --ink3:#71809a;
+  --bg:#f4f6fa; --card:#ffffff; --line:#dde4ef;
+  --green:#1a7f4b; --green-soft:#e6f4ec;
+  --amber:#b26a00; --amber-soft:#fdf1de;
+  --red:#b3362b; --red-soft:#fbeae8;
+  --radius:10px;
+  --shadow:0 1px 3px rgba(22,45,90,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
+    --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0;
+    --bg:#0e1420; --card:#17202f; --line:#2a3648;
+    --green:#4cc07f; --green-soft:#173527;
+    --amber:#e0a44a; --amber-soft:#3a2c14;
+    --red:#e07a6e; --red-soft:#3a201c;
+    --shadow:0 1px 3px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;font-size:15px;line-height:1.65}
+button,[role="button"],select,input,textarea,summary{min-height:36px}
+a{color:var(--blue)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 64px}
+
+/* ---------- header ---------- */
+.topbar{background:var(--blue-dark);color:#fff}
+.topbar .wrap{padding-top:22px;padding-bottom:20px}
+.topbar h1{font-size:23px;margin:0 0 4px;font-weight:700;letter-spacing:.5px}
+.topbar .sub{font-size:13.5px;opacity:.88;margin:0}
+.topbar .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.topbar .meta span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:3px 12px;font-size:12.5px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:-2px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;color:var(--blue);line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--ink2)}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)} .topbar h1{font-size:19px}}
+
+/* ---------- nav tabs ---------- */
+.tabs{position:sticky;top:0;z-index:20;background:var(--bg);padding:14px 0 10px}
+.tabs-inner{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:8px 16px;font-size:14.5px;cursor:pointer;font-weight:600}
+.tab[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab:focus-visible,.btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+section.panel{display:none}
+section.panel.active{display:block}
+
+/* ---------- generic ---------- */
+h2.sec{font-size:19px;margin:26px 0 6px;display:flex;align-items:center;gap:10px}
+h2.sec::before{content:"";width:4px;height:20px;background:var(--blue);border-radius:2px}
+.lede{color:var(--ink2);margin:0 0 14px;max-width:860px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--ink2);font-size:14px}
+.tag{display:inline-block;font-size:12px;border-radius:999px;padding:1px 9px;margin:2px 4px 2px 0;background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line)}
+.tag.g{background:var(--green-soft);color:var(--green);border-color:transparent}
+.tag.a{background:var(--amber-soft);color:var(--amber);border-color:transparent}
+.tag.r{background:var(--red-soft);color:var(--red);border-color:transparent}
+.note{border:1px solid var(--amber);background:var(--amber-soft);border-radius:var(--radius);padding:12px 14px;font-size:13.5px;color:var(--ink)}
+.note b{color:var(--amber)}
+.small{font-size:12.5px;color:var(--ink3)}
+.btn{background:var(--blue);color:#fff;border:1px solid var(--blue);border-radius:8px;padding:8px 18px;font-size:14px;cursor:pointer;font-weight:600}
+.btn.ghost{background:var(--card);color:var(--blue)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+input[type="search"],input[type="text"],select,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14.5px;background:var(--card);color:var(--ink);font-family:inherit}
+label.fl{display:block;font-size:13px;color:var(--ink2);margin:10px 0 4px;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink2);font-size:13px;background:var(--blue-soft);font-weight:600}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* flow steps */
+.flow{display:flex;flex-wrap:wrap;gap:0;align-items:stretch}
+.fstep{flex:1 1 110px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;position:relative;margin:0 14px 10px 0}
+.fstep b{display:block;font-size:14px}
+.fstep span{font-size:12.5px;color:var(--ink2)}
+.fstep::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:700}
+.fstep:last-child::after{content:""}
+.fstep.hot{border-color:var(--blue);background:var(--blue-soft)}
+
+/* chips filter */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font-size:13.5px;cursor:pointer;color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* tech cards */
+.tech h3{font-size:15.5px}
+.tech .who{color:var(--blue);font-weight:700}
+.tech .uni{color:var(--ink3);font-size:13px}
+.tech p{margin-top:6px}
+.tech .point{margin-top:8px;font-size:13.5px;color:var(--ink);background:var(--blue-soft);border-radius:6px;padding:8px 10px}
+
+/* scene matcher */
+.scene-btn{text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;cursor:pointer;box-shadow:var(--shadow)}
+.scene-btn h3{margin:0 0 4px;font-size:15.5px;color:var(--ink)}
+.scene-btn p{margin:0;font-size:13.5px;color:var(--ink2)}
+.scene-btn[aria-pressed="true"]{border-color:var(--blue);box-shadow:0 0 0 2px var(--blue-line)}
+
+/* fund flow */
+.fundflow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}
+.fnode{background:var(--card);border:1px solid var(--blue-line);border-radius:8px;padding:10px 14px;font-size:14px;flex:1 1 150px}
+.fnode b{display:block;color:var(--blue)}
+.fnode span{font-size:12.5px;color:var(--ink2)}
+.farrow{color:var(--blue);font-weight:700;font-size:18px}
+.big{font-size:20px;color:var(--blue);font-weight:700}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.kv:last-child{border-bottom:none}
+.kv b{color:var(--ink);text-align:right}
+footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:var(--ink3);font-size:12.5px}
+.toast{background:var(--green-soft);border:1px solid var(--green);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:14px;margin-top:12px;display:none}
+.empty{color:var(--ink3);padding:20px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius)}
+@media(max-width:640px){
+  #countyTable thead{display:none}
+  #countyTable,#countyTable tbody,#countyTable tr,#countyTable td{display:block;width:100%}
+  #countyTable tr{border-bottom:2px solid var(--line);padding:8px 0}
+  #countyTable td{border-bottom:none;padding:3px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <h1>深圳农业科技与产业帮扶促进中心 · 对口帮扶工作平台</h1>
+    <p class="sub">服务政府的科技帮扶应用：把国家级高校技术，匹配到深圳对口帮扶的 9 省 106 县场景；把科技局、工信局、国资委与协作资金的流向，梳理到项目库一条线上。</p>
+    <div class="meta">
+      <span>平台主体：促进中心（拟挂牌于深农科创）</span>
+      <span>统筹指导：深圳市乡村振兴局</span>
+      <span>模式：1 + 3 + N</span>
+      <span>数据口径：截至 2026 年 11 月公开信息</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats" style="margin-top:16px">
+    <div class="stat"><b>9 省</b><span>对口帮扶覆盖省（区、市）</span></div>
+    <div class="stat"><b>106 县</b><span>对口帮扶县（市、区）；清单正文逐项具名 52 个单位，见「场景匹配」</span></div>
+    <div class="stat"><b>5 大环节</b><span>种—分—存—运—卖 技术链</span></div>
+    <div class="stat"><b>28 个团队</b><span>京蓉报告高校技术库（本期收录）</span></div>
+    <div class="stat"><b>7 大场景</b><span>产业帮扶应用场景分类</span></div>
+    <div class="stat"><b>4 条资金线</b><span>乡村振兴局 / 科技局 / 工信局 / 国资委</span></div>
+  </div>
+
+  <nav class="tabs" aria-label="功能模块">
+    <div class="tabs-inner" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-tab="overview">工作总览</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="tech">高校技术库</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="match">场景匹配 · 106 县</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="fund">经费流向</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="project">项目库与揭榜</button>
+    </div>
+  </nav>
+
+  <!-- ============ 总览 ============ -->
+  <section class="panel active" id="panel-overview" role="tabpanel">
+    <h2 class="sec">平台定位：市局的专业支撑，不是又一个申报窗口</h2>
+    <p class="lede">东西部协作产业帮扶的三个老问题——<b>不知道做什么、不知道找谁做、投下去运营不可持续</b>——对应促进中心的三项职能：产业研究与需求诊断回答“做什么”，技术库与资源对接回答“找谁做”，项目全周期运营与绩效机制回答“如何持续”。促进中心不直接花钱，它为市局的资金安排提供候选项目清单、项目建议方案和评审依据。</p>
+
+    <div class="grid g3">
+      <div class="card"><h3>1 个市级统筹机制</h3><p>市乡村振兴局定年度方向、管资金、组织评审、做绩效监督；促进中心做研究、诊断、筛选和论证，把“拍脑袋选项目”变成“按成熟度入库”。</p></div>
+      <div class="card"><h3>3 类责任主体协同</h3><p>市局（统筹决策）＋协作地区政府与区县平台（属地承接）＋深农科创及生态伙伴（科技运营赋能与价值转化），四方分工见下表。</p></div>
+      <div class="card"><h3>N 个因地制宜场景</h3><p>设施农业、良种良苗、智能农机、产地加工、冷链仓储、质量追溯、数字化运营七大场景，按县的资源禀赋和产业基础适配，不搞一刀切。</p></div>
+    </div>
+
+    <h2 class="sec">四类主体分工</h2>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th style="min-width:130px">主体</th><th>角色</th><th>核心职责</th></tr>
+      <tr><td><b>深圳市乡村振兴局</b></td><td>统筹引导与决策监督</td><td>确定支持方向、安排帮扶资金、协调协作机制、组织专家评审与绩效评价、推广成果。</td></tr>
+      <tr><td><b>协作地区政府及区县平台公司</b></td><td>属地承接</td><td>需求申报、落实土地设施与地方配套、群众组织、资产管理、属地监管、收益分配。</td></tr>
+      <tr><td><b>深农科创及有关平台（促进中心）</b></td><td>专业支撑与科技运营赋能</td><td>产业研究、需求诊断、项目策划、方案论证、技术集成、运营提升、资源链接、人才培养、模式输出。</td></tr>
+      <tr><td><b>市场渠道及生态伙伴</b></td><td>专业协同与价值转化</td><td>科研成果、智能装备、管控系统、融资保险、品牌渠道、加工流通，参与订单协同与收益转化。</td></tr>
+    </table>
+    </div>
+
+    <h2 class="sec">项目全周期闭环</h2>
+    <div class="flow" id="lifecycle"></div>
+    <p class="small">资金安排与项目成熟度、长期运营能力、绩效结果深度绑定：绩效决定续期，先行试点以完整生产周期检验成效，再滚动复制。</p>
+
+    <h2 class="sec">技术从哪里来：京蓉双核供给侧</h2>
+    <p class="lede">深农科创京蓉双核战略把供给侧组织成一条链：<b>北京拿技术</b>（8 所核心高校、国家级平台策源集成）→ <b>深圳拿结算</b>（总部集成封装为“农业科技工具箱”、标准与结算中枢）→ <b>成都拿数据</b>（西南场景验证与聚产）→ 输出到 9 省 106 县飞地。农产品流通被拆成“种得好、分得好、存得鲜、运得省、卖得清”五大环节，每一环节在「高校技术库」页签都有对应的国家队团队。</p>
+    <div class="grid g3">
+      <div class="card"><h3>北京 · 策源集成</h3><p>中国农大、北大、北交大、北京工商大学、北京物资学院、北京农学院、中国农科院等团队，按环节寻源匹配，封装为标准化工具箱。</p></div>
+      <div class="card"><h3>成都 · 场景验证</h3><p>丘陵山区典型县做本土化“试验＋打磨”：轻简农机、水肥一体化、绿色防控先跑通投资回报与成熟度，方案“不带病出门”。</p></div>
+      <div class="card"><h3>深圳 · 标准与市场</h3><p>“圳品”三轮标准（安全、品质、风味）与数字流通标准互认；深农交易底盘与湾区渠道负责去化，溢价在采收环节前置到地头。</p></div>
+    </div>
+
+    <h2 class="sec">已验证的落地样本（深农科创在营项目）</h2>
+    <div class="grid g3">
+      <div class="card"><h3>云南文山 · 天麻智能方舱</h3><p>智能方舱种植运营：环境控制＋智能体管理，把中药材种植从靠天吃饭变成可复制的工厂化生产。</p><span class="tag g">设施农业</span><span class="tag g">数字化运营</span></div>
+      <div class="card"><h3>新疆双河 · 10 万㎡智能温室</h3><p>串番茄智能温室种植运营：设施农业成套方案在边疆地区落地，验证工具箱的跨气候带适配能力。</p><span class="tag g">设施农业</span><span class="tag g">良种良苗</span></div>
+      <div class="card"><h3>云南红河 · 约 600 亩蓝莓产业园</h3><p>高标准设施蓝莓种植产业园：品种、设施、农艺标准与渠道一体化导入的整园运营样本。</p><span class="tag g">设施农业</span><span class="tag g">产地加工</span></div>
+    </div>
+
+    <div class="note" style="margin-top:18px"><b>口径说明：</b>106 县名单来自方舆公众号《【广东】深圳对口帮扶清单，有106个县域》（2026 年 6 月 3 日，<a href="https://mp.weixin.qq.com/s/G_w8-bPo5chMIy2Cg55eDg" target="_blank" rel="noopener">原文链接</a>）：标题称 9 省 106 个县（市、区），但正文逐项列出的具名单位逐一计数为 <b>52 个</b>（原文称广东省内为 27 个，其逐项名单实际列出 23 个；哈尔滨市、赣州市为地级市，未拆分到县），其余未在正文逐项列出，可能在配图地图中，本平台不补编。完整名单以市乡村振兴局正式清单为准；<b>县级产业画像不在公开材料中，统一标注“待帮扶干部补充”，平台不代填</b>。52 个具名单位已在「场景匹配」页签按组列全。</div>
+  </section>
+
+  <!-- ============ 技术库 ============ -->
+  <section class="panel" id="panel-tech" role="tabpanel">
+    <h2 class="sec">高校技术库：五大环节 × 国家队团队</h2>
+    <p class="lede">来源：《深农科创集团京蓉双核布局战略报告》。方法论是“环节拆解 → 技术寻源 → 团队匹配 → 集成封装”：每支团队都标注了与“深圳农业科技工具箱”的集成点，即这项技术进入帮扶县时实际交付的东西。</p>
+    <input type="search" id="techSearch" placeholder="搜索团队、高校或技术关键词，如：冷链 / 无损检测 / 溯源 / 无人机" aria-label="搜索技术库">
+    <div class="chips" id="linkChips" role="group" aria-label="按环节筛选"></div>
+    <div class="grid g2" id="techGrid"></div>
+    <p class="small" id="techCount" style="margin-top:10px"></p>
+  </section>
+
+  <!-- ============ 场景匹配 ============ -->
+  <section class="panel" id="panel-match" role="tabpanel">
+    <h2 class="sec">第一步：选场景，看匹配的技术与资金通道</h2>
+    <p class="lede">七大场景来自促进中心方案（技术中立、产业中立、需求导向）。点击任一场景，右侧给出可对接的高校技术（按五大环节反查技术库）和可申报的资金通道。</p>
+    <div class="grid g2" style="align-items:start">
+      <div class="grid" id="sceneList" style="gap:10px"></div>
+      <div class="card" id="sceneDetail" style="position:sticky;top:76px"></div>
+    </div>
+
+    <h2 class="sec">第二步：106 县名单（清单正文具名 52 个单位）</h2>
+    <p class="lede">深圳对口帮扶涉及 9 省（区、市）106 县（市、区），近年年均财政投入近 60 亿元，“十四五”以来实施项目超 2200 个。下表把清单正文逐项列出的 52 个具名单位按帮扶类型分组列全，并附原文给出的帮扶要点；其余未在正文列出的县以市局正式清单为准，本平台不补编。县级产业场景由派驻干部按统一模板填报后进入需求库（见第三步）。</p>
+    <div class="chips" id="countyChips" role="group" aria-label="按帮扶类型筛选"></div>
+    <div>
+    <table id="countyTable">
+      <thead><tr><th style="min-width:100px">帮扶类型</th><th style="min-width:120px">省 · 地市</th><th style="min-width:260px">具名县（市、区）</th><th>原文帮扶要点</th><th style="min-width:130px">县级产业画像</th></tr></thead>
+      <tbody id="countyBody"></tbody>
+    </table>
+    </div>
+    <p class="small">名单来源：方舆公众号《【广东】深圳对口帮扶清单，有106个县域》（2026-06-03）。计数说明：正文逐项名单逐一计数为 52 个单位；原文称广东省内共 27 个县（区），其逐项名单列出 23 个，差额与总数 106 的其余部分均未在正文列出。</p>
+
+    <h2 class="sec">第三步：登记一条县级需求（演示台账）</h2>
+    <p class="lede">帮扶干部或协作地区填报：县名、主导产业、拟适配场景、当前痛点。提交后进入本次打开期间的需求台账，可导出 CSV 交促进中心汇总。<b>台账只存在于当前页面，不上传、不保存</b>，正式填报请走市局统一渠道。</p>
+    <div class="card">
+      <div class="grid g3">
+        <div><label class="fl" for="dCounty">县（市、区）名称</label><input type="text" id="dCounty" placeholder="如：广西乐业县"></div>
+        <div><label class="fl" for="dIndustry">主导产业 / 品类</label><input type="text" id="dIndustry" placeholder="如：高山蔬菜、猕猴桃"></div>
+        <div><label class="fl" for="dScene">拟适配场景</label><select id="dScene"></select></div>
+      </div>
+      <label class="fl" for="dPain">当前痛点（一句话）</label>
+      <textarea id="dPain" rows="2" placeholder="如：采后无预冷设施，损耗率三成以上，卖不到湾区"></textarea>
+      <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="dAdd">加入需求台账</button>
+        <button class="btn ghost" id="dExport" disabled>导出台账 CSV</button>
+      </div>
+      <div class="toast" id="dToast" role="status"></div>
+      <div id="dList" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ============ 经费流向 ============ -->
+  <section class="panel" id="panel-fund" role="tabpanel">
+    <h2 class="sec">经费流向总图：钱从哪来、经谁评审、到哪类项目</h2>
+    <p class="lede">四条线分工不同：<b>乡村振兴局</b>是协作资金的统筹盘，<b>科技局</b>是技术研发与示范的接口，<b>工信局</b>管产业转移与数字化转型，<b>国资委</b>线经市属国企（深农投 / 深农科创）把资金变成运营能力。促进中心项目库是四条线共同的前置筛选环节。</p>
+    <div class="fundflow">
+      <div class="fnode"><b>资金来源</b><span>市财政协作资金 · 科技研发资金 · 工信专项 · 国企投入与社会认捐</span></div><span class="farrow">→</span>
+      <div class="fnode"><b>促进中心项目库</b><span>产业研究 · 需求诊断 · 方案论证 · 候选清单</span></div><span class="farrow">→</span>
+      <div class="fnode"><b>市局组织评审</b><span>专家评审 · 择优入库 · 揭榜挂帅</span></div><span class="farrow">→</span>
+      <div class="fnode"><b>发包实施</b><span>市场主体 / 国企平台承接 · 属地配套</span></div><span class="farrow">→</span>
+      <div class="fnode"><b>运营与绩效</b><span>完整生产周期检验 · 绩效决定续期 · 滚动复制</span></div>
+    </div>
+
+    <div class="chips" id="fundChips" role="group" aria-label="按部门查看资金线"></div>
+    <div id="fundDetail"></div>
+
+    <h2 class="sec">已公开的盘子（锚点数字）</h2>
+    <div class="grid g4">
+      <div class="card"><div class="big num">32.06 亿 → 39.15 亿元</div><p>深圳省内帮扶资金：2024 年 32.06 亿元（对口汕头、河源、汕尾、潮州 4 市＋惠州 3 县，选派干部 392 名），2025 年增至 39.15 亿元。整体口径近年年均财政投入近 60 亿元。</p></div>
+      <div class="card"><div class="big num">超 100 亿元</div><p>2023 年以来省内对口帮扶累计安排资金；规划建设 4 个市级产业合作园、23 个县级特色产业园。</p></div>
+      <div class="card"><div class="big num">超 160 亿元</div><p>2024 年深圳采购帮扶产品规模（“政府引导＋市场运作”）；“圳帮扶”商城上架产品近 8000 款。</p></div>
+      <div class="card"><div class="big num">69 个</div><p>深圳在全国建设的“深圳农场”；“圳品”已覆盖全国 29 省 163 市 432 县——渠道端现成底盘。</p></div>
+    </div>
+    <p class="small">锚点数字来源：深圳市推进“百千万工程”公开报道、中国经济网《乡村振兴的深圳力量》、南都公开报道、方舆公众号对口帮扶清单（年均近 60 亿元、项目超 2200 个口径）。各专项的当年额度、申报条件以各部门当年发布的申报指南为准；本平台不构成申报承诺。</p>
+  </section>
+
+  <!-- ============ 项目库 ============ -->
+  <section class="panel" id="panel-project" role="tabpanel">
+    <h2 class="sec">项目筛选流程：五道关进项目库</h2>
+    <div class="flow" id="screenFlow"></div>
+
+    <h2 class="sec">揭榜挂帅：难題不靠指定，靠发榜</h2>
+    <p class="lede">技术需求明确、实施难度大、单一主体解决不了的任务，走四步：<b>需求方出题 → 主管部门发榜 → 市场主体揭榜 → 专业机构评榜</b>。面向深圳农业科技企业、科研院所、高校、产业运营机构及联合体征集解决方案——技术库里的高校团队就是天然的揭榜池。</p>
+    <div class="grid g3">
+      <div class="card"><h3>资金机制创新</h3><p>在符合财政与协作资金管理规定的前提下，资金由“买资产”向“<b>买能力、买成效</b>”拓展：统筹支持设施设备、产业诊断、技术服务、人才培训、数字管理和市场拓展。</p></div>
+      <div class="card"><h3>运行机制</h3><p>“资金支持建设、企业负责运营、科技提升效益、绩效决定续期”——重建设轻运营的项目，在评审环节就出局。</p></div>
+      <div class="card"><h3>复制推广</h3><p>试点以完整生产周期检验成效，评估复盘后形成绩效报告、典型案例、负面清单和标准工具包，再向条件相近地区滚动复制。</p></div>
+    </div>
+
+    <h2 class="sec">入库项目评审维度（促进中心建议口径）</h2>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th style="min-width:120px">维度</th><th>看什么</th><th style="min-width:170px">一票否决项</th></tr>
+      <tr><td><b>运营可持续</b></td><td>实施主体运营能力、订单与渠道是否落实、成本收益是否闭环</td><td>无明确运营主体、只建不用</td></tr>
+      <tr><td><b>科技可赋能</b></td><td>痛点能否被技术库现有方案覆盖，是否需要揭榜攻关</td><td>技术路线未经验证且无试点安排</td></tr>
+      <tr><td><b>群众可受益</b></td><td>联农带农机制：培训、托管、订单协作、组织化经营，而非一次性分红</td><td>收益分配机制缺失</td></tr>
+      <tr><td><b>模式可复制</b></td><td>投入产出比在同类县是否成立，能否沉淀为标准工具包</td><td>强依赖单点特殊资源</td></tr>
+    </table>
+    </div>
+
+    <div class="note" style="margin-top:18px"><b>提请市局支持的两件事（方案原文）：</b>① 支持在深农科创挂牌成立“深圳农业科技与产业帮扶促进中心”，由市局统筹指导，承担产业研究、需求诊断、项目策划、方案论证、项目库建设和资源对接；② 支持建立“专业筛选、组织评审、发包实施、协同推进”的全流程项目落地机制，打通市局、协作地区政府及平台公司、促进中心、实施主体的数据共享。</div>
+  </section>
+
+  <footer>
+    <p>资料来源：《深农科创集团京蓉双核布局战略报告》、《关于以科技赋能东西部协作产业帮扶，打造乡村振兴“深圳样板”的建议方案》（深农科创）、方舆公众号《【广东】深圳对口帮扶清单，有106个县域》（2026-06-03，https://mp.weixin.qq.com/s/G_w8-bPo5chMIy2Cg55eDg）、深圳市科技创新局公开办法与申报指南、中国经济网 / 南都 / 深圳新闻网公开报道。资金额度与政策口径以各部门当年正式文件为准。本平台为工作演示应用，县级数据以帮扶干部填报和市局正式清单为准。本页为单文件静态应用，可直接部署于 GitHub Pages 等静态托管以获得中国大陆可访问链接。</p>
+  </footer>
+</div>
+
+<script>
+/* ================= 数据 ================= */
+var LINKS = ["环节一 · 种植与产地数字流通","环节二 · 采后处理与智能分拣","环节三 · 仓储与冷链","环节四 · 运输与多式联运","环节五 · 市场流通与可信溯源"];
+var TECHS = [
+ {link:0, team:"韩一军 教授团队", uni:"中国农业大学 · 国家数字农产品流通创新分中心", dir:"数字农产品流通标准化管理体系、智能信息采集与管控装备、质量溯源与大数据平台", point:"“圳品”三轮标准与数字流通标准打通，产地数据从种植端结构化留痕"},
+ {link:0, team:"何雄奎 教授团队", uni:"中国农业大学工学院 · 智慧农业无人系统创新团队", dir:"智慧农业、无人机装备系统、农药精准减量施用；疏花疏果机械、无人机液体授粉", point:"飞地果园 / 大田的全程机械化与绿色生态化方案"},
+ {link:0, team:"陈建 特聘研究员课题组", uni:"中国农业大学工学院 · 具身智能与无人仿生系统", dir:"多旋翼无人机控制一体化、具身智能", point:"育种机器人、无人化作业装备的模块化封装"},
+ {link:0, team:"郑永军 教授团队", uni:"中国农业大学工学院 · 智能测控与农业无人机应用", dir:"北斗与多源传感机器人定位导航；果园采摘、肥药施用、剪枝除草智能装备", point:"山地轨道车、采摘机器人等“小灵巧”装备的国产替代"},
+ {link:0, team:"陈度 教授 / 王新 副教授团队", uni:"中国农业大学工学院 · 农业装备智能测控技术", dir:"农业装备信息检测与网络监控、运维管理与故障诊断", point:"农机远程运维与故障诊断系统，降低商户用机成本"},
+ {link:0, team:"陈峰 教授团队", uni:"北京大学工学院 · 食品与生物资源工程研究所", dir:"食品生物技术、发酵工程、微藻生物工程", point:"功能性食品与生物资源高值化模块"},
+ {link:0, team:"陈时盛 研究员团队", uni:"北京大学现代农业研究院", dir:"小麦等作物基因编辑与分子育种", point:"良种源头供给，支撑帮扶县品种更新"},
+ {link:1, team:"彭彦昆 教授团队", uni:"中国农业大学工学院 · 国家农产品加工技术装备研发分中心", dir:"农畜产品无损检测与智能识别分级装备；果蔬、粮食便携式与在线式无损检测分级装备", point:"分拣环节核心装备：产地分拣线、智能分级装箱机器手，把“溢价前置”变成设备"},
+ {link:1, team:"李海涛 / 刘平义 等团队", uni:"中国农业大学工学院 · 智能设计与传动控制", dir:"非道路移动装备行走系统、物流精密传动、农业装备末端执行器", point:"分拣线传动与末端执行机构的国产化配套"},
+ {link:1, team:"王伟 教授团队", uni:"中国农业大学工学院 · 智能检测技术与仪器", dir:"农产品 / 食品品质安全智能检测技术、仪器与装备研制", point:"产地快检设备与“圳品”现场定等"},
+ {link:1, team:"张小栓 教授 / 肖新清 副教授团队", uni:"中国农业大学工学院 · 智能传感与检测、物联网", dir:"智能（柔性）传感与物联网；智能物流（冰鲜、保活、催熟）；气调、杀菌、包装、分级智能化装备", point:"冷链品质保障＋区块链溯源一体化模块的核心枢纽"},
+ {link:1, team:"夏伊宁 研究员团队", uni:"中国农业科学院农产品加工研究所 · 保鲜与物流创新团队", dir:"采后品质劣变调控、产地预冷、智能分选、冰温保鲜、微气调精准控制、冷链运输智能控制", point:"果蔬采后全程减损保鲜关键技术，可直接复制至 106 县飞地"},
+ {link:1, team:"陈湘宁 教授团队", uni:"北京农学院食品科学与工程学院", dir:"鲜切蔬菜、冷链食品及预制菜加工保鲜与安全控制；气调包装保鲜体系；主导鲜切果蔬首个国家标准", point:"产地初加工模块化方案，就地增值"},
+ {link:2, team:"张信荣 教授课题组", uni:"北京大学工学院 · 超级冷链蓄冷传热实验室", dir:"超级冷链（预冷＋冷藏＋冷冻一体）、跨临界 CO₂ 冷热一体化技术与装备、采后高品质预冷保鲜", point:"核心突破：低碳超级冷链，破解“双碳”下冷库高能耗痛点"},
+ {link:2, team:"韩一军 教授团队（掌库系统）", uni:"中国农业大学 · 国家数字农产品流通创新分中心", dir:"冷库监测、库存管理、产销管理、账本记录一体化信息系统", point:"飞地冷库“智慧化改造”标准化方案"},
+ {link:2, team:"陈静 教授 / 姜旭 教授团队", uni:"北京物资学院 · 冷链物流研究中心", dir:"冷链规划设计、品质动态变化、温度探测及传感技术；冷链物流动态模拟与质量数据分析", point:"飞地冷库标准化设计与温控设备集采"},
+ {link:2, team:"张喜才 教授团队", uni:"北京物资学院商学院", dir:"农产品供应链、冷链物流与安全管理；生鲜农产品冷链物流薄弱环节研究", point:"冷链物流经济模型与产地悖论破解方案"},
+ {link:3, team:"王喜富 教授 / 沈孟如 副教授团队", uni:"北京交通大学交通运输学院 · 智慧物流与行业数据空间", dir:"可信数据空间；“公转铁、公转水、散改集”多式联运模式创新；货流分配与货运网络优化、多式联运标准", point:"核心枢纽：设计“产地—枢纽—湾区”多式联运方案，把渠道去化升级为物流总成本最优"},
+ {link:3, team:"张晓东 教授团队", uni:"北京交通大学交通运输学院 · 物流工程系", dir:"现代物流、多式联运、铁路货运；物流节点规划、商贸物流园区动态感知与仓配运智能调度", point:"销地市场枢纽规划与国家骨干冷链物流基地申报"},
+ {link:3, team:"陈静 教授 / 赵章荣 副教授团队", uni:"北京物资学院 · 智能设备与技术研究中心", dir:"AGV/RGV、模块化叉车、换轨式自动立体件箱库、滑块式分拣、机械手臂码垛、自动化包装", point:"产地仓储移动机器人、分拣线 AGV 的国产化集采池"},
+ {link:3, team:"左敏 教授团队（供应链风险）", uni:"北京物资学院 · 数智供应链应用与风险治理北京市重点实验室", dir:"数智供应链协同治理、特种物流动态监测与风险防控、冷链食品追溯、应急物流优化与智能调度", point:"“看得见、不中断、会思考”的供应链风险感知与智慧决策系统"},
+ {link:4, team:"左敏 教授团队", uni:"北京工商大学 · 农产品质量安全追溯技术及应用国家工程研究中心", dir:"食品品质质量与营养智能化区块链溯源体系；智慧农场、智慧车间、智能包装、智慧冷链、智慧市场", point:"核心背书：为“圳品”提供国家级实验室检测与追溯背书，让溢价有理有据"},
+ {link:4, team:"孔建磊 副教授 / 赵峙尧 副教授团队", uni:"北京工商大学 · 国家工程研究中心", dir:"“多源监控感知—害虫精准辨识—风险动态预警—溯源管控决策”；粮食产后全链条质量追溯平台", point:"流通环节病虫害防控与 AI 风险预警；“绿色智能粮仓”示范标准"},
+ {link:4, team:"董红宇 教授团队", uni:"北京工商大学计算机与人工智能学院", dir:"数智化消费品电商物流与供应链优化（已验证：路线效率 +13%、运输成本 −9%、库存周转 +12%）", point:"生鲜冷链即时配送与大型电商仓智能分拣算法，反向赋能商户降本"},
+ {link:4, team:"钱建平 研究员团队", uni:"中国农业科学院农业资源与农业区划研究所", dir:"批次混合下的追溯优化、智能柔性追溯模型、冷链微环境智能感知、区块链全程追溯框架", point:"全供应链追溯体系：“一物一码、来源可追、去向可查”"},
+ {link:4, team:"王国义 副教授团队", uni:"北京物资学院 · 京东学院 / 物流系统与技术重点实验室", dir:"“源头净菜＋云端调度＋共同配送”圈层保供模式；农产品质量安全追溯与风险评估", point:"与深农市场场景同源，可把成熟保供模式复制到深圳海吉星及协作市场"},
+ {link:2, team:"左敏 / 孔建磊 团队（智慧冷链）", uni:"北京工商大学 · 国家工程研究中心", dir:"智慧冷链、粮食仓储远程监测预警系统", point:"“圳品”冷链溯源的国家级背书，冷链与溯源在同一平台打通"},
+ {link:1, team:"农产品加工及贮藏工程学科团队", uni:"中国农业科学院农产品加工研究所 · 果蔬加工与品质调控", dir:"果蔬减损保鲜与冷链物流；机械化采收、产地预冷、分级分选；危害物代谢迁移规律及控制", point:"果蔬“圳品”品种端的技术源头与保鲜方案"}
+];
+
+var SCENES = [
+ {name:"1 · 设施农业与特色种植", desc:"特色果蔬、食用菌、茶叶、中药材：改善生产设施，推广精准水肥与标准化生产，提升稳产保供、品质一致性和单位产出。", links:[0,2], funds:["东西部协作资金（乡村振兴局）","科技局可持续发展专项","国资委线 · 深农科创运营导入"]},
+ {name:"2 · 良种良苗与种源保障", desc:"品种筛选、集约化育苗和示范推广，提高优良品种覆盖率和种苗稳定供应能力。", links:[0], funds:["科技局重点产业研发计划（农业生物育种方向）","东西部协作资金（乡村振兴局）"]},
+ {name:"3 · 智能农机与社会化服务", desc:"导入适用型智能农机及轻简化装备，发展耕、种、管、收、运托管和共享服务。", links:[0,3], funds:["工信局产业转移与装备支持","东西部协作资金（乡村振兴局）","科技局可持续发展专项"]},
+ {name:"4 · 产地加工与价值提升", desc:"清洗、分选、包装、保鲜及精深加工，副产物利用和产品创新，降低损耗、延长销售周期、提高附加值。", links:[1], funds:["工信局数字化转型奖补","东西部协作资金（乡村振兴局）","国资委线 · 产业合作园共建"]},
+ {name:"5 · 冷链仓储与湾区供应链", desc:"合理配置预冷、仓储、运输和区域集配设施，衔接深圳订单渠道。", links:[2,3], funds:["东西部协作资金（乡村振兴局）","工信局产业合作园政策","科技局可持续发展专项（应用示范）"]},
+ {name:"6 · 质量追溯与品牌营销", desc:"健全生产记录、质量检测、产品认证和追溯体系，促进帮扶产品入粤入湾。", links:[4,1], funds:["科技局可持续发展专项","国资委线 · “圳品”与消费帮扶渠道"]},
+ {name:"7 · 数字化生产运营", desc:"贯通生产计划、成本、设备、质量、库存、销售、联农带农和绩效数据，支持精细化运营与主管部门全过程监管。", links:[0,4], funds:["工信局数字化转型奖补","科技局概念验证 / 中小试平台","东西部协作资金（乡村振兴局）"]}
+];
+
+var COUNTIES = [
+ {type:"对口支援", area:"新疆 · 喀什地区", names:"喀什市、塔什库尔干塔吉克自治县（2 个）", note:"自 2010 年起持续开展，第十一批援疆干部人才 2023 年进疆。产业：空天信息产业园、京东智能物流港、TIR 集结中心，2025 年建成南疆首个 5G 数字化物流园；科技：鹏城实验室喀什网点、华大南疆精准医学实验室；民生：“喀什光明行”已免费实施白内障手术 990 余例，教育医疗“组团式”支援。超级冷链与数字物流技术可优先在此验证。"},
+ {type:"对口支援", area:"西藏 · 林芝市", names:"察隅县、察隅农场（2 个）", note:"援建易地搬迁小康村、察隅县人民医院、乡村道路及基础设施，实施“深圳标准”民生工程，衔接巩固脱贫攻坚与乡村振兴。"},
+ {type:"对口支援", area:"重庆市", names:"巫山县（1 个）", note:"原文标注为对口帮扶；正文未展开分县产业安排，项目需求待属地申报后由促进中心诊断。"},
+ {type:"东西部协作", area:"广西 · 百色市", names:"田阳区、田东县、德保县、靖西市、那坡县、凌云县、乐业县、西林县、田林县、隆林各族自治县（10 个）", note:"粤桂协作主战场之一：以“总部＋基地”模式推进产业协作，配套“圳品”农产品认证与消费帮扶渠道；具体分县产业以协作地区申报为准。"},
+ {type:"东西部协作", area:"广西 · 河池市", names:"罗城县、环江县、都安县、大化瑶族自治县、凤山县、东兰县、巴马瑶族自治县（7 个）", note:"粤桂协作：产业协作与消费帮扶并重；2025 年粤桂协作专项资金中 1277.57 万元用于消费帮扶（见「经费流向」）。"},
+ {type:"东西部协作", area:"广西 · 南宁市", names:"马山县、上林县、隆安县（3 个）", note:"粤桂协作县，距南宁都市圈近，适合产地加工与冷链集配先行试点；分县产业画像待干部填报。"},
+ {type:"东西部协作", area:"广西 · 桂林市", names:"龙胜各族自治县、资源县（2 个）", note:"粤桂协作县，山地地形突出，轻简农机、山地轨道运输与采后减损技术适配度高；分县产业画像待干部填报。"},
+ {type:"省内帮扶", area:"广东 · 汕头市", names:"澄海区、潮阳区、潮南区、南澳县、濠江区、龙湖区、金平区（7 个）", note:"省内对口帮扶协作；深汕头产业合作园为工信线产业转移与数字化奖补的主要落点（见「经费流向」）。"},
+ {type:"省内帮扶", area:"广东 · 河源市", names:"源城区、龙川县、东源县、紫金县、和平县、连平县（6 个）", note:"“深河”产业合作园推动“总部＋基地”模式，援建深河人民医院、重卡超充站，导入“圳品”认证体系。"},
+ {type:"省内帮扶", area:"广东 · 汕尾市", names:"城区、海丰县、陆河县、陆丰市（4 个）", note:"“深汕”协作口径，产业合作园与特色产业园共建；2025 年省内帮扶资金 39.15 亿元覆盖汕头、河源、汕尾、潮州及惠州口径。"},
+ {type:"省内帮扶", area:"广东 · 潮州市", names:"湘桥区、潮安区、饶平县（3 个）", note:"省内对口帮扶协作市之一；食品加工与预制菜产业链与技术库环节二（产地加工保鲜）适配度高，待属地确认需求。"},
+ {type:"省内帮扶", area:"广东 · 惠州市", names:"博罗县、龙门县、惠东县（3 个）", note:"原文口径为对口产业协作 3 县；距深圳最近，适合作为工具箱方案的首批近距离验证与复制样板。"},
+ {type:"对口合作", area:"黑龙江 · 哈尔滨市", names:"哈尔滨市（地级市，未拆分到县）", note:"深哈产业园为载体；非扶贫协作口径，项目筛选侧重双向投资、园区共建与市场互通。"},
+ {type:"对口合作", area:"江西 · 赣州市", names:"赣州市（地级市，未拆分到县）", note:"深赣港产城合作区为载体；以港产城融合与产业转移承接为主线，具体合作县区以双方正式文件为准。"}
+];
+
+var FUNDS = [
+ {dept:"市乡村振兴局 · 协作资金统筹盘", color:"var(--blue)", items:[
+   ["资金性质","东西部协作资金＋省内帮扶资金，市级统筹、按项目安排"],
+   ["已知规模","整体：近年年均财政投入近 60 亿元，“十四五”以来实施项目超 2200 个；省内：2024 年 32.06 亿元、2025 年 39.15 亿元，2023 年以来累计超 100 亿元；消费帮扶 2024 年采购超 160 亿元，2025 年粤桂协作专项资金 1277.57 万元专项用于消费帮扶"],
+   ["流向","经促进中心项目库筛选 → 市局组织专家评审 → 发包实施主体 → 绩效决定续期"],
+   ["与科技帮扶的接口","促进中心年度方向由市局确定；资金由“买资产”向“买能力、买成效”拓展，支持诊断、技术服务、培训、数字管理、市场拓展"],
+   ["申报主体","协作地区政府及区县平台、属地实施主体（经促进中心论证入库后）"]]},
+ {dept:"市科技创新局 · 技术研发与示范线", color:"var(--green)", items:[
+   ["可持续发展科技专项","单项资助上限 400 万 / 600 万 / 800 万元三档，事前资助，产学研用联合申报"],
+   ["关键接口","涉及应用示范的，示范地点应在深圳市、深汕合作区以及深圳市对口帮扶地区；涉及乡村振兴的，须与对口帮扶地区单位签订合作协议——这是高校技术合法落到 106 县的直接政策通道"],
+   ["重点产业研发计划","单项最高 3000 万元；可持续发展专项下设“乡村振兴与对口帮扶技术”支持方向"],
+   ["成果转化平台","概念验证中心资助最高 500 万元、中小试基地最高 1000 万元（先建设后认定）——高校成果进县前先在这里完成验证与中试"],
+   ["申报主体","深圳高校、科研机构、企业牵头，联合帮扶地区单位共同申报"]]},
+ {dept:"市工业和信息化局 · 产业转移与数字化线", color:"var(--amber)", items:[
+   ["主责方向","产业有序转移、产业合作园区共建、企业数字化转型奖补"],
+   ["与帮扶的接口","深圳与对口地区共建产业合作园配套数字化转型支持——以深汕头产业合作园为例：数字化诊断按 70% 奖补、单家上限 3 万元，数字化转型按 20% 奖补、单家上限 200 万元；区级政策（如坪山）明确区内企业在帮扶地区投资设厂可享受本区政策，单家年度最高 500 万元"],
+   ["流向","产业协作指挥部出资、市工信局组织申报与拨付，园区平台统筹落地"],
+   ["适配场景","产地加工、智能农机装备、数字化生产运营三类场景的主要增量资金"],
+   ["申报主体","在帮扶地区投资或共建园区的深圳企业、园区运营主体（以当年指南为准）"]]},
+ {dept:"市国资委 · 国企帮扶线", color:"var(--red)", items:[
+   ["主管处室","股东事务和社会责任处主管对口帮扶、乡村振兴与捐赠管理"],
+   ["实施载体","深农投集团及深农科创（注册资本 5 亿元）等市属国企：以项目运营而非一次性捐赠承接帮扶，促进中心拟挂牌于深农科创"],
+   ["社会动员","广东“6·30”助力乡村振兴活动：深圳国资系统 2019 年以来认捐到账超 20 亿元（以国资委年度公布为准）"],
+   ["流向","国企自有资金＋承接市级项目 → 产业园、智能温室、方舱种植等运营型资产 → 经营收益反哺联农带农"],
+   ["适配场景","设施农业整园运营、冷链枢纽、品牌与渠道（“圳品”、深圳农场）等重运营场景"]]}
+];
+
+/* ================= 渲染 ================= */
+function el(html){var d=document.createElement("div");d.innerHTML=html;return d.firstElementChild;}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+
+/* tabs */
+var tabs=document.querySelectorAll(".tab");
+tabs.forEach(function(t){t.addEventListener("click",function(){
+  tabs.forEach(function(x){x.setAttribute("aria-selected","false");});
+  t.setAttribute("aria-selected","true");
+  document.querySelectorAll("section.panel").forEach(function(p){p.classList.remove("active");});
+  document.getElementById("panel-"+t.dataset.tab).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+});});
+
+/* lifecycle */
+var LIFE=[["年度方向","市局定重点"],["需求征集","区县申报"],["产业研究","促进中心"],["项目筛选","成熟度排序"],["评审入库","专家评审"],["发包实施","市场遴选"],["运营提升","科技导入"],["绩效评价","决定续期"],["复制推广","工具包输出"]];
+document.getElementById("lifecycle").innerHTML=LIFE.map(function(s,i){return '<div class="fstep'+(i===4?" hot":"")+'"><b>'+(i+1)+". "+s[0]+'</b><span>'+s[1]+'</span></div>';}).join("");
+var SCREEN=[["年度方向","市局发布"],["需求征集","协作地区申报"],["产业研究","图谱与诊断"],["项目筛选","四维评审"],["评审入库","择优进库"]];
+document.getElementById("screenFlow").innerHTML=SCREEN.map(function(s,i){return '<div class="fstep"><b>'+(i+1)+". "+s[0]+'</b><span>'+s[1]+'</span></div>';}).join("");
+
+/* tech library */
+var curLink=-1;
+var chipsBox=document.getElementById("linkChips");
+var chipDefs=[["全部环节",-1]].concat(LINKS.map(function(l,i){return [l,i];}));
+chipDefs.forEach(function(c){
+  var b=document.createElement("button");b.className="chip";b.textContent=c[0];b.setAttribute("aria-pressed",c[1]===-1?"true":"false");
+  b.addEventListener("click",function(){curLink=c[1];chipsBox.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");renderTech();});
+  chipsBox.appendChild(b);
+});
+function renderTech(){
+  var q=document.getElementById("techSearch").value.trim();
+  var list=TECHS.filter(function(t){
+    if(curLink!==-1&&t.link!==curLink)return false;
+    if(q&&(t.team+t.uni+t.dir+t.point).indexOf(q)===-1)return false;
+    return true;
+  });
+  var g=document.getElementById("techGrid");
+  g.innerHTML=list.length?list.map(function(t){
+    return '<article class="card tech"><span class="tag">'+esc(LINKS[t.link].split(" · ")[1])+'</span>'+
+    '<h3><span class="who">'+esc(t.team)+'</span></h3><div class="uni">'+esc(t.uni)+'</div>'+
+    '<p>'+esc(t.dir)+'</p><div class="point"><b>工具箱集成点：</b>'+esc(t.point)+'</div></article>';
+  }).join(""):'<div class="empty">没有匹配的团队，换个关键词试试。</div>';
+  document.getElementById("techCount").textContent="共 "+list.length+" 个团队条目（来源：京蓉双核战略报告团队表，本期收录 28 条）。";
+}
+document.getElementById("techSearch").addEventListener("input",renderTech);
+renderTech();
+
+/* scenes */
+var sceneList=document.getElementById("sceneList"), sceneDetail=document.getElementById("sceneDetail");
+var curScene=0;
+SCENES.forEach(function(s,i){
+  var b=document.createElement("button");b.className="scene-btn";b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.innerHTML="<h3>"+esc(s.name)+"</h3><p>"+esc(s.desc)+"</p>";
+  b.addEventListener("click",function(){curScene=i;sceneList.querySelectorAll(".scene-btn").forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");renderScene();});
+  sceneList.appendChild(b);
+});
+function renderScene(){
+  var s=SCENES[curScene];
+  var techs=TECHS.filter(function(t){return s.links.indexOf(t.link)>-1;}).slice(0,6);
+  sceneDetail.innerHTML="<h3 style='margin-top:0'>"+esc(s.name)+"</h3>"+
+   "<p class='small' style='margin-bottom:8px'>可对接技术（"+s.links.map(function(l){return LINKS[l].split(" · ")[1];}).join(" / ")+"）</p>"+
+   techs.map(function(t){return "<div style='padding:8px 0;border-bottom:1px dashed var(--line)'><b style='color:var(--blue)'>"+esc(t.team)+"</b><br><span style='font-size:13.5px;color:var(--ink2)'>"+esc(t.point)+"</span></div>";}).join("")+
+   "<p class='small' style='margin:12px 0 6px'>可申报资金通道</p>"+
+   s.funds.map(function(f){return "<span class='tag g'>"+esc(f)+"</span>";}).join("")+
+   "<p class='small' style='margin-top:12px'>完整团队清单见「高校技术库」页签，按环节筛选。</p>";
+}
+renderScene();
+
+/* counties */
+var cChips=document.getElementById("countyChips");
+var cTypes=[];COUNTIES.forEach(function(c){if(cTypes.indexOf(c.type)===-1)cTypes.push(c.type);});
+["全部"].concat(cTypes).forEach(function(name,i){
+  var b=document.createElement("button");b.className="chip";b.textContent=name;b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.addEventListener("click",function(){
+    cChips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");
+    document.getElementById("countyBody").innerHTML=COUNTIES.filter(function(c){return name==="全部"||c.type===name;}).map(function(c){
+      return "<tr><td><b>"+esc(c.type)+"</b></td><td>"+esc(c.area)+"</td><td>"+esc(c.names)+"</td><td>"+esc(c.note)+"</td><td><span class='tag a'>待帮扶干部补充</span></td></tr>";
+    }).join("");
+  });
+  cChips.appendChild(b);
+});
+cChips.querySelector(".chip").click();
+
+/* demand ledger */
+var dScene=document.getElementById("dScene");
+SCENES.forEach(function(s){var o=document.createElement("option");o.textContent=s.name;dScene.appendChild(o);});
+var ledger=[];
+document.getElementById("dAdd").addEventListener("click",function(){
+  var county=document.getElementById("dCounty").value.trim();
+  var ind=document.getElementById("dIndustry").value.trim();
+  var pain=document.getElementById("dPain").value.trim();
+  var toast=document.getElementById("dToast");
+  if(!county||!ind){toast.style.display="block";toast.textContent="请至少填写县名和主导产业。";return;}
+  ledger.push({county:county,industry:ind,scene:dScene.value,pain:pain});
+  document.getElementById("dExport").disabled=false;
+  toast.style.display="block";toast.textContent="已加入台账：第 "+ledger.length+" 条（"+county+" · "+ind+"）。";
+  document.getElementById("dList").innerHTML="<table><thead><tr><th>县</th><th>主导产业</th><th>适配场景</th><th>痛点</th></tr></thead><tbody>"+
+    ledger.map(function(r){return "<tr><td>"+esc(r.county)+"</td><td>"+esc(r.industry)+"</td><td>"+esc(r.scene)+"</td><td>"+esc(r.pain||"—")+"</td></tr>";}).join("")+"</tbody></table>";
+  document.getElementById("dCounty").value="";document.getElementById("dIndustry").value="";document.getElementById("dPain").value="";
+});
+document.getElementById("dExport").addEventListener("click",function(){
+  var csv="县,主导产业,适配场景,痛点\n"+ledger.map(function(r){return [r.county,r.industry,r.scene,r.pain].map(function(v){return '"'+String(v).replace(/"/g,'""')+'"';}).join(",");}).join("\n");
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"}));a.download="对口帮扶县级需求台账.csv";a.click();URL.revokeObjectURL(a.href);
+});
+
+/* funds */
+var fChips=document.getElementById("fundChips");
+FUNDS.forEach(function(f,i){
+  var b=document.createElement("button");b.className="chip";b.textContent=f.dept.split(" · ")[0];b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.addEventListener("click",function(){
+    fChips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});b.setAttribute("aria-pressed","true");
+    document.getElementById("fundDetail").innerHTML='<div class="card"><h3 style="color:'+f.color+'">'+esc(f.dept)+'</h3>'+
+      f.items.map(function(kv){return '<div class="kv"><span style="color:var(--ink2)">'+esc(kv[0])+'</span><b style="max-width:62%">'+esc(kv[1])+'</b></div>';}).join("")+"</div>";
+  });
+  fChips.appendChild(b);
+});
+fChips.querySelector(".chip").click();
+</script>
+</body>
+</html>
