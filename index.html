@@ -317,7 +317,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-zoom button:hover{background:var(--blue-soft)}
 .cp-zoom button.wide{width:auto;padding:0 12px;font-size:12.5px}
 .cp-map-hint{font-size:11.5px;color:var(--ink3)}
-.cp-map-note{font-size:11px;color:var(--ink3);margin:6px 0 0;line-height:1.5}
+/* 地图图注：独立于地图卡片之外的一行，位于地图卡正下方，与地图图形留出明确间隔，
+   任何缩放 / 下钻 / 全屏状态下都不与地图重叠 */
+.cp-map-note{font-size:11px;color:var(--ink3);margin:9px 0 0;line-height:1.6;padding:7px 11px;background:var(--card);border:1px solid var(--line);border-radius:7px;position:relative}
 /* 城市下钻条 */
 .cp-citybar{display:none;flex-wrap:wrap;gap:6px;margin-top:8px}
 .cp-citybar.on{display:flex}
@@ -386,6 +388,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .topbar .theme-switch{border-color:#ffffff;background:#ffffff}
 .topbar .theme-switch button{color:#33415c}
 .topbar .theme-switch button[aria-pressed="true"]{background:#1449a8;color:#fff}
+/* 明暗模式切换只在驾驶舱全屏（含伪全屏）时显示；非全屏的驾驶舱头屏不放切换按钮，页眉也不放 */
+.cp-fs-theme{display:none;align-items:center}
+.cp-shell:fullscreen .cp-fs-theme,.cp-shell.cp-pseudo .cp-fs-theme{display:inline-flex}
 .cp-head .theme-label{color:#43536e}
 .cp-head .theme-switch{border-color:#b9cdec;background:#eef3fb}
 .cp-head .theme-switch button{color:#43536e}
@@ -449,6 +454,8 @@ body.cp-locked{overflow:hidden}
 .cp-shell:fullscreen .cp-citybar,.cp-shell.cp-pseudo .cp-citybar,
 .cp-shell:fullscreen .cp-detail,.cp-shell.cp-pseudo .cp-detail,
 .cp-shell:fullscreen .cp-viz-wrap>p.small,.cp-shell.cp-pseudo .cp-viz-wrap>p.small{flex:none}
+/* 全屏时图注是地图列（flex 列）的固定尾行：不参与挤压，地图本体收缩让位，图注完整显示在地图下方 */
+.cp-shell:fullscreen .cp-map-note,.cp-shell.cp-pseudo .cp-map-note{flex:none}
 /* 窄屏全屏：整列可滚动，地图保持自然比例在最前，不做高度压缩 */
 @media(max-width:1020px){
   .cp-shell:fullscreen .cp-col-map,.cp-shell.cp-pseudo .cp-col-map{display:block;overflow:visible}
@@ -470,7 +477,6 @@ body.cp-locked{overflow:hidden}
       <span>模式：1 + 3 + N</span>
       <span>数据口径：截至 2026 年 11 月公开信息</span>
     </div>
-    <div style="margin-top:14px"><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮模式</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑模式</button></span></div>
   </div>
 </header>
 
@@ -508,7 +514,7 @@ body.cp-locked{overflow:hidden}
         </div>
         <div class="cp-head-actions">
           <div class="cp-clock"><span class="cp-livechip"><i></i>平台运行中</span>数据快照 <b>2026-11</b><br><span class="cp-fs-hint">全屏一屏呈现 · Esc 退出</span></div>
-          <span><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑</button></span></span>
+          <span class="cp-fs-theme"><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑</button></span></span>
           <button class="cp-fs-btn" id="cpFsBtn" type="button">⛶ 全屏演示</button>
         </div>
       </div>
@@ -543,12 +549,12 @@ body.cp-locked{overflow:hidden}
             </div>
             <div class="cp-citybar" id="cpCityBar" aria-label="下钻城市"></div>
             <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点，支持缩放与省份下钻"></div>
-            <p class="cp-map-note">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数 · ★ = 重点项目</p>
             <div class="legend" id="cpLegend"></div>
             <div class="cp-dest" id="cpDest"></div>
             <div class="cp-detail" id="cpDetail" aria-live="polite"></div>
             <p class="small" style="margin:8px 0 2px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
           </div>
+          <p class="cp-map-note">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数 · ★ = 重点项目</p>
         </div>
         <div class="cp-col">
           <h3>技术对接构成</h3>
