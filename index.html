@@ -342,6 +342,17 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-prow .bar2{flex:0 0 74px}
 #cpViz svg{touch-action:none}
 #cpViz svg.cp-grabbing{cursor:grabbing!important}
+/* 项目详情悬浮框：点选具体项目后贴着地图点位浮动展示全量信息，随缩放 / 平移跟随点位，
+   不必再去右栏面板看；HTML 浮层不进 SVG 坐标系，不随地图放大变形 */
+.cp-viz-wrap{position:relative}
+.cp-popup{position:absolute;z-index:40;width:302px;max-width:calc(100% - 12px);background:var(--card);border:1px solid var(--blue-line);border-radius:10px;box-shadow:0 12px 30px rgba(10,25,60,.28);padding:11px 13px 12px;font-size:12.5px;line-height:1.55;color:var(--ink)}
+.cp-popup[hidden]{display:none}
+.cp-popup .ph{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.cp-popup h4{margin:0;font-size:14px;line-height:1.4}
+.cp-popup .x{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:7px;width:28px;height:28px;min-height:28px;cursor:pointer;font-size:14px;line-height:1;flex:none;font-family:inherit}
+.cp-popup .x:hover{color:var(--blue);border-color:var(--blue-line)}
+.cp-popup .m{font-size:12.5px;color:var(--ink2);margin:5px 0 0;line-height:1.6}
+.cp-popup .m b{color:var(--ink)}
 .cp-prov-path{cursor:pointer}
 .cp-prov-path:hover{stroke:var(--blue-dark);stroke-width:1.8}
 .cp-pill{cursor:pointer}
@@ -546,6 +557,7 @@ body.cp-locked{overflow:hidden}
             </div>
             <div class="cp-citybar" id="cpCityBar" aria-label="下钻城市"></div>
             <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点，支持缩放与省份下钻"></div>
+            <div class="cp-popup" id="cpPopup" hidden></div>
             <div class="legend" id="cpLegend"></div>
             <div class="cp-dest" id="cpDest"></div>
             <p class="small" style="margin:8px 0 2px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
@@ -1131,6 +1143,8 @@ function cpApplyVB(){
      否则放大后它仍留在图下，与已收起的图内小卡口径不一致 */
   var dest=document.getElementById("cpDest");
   if(dest) dest.style.display=cpPillsOn()?"":"none";
+  /* 项目详情悬浮框跟随点位：每次缩放 / 平移改 viewBox 后按新视图重定位 */
+  if(typeof cpPositionPopup==="function") cpPositionPopup();
 }
 function cpZoomBy(f,cx,cy){
   var vb=cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:cpFullVB();
@@ -1248,6 +1262,7 @@ function cpProjRow(p,on){
 }
 function cpRenderDetail(){
   var box=document.getElementById("cpDetail"); if(!box) return;
+  cpRenderPopup();
   var list=CP_LAST_LIST||[];
   box.querySelectorAll("[data-sel]").forEach(function(b){
     b.addEventListener("click",function(){ cpSelectProject(b.getAttribute("data-sel"),true); });
@@ -1285,6 +1300,61 @@ function cpRenderDetail(){
     b.addEventListener("click",function(){ cpSelectProject(b.getAttribute("data-sel"),true); });
   });
 }
+/* ===== 地图项目详情悬浮框：点选具体项目后，详情直接贴点位浮在地图上展示
+   （名称 / 状态 / 地点 / 承接 / 进度 / 描述 / 技术 / 资金线），不必再去右栏面板看；
+   定位 = 圆点真实坐标 CP_PT_POS 按当前 viewBox 换算到地图像素位置，
+   cpApplyVB 在每次缩放 / 平移后调用 cpPositionPopup 同步跟随 ===== */
+var CP_POP_ID=null; /* 悬浮框当前承载的项目 id，null = 无悬浮框内容 */
+function cpPopupProject(){
+  var p=null;
+  if(cpSel) PROJECTS.forEach(function(q){ if(q.id===cpSel) p=q; });
+  return p;
+}
+function cpRenderPopup(){
+  var pop=document.getElementById("cpPopup"); if(!pop) return;
+  var p=cpPopupProject();
+  if(!p){ CP_POP_ID=null; pop.hidden=true; pop.innerHTML=""; return; }
+  CP_POP_ID=p.id;
+  pop.innerHTML='<div class="ph"><h4>'+(CP_KEYSET[p.id]?'<span style="color:#d97706">★ </span>':'')+esc(p.name)+'</h4>'
+    +'<button type="button" class="x" id="cpPopX" aria-label="关闭项目详情">✕</button></div>'
+    +'<p class="m"><span class="stag" style="background:'+pStatusColor(p.status)+'">'+p.status+'</span> '+esc(p.loc)+'</p>'
+    +'<p class="m">承接：'+esc(p.lead)+'</p>'
+    +'<div class="cp-bar" style="margin-top:7px"><i style="width:'+p.progress+'%;background:'+pStatusColor(p.status)+'"></i></div>'
+    +'<p class="m">推进进度 <b>'+p.progress+'%</b> · '+esc(p.start)+'</p>'
+    +'<p class="m">'+esc(p.desc)+'</p>'
+    +'<p class="m"><b>用了什么技术：</b>'+p.techs.map(function(d){return esc(TECHS[d.t].team)+"（"+d.s+"）";}).join("、")+'</p>'
+    +'<p class="m"><b>钱走哪条线：</b>'+esc(p.fund)+'</p>';
+  pop.hidden=false;
+  var x=document.getElementById("cpPopX");
+  if(x) x.addEventListener("click",function(ev){ ev.stopPropagation(); cpSel=null; renderCpViz(CP_LAST_LIST); cpRenderDetail(); });
+  cpPositionPopup();
+}
+function cpPositionPopup(){
+  var pop=document.getElementById("cpPopup"); if(!pop||pop.hidden||!CP_POP_ID) return;
+  var svg=document.querySelector("#cpViz svg"); if(!svg) return;
+  var wrap=pop.offsetParent; if(!wrap) return;
+  var p=cpPopupProject(); if(!p||p.id!==CP_POP_ID) return;
+  var pos=CP_PT_POS[p.id];
+  if(!pos){
+    var lng=p.lng,lat=p.lat;
+    if(typeof lng!=="number"||typeof lat!=="number"){ var fb=CP_FALLBACK_POS[p.id]||[108,28]; lng=fb[0]; lat=fb[1]; }
+    var xy=cpXY(lng,lat); pos={x:xy[0],y:xy[1]};
+  }
+  var vb=cpVB||cpFullVB();
+  var fx=(pos.x-vb.x)/vb.w, fy=(pos.y-vb.y)/vb.h;
+  /* 点位被平移出当前视窗时先收起悬浮框，平移回来（cpApplyVB 再次调用）自动恢复 */
+  if(fx<-0.02||fx>1.02||fy<-0.02||fy>1.02){ pop.style.visibility="hidden"; return; }
+  pop.style.visibility="";
+  var sr=svg.getBoundingClientRect(), wr=wrap.getBoundingClientRect();
+  var px=sr.left-wr.left+fx*sr.width, py=sr.top-wr.top+fy*sr.height;
+  var pw=pop.offsetWidth, ph=pop.offsetHeight;
+  var left=Math.max(6,Math.min(wr.width-pw-6,px-pw/2));
+  var top=py-ph-16; if(top<6) top=py+18;         /* 优先贴点位上方，上方放不下改到下方 */
+  if(top+ph>wr.height-4) top=Math.max(6,wr.height-ph-4);
+  pop.style.left=left+"px"; pop.style.top=top+"px";
+}
+window.addEventListener("resize",function(){ cpPositionPopup(); });
+
 /* 面包屑 + 城市下钻条（随下钻状态与筛选联动） */
 function cpRenderMapChrome(){
   var cur=document.getElementById("cpCrumbCur");
@@ -1420,7 +1490,6 @@ function renderCpViz(list){
     if(isSel) s+='<circle cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="17" fill="none" stroke="'+pal.sel+'" stroke-width="2.6"'+dim+'/>';
     s+='<g class="cp-viz-pt" data-pid="'+pt.p.id+'"'+dim+'><title>'+esc(pt.p.name)+' · '+esc(pt.p.loc)+' · '+pt.p.status+' · 进度 '+pt.p.progress+'%（点击看详情）</title>'
       +'<circle class="core" cx="'+pt.x.toFixed(0)+'" cy="'+pt.y.toFixed(0)+'" r="'+(isKey?13:11.5)+'" fill="'+col+'" stroke="'+(isKey?"#e8a33d":"#fff")+'" stroke-width="'+(isKey?3:2.5)+'"/>'
-      +'<text x="'+pt.x.toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">'+pt.p.progress+'</text>'
       +(isKey?'<text x="'+(pt.x+11).toFixed(0)+'" y="'+(pt.y-9).toFixed(0)+'" font-size="12" fill="#d97706" stroke="#fff" stroke-width="0.6" style="paint-order:stroke">★</text>':'')
       +'</g>';
     var rightSide=pt.x>W-120;
@@ -1449,9 +1518,9 @@ function renderCpViz(list){
     var px=Math.max(4,Math.min(W-102,xy[0]+off[0])), py=Math.max(4,Math.min(H-44,xy[1]+off[1]));
     s+='<g class="cp-pill" data-prov="'+r+'" data-ax="'+px.toFixed(0)+'" data-ay="'+py.toFixed(0)+'" filter="url(#cpPillSh)"><title>'+r+' · '+a.n+' 个项目 · 点击下钻到城市</title><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
       +'<text x="'+(px+10).toFixed(0)+'" y="'+(py+16).toFixed(0)+'" font-size="12" font-weight="700" fill="'+pal.pillInk+'">'+r+' · '+a.n+' 个项目</text>'
-      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="52" height="5" rx="2.5" fill="'+pal.track+'"/>'
-      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="'+pal.acc+'"/>'
-      +'<text x="'+(px+67).toFixed(0)+'" y="'+(py+29).toFixed(0)+'" font-size="10.5" font-weight="700" fill="'+pal.pillSub+'">'+avg+'%</text></g>';
+      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="78" height="5" rx="2.5" fill="'+pal.track+'"/>'
+      +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(78*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="'+pal.acc+'"/>'
+      +'</g>';
   });
   s+='</svg>';
   box.innerHTML=s;
