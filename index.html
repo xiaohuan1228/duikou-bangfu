@@ -176,14 +176,14 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-filters select{width:auto;min-width:112px;padding:6px 8px;font-size:13px;min-height:32px}
 .cp-filters .btn{min-height:32px;padding:6px 14px;font-size:13px}
 .cp-total{margin-left:auto;background:var(--blue);color:#fff;border-radius:8px;padding:7px 14px;font-size:13px;font-weight:700;white-space:nowrap}
-.cp-kpis{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:8px 10px 0;flex:none}
+.cp-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:8px 10px 0;flex:none}
 .cp-kpi{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;min-width:0}
 .cp-kpi .dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px}
 .cp-kpi .lab{font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp-kpi .val{font-size:24px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}
 .cp-kpi .val small{font-size:12px;font-weight:600;color:var(--ink2)}
 .cp-kpi .note2{font-size:11.5px;color:var(--ink3);line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:1020px){.cp-kpis{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1020px){.cp-kpis{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:560px){.cp-kpis{grid-template-columns:repeat(2,1fr)}.cp-title p{display:none}}
 .cp-main{display:grid;grid-template-columns:262px minmax(0,1fr) 292px;gap:8px;padding:8px 10px;align-items:stretch;min-height:0}
 .cp-shell:fullscreen .cp-main{flex:1}
@@ -385,8 +385,35 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 [data-theme="dark"] .cp-proj{border-color:#2f4a3a;box-shadow:none}
 [data-theme="dark"] .cp-bar{background:#2a3d31}
 [data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#16211b,#101713)}
-.cp-shell.cp-pseudo{position:fixed;inset:0;z-index:300;width:100%;height:100%;height:100dvh;border-radius:0;border:none;overflow-y:auto}
+.cp-shell.cp-pseudo{position:fixed;inset:0;z-index:300;width:100%;height:100%;height:100dvh;border-radius:0;border:none;overflow:hidden}
 body.cp-locked{overflow:hidden}
+
+/* ---------- 全屏遮挡修正 + 简化布局 ----------
+   全屏时外壳是定高 flex 列：头/筛选/KPI/底栏各占自然高度，中栏 flex:1 吃掉剩余高度；
+   地图列改为 flex 列，SVG 同时受宽与高约束（viewBox 等比 meet 缩放），
+   省份小卡、落点、附图框都在 SVG 内部随图缩放，不再被底栏或侧栏盖住，也不需要滚动才看得全。 */
+.cp-shell:fullscreen .cp-main,.cp-shell.cp-pseudo .cp-main{flex:1 1 auto;min-height:0}
+.cp-shell:fullscreen .cp-col-map,.cp-shell.cp-pseudo .cp-col-map{display:flex;flex-direction:column;overflow:hidden}
+.cp-shell:fullscreen .cp-viz-wrap,.cp-shell.cp-pseudo .cp-viz-wrap{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.cp-shell:fullscreen .cp-viz-head,.cp-shell.cp-pseudo .cp-viz-head{flex:none}
+.cp-shell:fullscreen #cpViz,.cp-shell.cp-pseudo #cpViz{flex:1 1 auto;min-height:0}
+.cp-shell:fullscreen #cpViz svg,.cp-shell.cp-pseudo #cpViz svg{width:100%;height:100%;max-height:none}
+.cp-shell:fullscreen .legend,.cp-shell.cp-pseudo .legend{flex:none}
+.cp-shell:fullscreen .cp-dest,.cp-shell.cp-pseudo .cp-dest{flex:none}
+.cp-shell:fullscreen .cp-bottom,.cp-shell.cp-pseudo .cp-bottom{max-height:196px}
+.cp-shell.cp-pseudo .cp-col{overflow-y:auto;scrollbar-width:thin}
+.cp-shell.cp-pseudo .cp-col-map{overflow:hidden}
+.cp-shell.cp-pseudo .cp-bottom{overflow-y:auto;scrollbar-width:thin}
+@media(min-width:1280px){
+  .cp-shell:fullscreen #cpProjGrid,.cp-shell.cp-pseudo #cpProjGrid{grid-template-columns:repeat(6,1fr)}
+}
+/* 窄屏全屏：整列可滚动，地图保持自然比例在最前，不做高度压缩 */
+@media(max-width:1020px){
+  .cp-shell:fullscreen .cp-col-map,.cp-shell.cp-pseudo .cp-col-map{display:block;overflow:visible}
+  .cp-shell:fullscreen #cpViz svg,.cp-shell.cp-pseudo #cpViz svg{height:auto}
+  .cp-shell.cp-pseudo .cp-main{overflow-y:auto}
+  .cp-shell.cp-pseudo .cp-col{overflow:visible}
+}
 </style>
 </head>
 <body>
@@ -438,7 +465,7 @@ body.cp-locked{overflow:hidden}
           </div>
         </div>
         <div class="cp-head-actions">
-          <div class="cp-clock"><span class="cp-livechip"><i></i>平台运行中</span>数据快照 <b>2026-11</b> · 台账 <b>16 个项目</b> · 技术库 <b>28 个团队</b><br><span class="cp-fs-hint">全屏后一屏呈现核心分布与数据，按 Esc 退出</span></div>
+          <div class="cp-clock"><span class="cp-livechip"><i></i>平台运行中</span>数据快照 <b>2026-11</b><br><span class="cp-fs-hint">全屏一屏呈现 · Esc 退出</span></div>
           <span><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑</button></span></span>
           <button class="cp-fs-btn" id="cpFsBtn" type="button">⛶ 全屏演示</button>
         </div>
@@ -454,61 +481,35 @@ body.cp-locked{overflow:hidden}
       <div class="cp-kpis" id="cpKpis"></div>
       <div class="cp-main">
         <div class="cp-col">
-          <h3>技术供给 · 五大环节</h3>
+          <h3>项目阶段分布</h3>
+          <p class="sub2">六个管理状态 · 当前筛选范围内项目数。</p>
+          <div id="cpStages"></div>
+          <h3 style="margin-top:14px">技术供给 · 五大环节</h3>
           <p class="sub2">国家队团队数 / 在途项目调用项 / 落稳率（条长）。</p>
           <div id="cpLinks"></div>
-          <h3 style="margin-top:14px">项目阶段分布</h3>
-          <p class="sub2">六个管理状态 · 当前筛选范围内。</p>
-          <div id="cpStages"></div>
-          <h3 style="margin-top:14px">深圳输出</h3>
-          <div class="cp-row"><div class="r1"><b>标准与背书</b></div><div class="r2">“圳品”三轮标准 + 国家工程研究中心检测与区块链溯源背书</div></div>
-          <div class="cp-row"><div class="r1"><b>渠道与结算</b></div><div class="r2">69 个深圳农场 · 覆盖 29 省 163 市 432 县 · 2024 采购帮扶产品超 160 亿</div></div>
-          <div class="cp-row"><div class="r1"><b>运营模式</b></div><div class="r2">文山方舱 / 双河温室 / 红河蓝莓整园运营，沉淀工具箱向其余县复制</div></div>
         </div>
         <div class="cp-col cp-col-map">
           <div class="cp-viz-wrap">
-            <div class="cp-viz-head"><b>全国项目分布图</b><span>标准中国地图（DataV GeoJSON 省界）· 省份着色 = 在途项目落点 · 小卡 = 项目数 / 平均进度 · 圆点颜色 = 项目状态 · 数字 = 进度% · 随上方筛选联动</span></div>
+            <div class="cp-viz-head"><b>全国项目分布图</b><span>省份着色 = 项目落点 · 小卡 = 项目数 / 平均进度 · 圆点 = 状态与进度% · 随筛选联动</span></div>
             <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点"></div>
             <div class="legend" id="cpLegend"></div>
             <div class="cp-dest" id="cpDest"></div>
-          </div>
-          <h3 style="margin-top:12px">技术去了哪儿</h3>
-          <div class="cp-flow">
-            <div class="cp-fnode"><b>北京 · 拿技术</b><span>28 个团队 · 五大环节寻源</span></div>
-            <div class="cp-fnode"><b>深圳 · 拿结算</b><span>工具箱封装 · 圳品标准与结算</span></div>
-            <div class="cp-fnode"><b>成都 · 拿数据</b><span>丘陵山区场景验证</span></div>
-            <div class="cp-fnode"><b>对口县 · 落场景</b><span>9 省 106 县 · 七大场景</span></div>
-            <div class="cp-fnode"><b>绩效 · 再复制</b><span>完整周期检验 · 滚动复制</span></div>
-          </div>
-          <h3 style="margin-top:6px">政策资金去了哪儿</h3>
-          <div class="cp-flow">
-            <div class="cp-fnode money"><b>四路来源</b><span>财政协作 · 科技 · 工信 · 国企/认捐</span></div>
-            <div class="cp-fnode money"><b>促进中心项目库</b><span>研究 · 诊断 · 论证</span></div>
-            <div class="cp-fnode money"><b>市局评审</b><span>专家评审 · 揭榜挂帅</span></div>
-            <div class="cp-fnode money"><b>发包实施</b><span>属地承接 + 市场实施</span></div>
-            <div class="cp-fnode money"><b>运营绩效</b><span>买能力买成效 · 绩效续期</span></div>
           </div>
         </div>
         <div class="cp-col">
           <h3>技术对接构成</h3>
           <p class="sub2">当前筛选范围内全部对接项状态构成。</p>
           <div class="cp-donut-wrap"><div id="cpDonut"></div><div class="cp-legend" id="cpDonutLegend"></div></div>
-          <h3 style="margin-top:14px">资金盘子 · 公开锚点</h3>
-          <div class="cp-row"><div class="r1"><span>省内帮扶资金（2025）</span><b>39.15 亿</b></div><div class="r2">2024 年 32.06 亿 · 对口汕头/河源/汕尾/潮州+惠州 3 县</div></div>
-          <div class="cp-row"><div class="r1"><span>近年年均财政投入</span><b>近 60 亿</b></div><div class="r2">“十四五”项目超 2200 个 · 2023 以来省内累计超 100 亿</div></div>
-          <div class="cp-row"><div class="r1"><span>采购帮扶产品（2024）</span><b>超 160 亿</b></div><div class="r2">圳帮扶商城近 8000 款 · 深圳农场 69 个</div></div>
-          <div class="cp-row"><div class="r1"><span>国资“6·30”认捐到账</span><b>超 20 亿</b></div><div class="r2">2019 年以来累计 · 以国资委年度公布为准</div></div>
-          <div class="cp-row"><div class="r1"><span>单项政策上限（示例）</span><b>800 万 / 3000 万</b></div><div class="r2">科技局可持续发展专项 / 重点产业研发计划</div></div>
           <h3 style="margin-top:14px">地区排行 · 项目与进度</h3>
           <p class="sub2">按项目数排序，同数按平均进度排序。</p>
           <div id="cpRank"></div>
         </div>
       </div>
       <div class="cp-bottom">
-        <h3 style="margin:0 0 3px;font-size:14.5px">对口地方用了什么</h3>
+        <h3 style="margin:0 0 3px;font-size:14.5px">重点项目 · 对口地方用了什么</h3>
         <p class="sub2" style="font-size:11.5px;color:var(--ink3);margin:0 0 10px" id="cpProjNote"></p>
         <div class="grid g3" id="cpProjGrid"></div>
-        <p class="small" style="margin-top:10px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目；资金数字均为公开锚点，正式汇报以市局与各部门当年文件为准。分布图为标准中国地图：国界与省界采用阿里 DataV 公开 GeoJSON 边界数据（与交付指标看板同源），含台湾、海南及南海诸岛附图，按经纬度投影绘制，不使用瓦片地图组件；项目点位为所在地示意，不代表设施精确位置；无坐标项目按所属省份示意落位。</p>
+        <p class="small" style="margin-top:10px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
       </div>
     </div>
   </section>
@@ -980,12 +981,10 @@ function renderCockpit(){
   var rate=dockTotal?Math.round(dockDoneN/dockTotal*100):0;
   var kpis=[
     ["平台覆盖","#e8a33d","9 <small>省</small> · 106 <small>县</small>","清单正文逐项具名 52 个单位",1],
-    ["在途项目","#1d5fd6",'<span data-n="'+list.length+'">'+list.length+'</span> <small>个</small>',"共 16 个 · 其中真实运营样本 3 个",0],
+    ["在途项目","#1d5fd6",'<span data-n="'+list.length+'">'+list.length+'</span> <small>个</small>',"共 16 个 · 真实运营样本 3 个",0],
     ["试点＋运营","#1a7f4b",'<span data-n="'+running+'">'+running+'</span> <small>个</small>',"已进入实施与运营阶段",0],
-    ["调用技术团队","#0e7c86",'<span data-n="'+Object.keys(teamSet).length+'">'+Object.keys(teamSet).length+'</span> <small>支</small>',"技术库共 28 支 · 五大环节",0],
-    ["技术对接项","#b26a00",'<span data-n="'+dockTotal+'">'+dockTotal+'</span> <small>项</small>',"已落稳 "+dockDoneN+" 项 · 落稳率 "+rate+"%",0],
-    ["平均推进进度","#1449a8",'<span data-n="'+avg+'">'+avg+'</span><small>%</small>',"按台账填报进度均值",0],
-    ["待推进对接","#b3362b",'<span data-n="'+dockPending+'">'+dockPending+'</span> <small>项</small>',"对接中＋待对接，需催办跟进",0]
+    ["技术对接项","#b26a00",'<span data-n="'+dockTotal+'">'+dockTotal+'</span> <small>项</small>',"已落稳 "+dockDoneN+" 项 · 待推进 "+dockPending+" 项",0],
+    ["平均推进进度","#1449a8",'<span data-n="'+avg+'">'+avg+'</span><small>%</small>',"落稳率 "+rate+"% · 按台账进度均值",0]
   ];
   document.getElementById("cpKpis").innerHTML=kpis.map(function(k){return '<div class="cp-kpi'+(k[4]?" hero":"")+'" style="--acc:'+k[1]+'"><div class="lab"><span class="dot" style="background:'+k[1]+'"></span>'+k[0]+'</div><div class="val">'+k[2]+'</div><div class="note2">'+k[3]+'</div></div>';}).join("");
   cpCountUp();
@@ -1021,15 +1020,16 @@ function renderCockpit(){
     var avgp=Math.round(rank[r].prog/rank[r].n);
     return '<div class="cp-rank"><div class="r1"><span class="no">'+(i+1)+'</span><b>'+r+'</b><span style="margin-left:auto">'+rank[r].n+' 个项目 · '+avgp+'%</span></div><div class="cp-bar"><i style="width:'+avgp+'%;background:var(--blue)"></i></div></div>';
   }).join(""):'<div class="empty">当前筛选下暂无项目</div>';
-  /* 下：项目卡片 */
-  document.getElementById("cpProjNote").textContent="当前筛选范围内 "+list.length+" 个项目：每张卡片列明所在地实际对接的高校技术、资金通道与推进状态。";
-  document.getElementById("cpProjGrid").innerHTML=list.length?list.map(function(p){
+  /* 下：重点项目（筛选范围内按阶段优先级 + 进度排序，最多 6 个，卡片只保留技术与资金两行） */
+  var stageRank={"运营中":0,"试点实施":1,"绩效评估":2,"技术对接":3,"方案论证":4,"需求诊断":5};
+  var focus=list.slice().sort(function(a,b){return (stageRank[a.status]-stageRank[b.status])||(b.progress-a.progress);}).slice(0,6);
+  document.getElementById("cpProjNote").textContent="当前筛选范围内共 "+list.length+" 个项目，下方按阶段与进度列出重点项目（最多 6 个）。";
+  document.getElementById("cpProjGrid").innerHTML=focus.length?focus.map(function(p){
     return '<div class="cp-proj"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h4>'+esc(p.name)+'</h4><span class="stag" style="background:'+pStatusColor(p.status)+'">'+p.status+'</span></div>'+
     '<p class="m">'+esc(p.loc)+' · '+esc(sceneShort(p.scene))+' · 进度 '+p.progress+'%</p>'+
     '<div class="cp-bar"><i style="width:'+p.progress+'%;background:'+pStatusColor(p.status)+'"></i></div>'+
     '<p class="m" style="margin-top:8px"><b style="color:var(--ink)">用了什么技术：</b>'+p.techs.map(function(d){return esc(TECHS[d.t].team.split(" ")[0])+"（"+d.s+"）";}).join("、")+'</p>'+
-    '<p class="m"><b style="color:var(--ink)">钱走哪条线：</b>'+esc(p.fund)+'</p>'+
-    '<p class="m"><b style="color:var(--ink)">下一节点：</b>'+esc(p.next)+'</p></div>';
+    '<p class="m"><b style="color:var(--ink)">钱走哪条线：</b>'+esc(p.fund)+'</p></div>';
   }).join(""):'<div class="empty">当前筛选组合下暂无在途项目，点「重置」查看全部。</div>';
   renderCpViz(list);
 }
@@ -1152,7 +1152,7 @@ function renderCpViz(list){
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="#1d5fd6"/>'
       +'<text x="'+(px+67).toFixed(0)+'" y="'+(py+29).toFixed(0)+'" font-size="10.5" font-weight="700" fill="'+pal.pillSub+'">'+avg+'%</text></g>';
   });
-  s+='<text x="10" y="'+(H-8)+'" font-size="10" fill="'+pal.note+'">标准中国地图 · 边界数据来源：阿里 DataV 公开 GeoJSON（100000_full）· 含南海诸岛附图 · 省份着色深浅 = 项目数 · 小卡 = 项目数 / 平均进度</text>';
+  s+='<text x="10" y="'+(H-8)+'" font-size="10" fill="'+pal.note+'">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数</text>';
   s+='</svg>';
   box.innerHTML=s;
 }
