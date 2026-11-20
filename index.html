@@ -192,6 +192,10 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-col h3{margin:0 0 3px;font-size:14.5px}
 .cp-col .sub2{font-size:11.5px;color:var(--ink3);margin:0 0 8px;line-height:1.5}
 @media(max-width:1020px){.cp-main{grid-template-columns:1fr}.cp-shell:fullscreen .cp-main{overflow-y:auto}.cp-shell:fullscreen .cp-col{overflow:visible}}
+/* 窄屏：地图列提到最前，打开驾驶舱即见全国地图，不必翻过左栏 */
+@media(max-width:1020px){.cp-main{display:flex;flex-direction:column}.cp-col-map{order:-1}}
+#cpViz{min-height:240px}
+@media(max-width:560px){#cpViz{min-height:200px}}
 /* 自定义核心分布图（非地图组件）：枢纽—落点示意 */
 .cp-viz-wrap{background:linear-gradient(180deg,#f2f5f9,#e8edf3);border:1px solid var(--line);border-radius:8px;padding:8px 10px 6px}
 .cp-viz-head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
@@ -400,7 +404,7 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
           <div class="cp-row"><div class="r1"><b>渠道与结算</b></div><div class="r2">69 个深圳农场 · 覆盖 29 省 163 市 432 县 · 2024 采购帮扶产品超 160 亿</div></div>
           <div class="cp-row"><div class="r1"><b>运营模式</b></div><div class="r2">文山方舱 / 双河温室 / 红河蓝莓整园运营，沉淀工具箱向其余县复制</div></div>
         </div>
-        <div class="cp-col">
+        <div class="cp-col cp-col-map">
           <div class="cp-viz-wrap">
             <div class="cp-viz-head"><b>全国项目分布图</b><span>省份着色 = 在途项目落点 · 小卡 = 项目数 / 平均进度 · 圆点颜色 = 项目状态 · 数字 = 进度% · 随上方筛选联动</span></div>
             <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点"></div>
@@ -973,7 +977,8 @@ document.getElementById("cpReset").addEventListener("click",function(){
   [cpRegionSel,cpStatusSel2,cpSceneSel2,cpFundSel2].forEach(function(sel){sel.value="-1";});
   renderCockpit();
 });
-renderCockpit();
+/* 注意：首次 renderCockpit() 必须在下方地图数据（CP_FALLBACK_POS / CP_W 等）定义之后调用，
+   否则无坐标项目取备用坐标时读到 undefined 而抛错，地图首屏不渲染。调用点已移至脚本末尾。 */
 
 /* ===== 驾驶舱核心分布图：自定义示意（非地图组件）+ 全屏演示 ===== */
 var CP_FALLBACK_POS={"P14":[97.47,29.32],"P15":[107.0,24.0],"P16":[109.88,31.07]};
@@ -1021,7 +1026,7 @@ var CP_PROV_PROJ=[
  {n:"重庆",c:[107.9,30.2],pts:[[105.8,28.3],[105.5,28.3],[106.8,28.6],[108,28.5],[109.5,29.3],[110.2,30.5],[109.5,31.8],[108.3,32.2],[107,31.8],[106,30.8],[105.8,29.5]]},
  {n:"黑龙江",c:[127.8,48],pts:[[119.7,49.9],[120,49],[121.5,48],[123,46.8],[124.5,46.5],[126,45.5],[127.5,45.3],[129,45],[131,44],[132.9,43.3],[134,45.5],[135.1,47],[134.8,48.3],[132,49.5],[129,49.8],[126,49.7],[123,50],[121,50.1]]}
 ];
-var CP_FILL_SCALE=["#d7e5f8","#bcd3f2","#8fb4e8","#5b8edb","#2f6fd0"];
+var CP_FILL_SCALE=["#a9c6ee","#7ea9e4","#4f86d4","#2f6fd0","#1d5fd6"];
 var CP_PILL_OFF={"新疆":[-52,-64],"西藏":[-64,-16],"云南":[-76,-58],"广西":[-30,34],"广东":[20,-60],"江西":[18,-54],"黑龙江":[12,-58],"重庆":[24,-50]};
 function renderCpViz(list){
   var box=document.getElementById("cpViz"); if(!box) return;
@@ -1038,24 +1043,24 @@ function renderCpViz(list){
   var s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
   s+='<defs><filter id="cpPillSh" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0b2a5b" flood-opacity="0.22"/></filter></defs>';
   /* 地图底 */
-  s+='<path d="'+cpPath(CP_BORDER,true)+'" fill="#e9eff6" stroke="none"/>';
-  /* 非项目省份浅色块 + 省界 */
+  s+='<path d="'+cpPath(CP_BORDER,true)+'" fill="#cfdeef" stroke="none"/>';
+  /* 非项目省份色块 + 省界 */
   CP_PROV_LIGHT.forEach(function(pv,i){
-    s+='<path d="'+cpPath(pv.pts,true)+'" fill="'+(i%2?"#eef2f7":"#e6edf5")+'" stroke="#b4c5da" stroke-width="1"/>';
+    s+='<path d="'+cpPath(pv.pts,true)+'" fill="'+(i%2?"#dce8f4":"#c9daf0")+'" stroke="#7e97b8" stroke-width="1.2"/>';
   });
   /* 项目省份着色 */
   CP_PROV_PROJ.forEach(function(pv){
     var a=agg[pv.n];
-    var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:"#e9eff6";
+    var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:"#cfdeef";
     s+='<path d="'+cpPath(pv.pts,true)+'" fill="'+fill+'" stroke="#ffffff" stroke-width="1.3"/>';
   });
   /* 海南 / 台湾 */
-  s+='<path d="'+cpPath(CP_HAINAN,true)+'" fill="#e9eff6" stroke="#b4c5da" stroke-width="1"/>';
-  s+='<path d="'+cpPath(CP_TAIWAN,true)+'" fill="#e9eff6" stroke="#b4c5da" stroke-width="1"/>';
+  s+='<path d="'+cpPath(CP_HAINAN,true)+'" fill="#cfdeef" stroke="#7e97b8" stroke-width="1.2"/>';
+  s+='<path d="'+cpPath(CP_TAIWAN,true)+'" fill="#cfdeef" stroke="#7e97b8" stroke-width="1.2"/>';
   /* 国界轮廓 */
-  s+='<path d="'+cpPath(CP_BORDER,true)+'" fill="none" stroke="#7e97b8" stroke-width="1.8"/>';
+  s+='<path d="'+cpPath(CP_BORDER,true)+'" fill="none" stroke="#47648c" stroke-width="2.4"/>';
   /* 省名标注 */
-  CP_PROV_LIGHT.forEach(function(pv){var xy=cpXY(pv.c[0],pv.c[1]); s+='<text x="'+xy[0].toFixed(0)+'" y="'+xy[1].toFixed(0)+'" font-size="10.5" fill="#93a7c4" text-anchor="middle">'+pv.n+'</text>';});
+  CP_PROV_LIGHT.forEach(function(pv){var xy=cpXY(pv.c[0],pv.c[1]); s+='<text x="'+xy[0].toFixed(0)+'" y="'+xy[1].toFixed(0)+'" font-size="10.5" fill="#546e92" text-anchor="middle">'+pv.n+'</text>';});
   CP_PROV_PROJ.forEach(function(pv){var xy=cpXY(pv.c[0],pv.c[1]); var a=agg[pv.n]; s+='<text x="'+xy[0].toFixed(0)+'" y="'+xy[1].toFixed(0)+'" font-size="11" font-weight="'+(a?"700":"400")+'" fill="'+(a&&a.n>=4?"#ffffff":"#7d95b5")+'" text-anchor="middle">'+pv.n+'</text>';});
   var hn=cpXY(109.8,19),tw=cpXY(121,23.6);
   s+='<text x="'+hn[0].toFixed(0)+'" y="'+hn[1].toFixed(0)+'" font-size="9.5" fill="#93a7c4" text-anchor="middle">海南</text>';
@@ -1125,6 +1130,9 @@ function renderCpViz(list){
   });
   document.addEventListener("fullscreenchange",sync);
 })();
+
+/* 首次渲染：置于全部地图数据与函数定义之后，保证首屏即出图 */
+renderCockpit();
 
 </script>
 </body>
