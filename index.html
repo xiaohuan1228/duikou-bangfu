@@ -242,41 +242,41 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-proj .m{font-size:12px;color:var(--ink2)}
 .cp-fs-hint{font-size:11.5px;color:var(--ink3)}
 
-/* ---------- 驾驶舱视觉升级：指挥大屏质感（深蓝头屏 + 大数字 + 中国轮廓分布图） ---------- */
+/* ---------- 驾驶舱视觉：明亮农业主题（白底头屏 + 深绿主色 + 琥珀点缀，去深蓝） ---------- */
 .cp-shell{
-  --ink:#16233a; --ink2:#43536e; --ink3:#71809a; --card:#ffffff; --line:#dde4ef;
+  --ink:#1c2a22; --ink2:#43584c; --ink3:#71857a; --card:#ffffff; --line:#dce5dc;
   --blue:#1d5fd6; --blue-dark:#1449a8; --blue-soft:#eaf1fd; --blue-line:#c9dbf7;
   --green:#1a7f4b; --green-soft:#e6f4ec; --amber:#b26a00; --amber-soft:#fdf1de; --red:#b3362b;
-  background:linear-gradient(180deg,#e9eef5 0%,#dde5ef 100%);
-  border:1px solid #bfcddd; border-radius:16px;
-  box-shadow:0 16px 40px rgba(11,42,91,.16),0 3px 8px rgba(11,42,91,.08);
+  background:linear-gradient(180deg,#f6f8f4 0%,#e9efe7 100%);
+  border:1px solid #c2d2bf; border-radius:16px;
+  box-shadow:0 16px 40px rgba(23,58,38,.14),0 3px 8px rgba(23,58,38,.07);
 }
-/* 头屏：深蓝指挥带 */
-.cp-head{background:#0b2a5b;background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1.4px);background-size:22px 22px;border-bottom:3px solid #e8a33d;padding:14px 18px}
-.cp-logo{width:44px;height:44px;border-radius:10px;background:#1a7f4b;border:1px solid rgba(255,255,255,.45);box-shadow:0 4px 14px rgba(0,0,0,.35);font-size:21px}
-.cp-title h2{color:#fff;font-size:22px;letter-spacing:1px}
-.cp-title p{color:rgba(255,255,255,.78);font-size:12.5px}
-.cp-clock{color:rgba(255,255,255,.75)}
-.cp-clock b{color:#fff}
-.cp-fs-hint{color:rgba(255,255,255,.55)}
-.cp-livechip{display:inline-flex;align-items:center;gap:6px;background:rgba(26,127,75,.35);border:1px solid rgba(92,220,160,.55);color:#a7f3cd;border-radius:999px;padding:1px 10px;font-size:11.5px;font-weight:700;margin-right:8px;vertical-align:1px}
-.cp-livechip i{width:7px;height:7px;border-radius:50%;background:#34d399;display:inline-block;animation:cpBlink 1.8s ease-in-out infinite}
+/* 头屏：白色明亮带 + 深绿下边线 */
+.cp-head{background:#ffffff;border-bottom:3px solid #1a7f4b;padding:14px 18px}
+.cp-logo{width:44px;height:44px;border-radius:10px;background:#1a7f4b;border:1px solid #146c3c;box-shadow:0 4px 12px rgba(23,90,50,.28);font-size:21px}
+.cp-title h2{color:#17301f;font-size:22px;letter-spacing:1px}
+.cp-title p{color:#5a6f61;font-size:12.5px}
+.cp-clock{color:#71857a}
+.cp-clock b{color:#1c2a22}
+.cp-fs-hint{color:#93a69b}
+.cp-livechip{display:inline-flex;align-items:center;gap:6px;background:#e6f4ec;border:1px solid #8fceac;color:#146c3c;border-radius:999px;padding:1px 10px;font-size:11.5px;font-weight:700;margin-right:8px;vertical-align:1px}
+.cp-livechip i{width:7px;height:7px;border-radius:50%;background:#22a35c;display:inline-block;animation:cpBlink 1.8s ease-in-out infinite}
 @keyframes cpBlink{0%,100%{opacity:1}50%{opacity:.35}}
-.cp-fs-btn{background:#e8a33d;color:#221a04;border-color:#e8a33d;font-size:14.5px;padding:10px 20px;box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.cp-fs-btn:hover{background:#f4b74a}
+.cp-fs-btn{background:#177a46;color:#fff;border-color:#177a46;font-size:14.5px;padding:10px 20px;box-shadow:0 4px 12px rgba(23,90,50,.30)}
+.cp-fs-btn:hover{background:#12653a}
 /* 筛选条 */
-.cp-filters{background:#f7f9fc;padding:10px 14px}
-.cp-filters select{border-color:#c3d2e8;font-weight:600;color:var(--ink)}
-.cp-total{background:#0b2a5b;border-radius:999px;padding:8px 16px;font-size:13.5px;box-shadow:0 3px 10px rgba(11,42,91,.25)}
-/* KPI：大数字 + 顶部色带，首卡深蓝主卡 */
+.cp-filters{background:#f7faf6;padding:10px 14px}
+.cp-filters select{border-color:#bfd4ba;font-weight:600;color:var(--ink)}
+.cp-total{background:#177a46;border-radius:999px;padding:8px 16px;font-size:13.5px;box-shadow:0 3px 10px rgba(23,90,50,.25)}
+/* KPI：大数字 + 顶部色带，首卡深绿主卡 */
 .cp-kpis{gap:10px;padding:12px 12px 2px}
-.cp-kpi{border-radius:12px;padding:12px 14px 11px;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(11,42,91,.07);border:1px solid #d3deee}
+.cp-kpi{border-radius:12px;padding:12px 14px 11px;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(23,58,38,.07);border:1px solid #d3dfd2}
 .cp-kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--acc,#1d5fd6)}
 .cp-kpi .lab{font-size:12.5px;font-weight:700;color:var(--ink2)}
 .cp-kpi .val{font-size:31px;letter-spacing:-.5px;margin:2px 0 1px;color:var(--ink)}
 .cp-kpi .val small{color:var(--ink3)}
 .cp-kpi .note2{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.5}
-.cp-kpi.hero{background:#0b2a5b;border-color:#0b2a5b}
+.cp-kpi.hero{background:#14532d;border-color:#14532d}
 .cp-kpi.hero::before{background:#e8a33d}
 .cp-kpi.hero .lab{color:rgba(255,255,255,.75)}
 .cp-kpi.hero .val{color:#fff}
@@ -284,18 +284,18 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-kpi.hero .note2{color:rgba(255,255,255,.6)}
 /* 三栏卡片 */
 .cp-main{gap:10px;padding:10px 12px}
-.cp-col{border-radius:12px;padding:14px 15px;box-shadow:0 3px 10px rgba(11,42,91,.06);border-color:#d3deee}
+.cp-col{border-radius:12px;padding:14px 15px;box-shadow:0 3px 10px rgba(23,58,38,.06);border-color:#d3dfd2}
 .cp-col h3{font-size:15px;border-left:4px solid var(--blue);padding-left:9px;letter-spacing:.3px}
 .cp-col h3.cp-h3g{border-left-color:var(--green)}
 .cp-bar{height:7px;background:#e3eaf3}
 .cp-row .r1{font-size:13.5px}
 /* 分布图容器 */
-.cp-viz-wrap{background:linear-gradient(180deg,#f5f8fc,#e8eff7);border:1px solid #ccd9ec;border-radius:12px;padding:12px 12px 8px;box-shadow:inset 0 1px 0 #fff}
-.cp-viz-head b{font-size:14px;color:#0b2a5b}
-.cp-dest span{border-color:#c3d2e8;box-shadow:0 1px 4px rgba(11,42,91,.06);font-size:12px;padding:2px 11px}
+.cp-viz-wrap{background:linear-gradient(180deg,#f7faf6,#e9f1e7);border:1px solid #c6d8c2;border-radius:12px;padding:12px 12px 8px;box-shadow:inset 0 1px 0 #fff}
+.cp-viz-head b{font-size:14px;color:#14532d}
+.cp-dest span{border-color:#bfd4ba;box-shadow:0 1px 4px rgba(23,58,38,.06);font-size:12px;padding:2px 11px}
 /* 流向节点 */
-.cp-fnode{background:#fff;border:1px solid var(--blue-line);border-top:4px solid var(--blue);border-radius:10px;padding:8px 10px;box-shadow:0 2px 6px rgba(11,42,91,.06)}
-.cp-fnode b{white-space:normal;overflow:visible;font-size:13px;color:#0b2a5b}
+.cp-fnode{background:#fff;border:1px solid var(--blue-line);border-top:4px solid var(--blue);border-radius:10px;padding:8px 10px;box-shadow:0 2px 6px rgba(23,58,38,.06)}
+.cp-fnode b{white-space:normal;overflow:visible;font-size:13px;color:#14532d}
 .cp-fnode.money{border-top-color:#e8a33d}
 .cp-fnode.money b{color:#8a5a00}
 /* 环图与排行 */
@@ -307,9 +307,9 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 #cpRank .cp-rank:nth-child(3) .no{background:#cf8a4e;color:#fff}
 .cp-rank .no{width:22px;height:22px;font-size:12.5px}
 /* 底部项目卡 */
-.cp-bottom{background:#f2f5f9;padding:12px 14px 14px}
-.cp-proj{border-radius:12px;padding:12px 13px;box-shadow:0 2px 8px rgba(11,42,91,.06);border-color:#d3deee;transition:transform .18s ease,box-shadow .18s ease}
-.cp-proj:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(11,42,91,.13)}
+.cp-bottom{background:#f0f4ee;padding:12px 14px 14px}
+.cp-proj{border-radius:12px;padding:12px 13px;box-shadow:0 2px 8px rgba(23,58,38,.06);border-color:#d3dfd2;transition:transform .18s ease,box-shadow .18s ease}
+.cp-proj:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(23,58,38,.13)}
 .cp-proj .cp-bar{height:8px}
 /* 地图脉冲点（运营中） */
 .cp-pulse-ring{transform-box:fill-box;transform-origin:center;animation:cpPulse 2.2s ease-out infinite}
@@ -319,7 +319,7 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
   .cp-proj{transition:none}
 }
 /* 全屏：一屏收紧 */
-.cp-shell:fullscreen{background:linear-gradient(180deg,#e9eef5,#dde5ef)}
+.cp-shell:fullscreen{background:linear-gradient(180deg,#f6f8f4,#e9efe7)}
 .cp-shell:fullscreen #cpViz svg{max-height:none}
 .cp-shell:fullscreen .cp-bottom{max-height:196px}
 .cp-shell:fullscreen .cp-kpi .val{font-size:34px}
@@ -341,36 +341,50 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
   color-scheme:dark;
 }
 :root[data-theme="light"]{color-scheme:light}
-.theme-switch{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card);vertical-align:middle}
-.theme-switch button{border:none;background:transparent;color:var(--ink2);padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;min-height:32px;font-family:inherit}
+.theme-switch{display:inline-flex;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card);vertical-align:middle;box-shadow:0 2px 8px rgba(20,40,30,.14)}
+.theme-switch button{border:none;background:transparent;color:var(--ink2);padding:9px 20px;font-size:14.5px;font-weight:800;cursor:pointer;min-height:42px;font-family:inherit;letter-spacing:.3px}
 .theme-switch button[aria-pressed="true"]{background:var(--blue);color:#fff}
-.topbar .theme-switch{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.12)}
-.topbar .theme-switch button{color:rgba(255,255,255,.85)}
-.topbar .theme-switch button[aria-pressed="true"]{background:#fff;color:#1449a8}
-.cp-head .theme-switch{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.10)}
-.cp-head .theme-switch button{color:rgba(255,255,255,.85)}
-.cp-head .theme-switch button[aria-pressed="true"]{background:#e8a33d;color:#221a04}
+.theme-label{font-size:13.5px;font-weight:800;vertical-align:middle;margin-right:8px}
+.topbar .theme-label{color:#fff}
+.topbar .theme-switch{border-color:#ffffff;background:#ffffff}
+.topbar .theme-switch button{color:#33415c}
+.topbar .theme-switch button[aria-pressed="true"]{background:#1449a8;color:#fff}
+.cp-head .theme-label{color:#43584c}
+.cp-head .theme-switch{border-color:#9db8a2;background:#eef3ee}
+.cp-head .theme-switch button{color:#43584c}
+.cp-head .theme-switch button[aria-pressed="true"]{background:#177a46;color:#fff}
 [data-theme="dark"] .cp-shell{
-  --ink:#e8edf6; --ink2:#b3c0d8; --ink3:#8494b0; --card:#17202f; --line:#2c425f;
+  --ink:#e9f2ea; --ink2:#b3c8b8; --ink3:#84a08c; --card:#1a2620; --line:#2f4a3a;
   --blue:#5b93f0; --blue-dark:#8db4f7; --blue-soft:#1b2c4d; --blue-line:#2c4a80;
   --green:#4cc07f; --green-soft:#173527; --amber:#e0a44a; --amber-soft:#3a2c14; --red:#e07a6e;
-  background:linear-gradient(180deg,#131e31 0%,#0d1624 100%);
-  border-color:#2c425f; box-shadow:0 16px 40px rgba(0,0,0,.5);
+  background:linear-gradient(180deg,#16211b 0%,#101713 100%);
+  border-color:#2f4a3a; box-shadow:0 16px 40px rgba(0,0,0,.5);
 }
-[data-theme="dark"] .cp-filters{background:#131e31}
-[data-theme="dark"] .cp-filters select{border-color:#2c4a80}
-[data-theme="dark"] .cp-kpi{border-color:#2c425f;box-shadow:none}
-[data-theme="dark"] .cp-col{border-color:#2c425f;box-shadow:none}
-[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#16233a,#101a2c);border-color:#2c4a80;box-shadow:none}
-[data-theme="dark"] .cp-viz-head b{color:#cfe0f7}
-[data-theme="dark"] .cp-viz-head span{color:#8494b0}
-[data-theme="dark"] .cp-fnode{background:#17202f;box-shadow:none}
-[data-theme="dark"] .cp-fnode b{color:#8db4f7}
+[data-theme="dark"] .cp-head{background:#1c2a22;border-bottom-color:#2f9e5f}
+[data-theme="dark"] .cp-title h2{color:#eef7ee}
+[data-theme="dark"] .cp-title p{color:rgba(230,242,230,.72)}
+[data-theme="dark"] .cp-clock{color:rgba(230,242,230,.68)}
+[data-theme="dark"] .cp-clock b{color:#ffffff}
+[data-theme="dark"] .cp-fs-hint{color:rgba(230,242,230,.48)}
+[data-theme="dark"] .cp-livechip{background:rgba(26,127,75,.35);border-color:rgba(92,220,160,.55);color:#a7f3cd}
+[data-theme="dark"] .cp-head .theme-label{color:rgba(230,242,230,.8)}
+[data-theme="dark"] .cp-head .theme-switch{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.10)}
+[data-theme="dark"] .cp-head .theme-switch button{color:rgba(255,255,255,.88)}
+[data-theme="dark"] .cp-head .theme-switch button[aria-pressed="true"]{background:#2f9e5f;color:#fff}
+[data-theme="dark"] .cp-filters{background:#16211b}
+[data-theme="dark"] .cp-filters select{border-color:#33523f}
+[data-theme="dark"] .cp-kpi{border-color:#2f4a3a;box-shadow:none}
+[data-theme="dark"] .cp-col{border-color:#2f4a3a;box-shadow:none}
+[data-theme="dark"] .cp-viz-wrap{background:linear-gradient(180deg,#1a2620,#131c16);border-color:#33523f;box-shadow:none}
+[data-theme="dark"] .cp-viz-head b{color:#cfe7d2}
+[data-theme="dark"] .cp-viz-head span{color:#84a08c}
+[data-theme="dark"] .cp-fnode{background:#1a2620;box-shadow:none}
+[data-theme="dark"] .cp-fnode b{color:#8fd0a8}
 [data-theme="dark"] .cp-fnode.money b{color:#e0a44a}
-[data-theme="dark"] .cp-bottom{background:#111a29}
-[data-theme="dark"] .cp-proj{border-color:#2c425f;box-shadow:none}
-[data-theme="dark"] .cp-bar{background:#263650}
-[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#131e31,#0d1624)}
+[data-theme="dark"] .cp-bottom{background:#131c16}
+[data-theme="dark"] .cp-proj{border-color:#2f4a3a;box-shadow:none}
+[data-theme="dark"] .cp-bar{background:#2a3d31}
+[data-theme="dark"] .cp-shell:fullscreen,[data-theme="dark"] .cp-shell.cp-pseudo{background:linear-gradient(180deg,#16211b,#101713)}
 .cp-shell.cp-pseudo{position:fixed;inset:0;z-index:300;width:100%;height:100%;height:100dvh;border-radius:0;border:none;overflow-y:auto}
 body.cp-locked{overflow:hidden}
 </style>
@@ -387,7 +401,7 @@ body.cp-locked{overflow:hidden}
       <span>模式：1 + 3 + N</span>
       <span>数据口径：截至 2026 年 11 月公开信息</span>
     </div>
-    <div class="theme-switch" role="group" aria-label="明亮与暗黑模式切换" style="margin-top:12px"><button type="button" data-set-theme="light" aria-pressed="true">明亮模式</button><button type="button" data-set-theme="dark" aria-pressed="false">暗黑模式</button></div>
+    <div style="margin-top:14px"><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮模式</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑模式</button></span></div>
   </div>
 </header>
 
@@ -425,7 +439,7 @@ body.cp-locked{overflow:hidden}
         </div>
         <div class="cp-head-actions">
           <div class="cp-clock"><span class="cp-livechip"><i></i>平台运行中</span>数据快照 <b>2026-11</b> · 台账 <b>16 个项目</b> · 技术库 <b>28 个团队</b><br><span class="cp-fs-hint">全屏后一屏呈现核心分布与数据，按 Esc 退出</span></div>
-          <span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">明亮</button><button type="button" data-set-theme="dark" aria-pressed="false">暗黑</button></span>
+          <span><span class="theme-label">显示模式</span><span class="theme-switch" role="group" aria-label="明亮与暗黑模式切换"><button type="button" data-set-theme="light" aria-pressed="true">☀ 明亮</button><button type="button" data-set-theme="dark" aria-pressed="false">☾ 暗黑</button></span></span>
           <button class="cp-fs-btn" id="cpFsBtn" type="button">⛶ 全屏演示</button>
         </div>
       </div>
@@ -1036,12 +1050,12 @@ var CP_GEO=[{"n": "北京", "d": "M477.5 178.9L479.2 178.0L473.6 177.4L471.0 174
 var CP_SCS_D="M605.5 445.5L605.5 445.5ZM611.1 425.6L611.7 424.8L611.1 425.6ZM604.4 445.7L604.4 445.7ZM601.6 383.5L602.1 383.5L601.6 383.5ZM634.7 392.4L635.3 392.8L634.7 392.4ZM605.7 445.2L605.7 445.2ZM603.0 387.7L603.4 387.4L603.0 387.7ZM602.5 387.4L602.1 387.8L602.5 387.4ZM614.5 428.0L617.0 427.9L617.9 426.4L614.5 428.0ZM614.9 422.1L615.2 422.5L614.9 422.1ZM614.8 422.2L614.8 422.2ZM604.3 387.1L604.8 387.0L604.3 387.1ZM603.0 386.5L603.0 386.5ZM605.5 422.1L605.5 422.1ZM613.9 429.1L613.9 429.1ZM616.0 422.6L616.0 422.6ZM605.6 383.9L605.6 383.9ZM618.7 415.2L618.7 415.2ZM624.7 418.1L625.2 417.8L624.7 418.1ZM618.3 416.9L618.3 416.9ZM613.8 427.9L613.8 427.9ZM591.0 429.3L593.5 428.4L592.0 428.2L591.0 429.3ZM627.0 422.0L627.0 422.0ZM606.9 388.6L607.6 388.4L606.9 388.6ZM607.2 422.2L607.8 422.3L607.2 422.2ZM617.5 412.9L618.1 412.5L617.5 412.9ZM606.6 387.2L607.2 387.1L606.6 387.2ZM628.2 414.9L629.0 415.2L628.2 414.9ZM606.2 384.3L606.2 384.3ZM601.8 386.5L601.8 386.5ZM623.0 417.3L623.0 417.3ZM618.6 425.2L618.6 425.2ZM617.7 425.6L618.3 425.5L617.7 425.6ZM621.2 424.4L622.0 424.5L621.2 424.4ZM614.4 426.2L614.4 426.2ZM622.6 419.6L622.6 419.6ZM628.0 420.7L628.0 420.7ZM613.1 421.6L613.6 421.5L613.1 421.6ZM618.7 412.1L619.2 411.6L618.7 412.1ZM618.3 410.1L618.3 410.1ZM619.8 412.7L619.8 412.7ZM602.1 386.4L602.1 386.4ZM614.7 422.1L614.7 422.1ZM593.5 426.9L594.2 426.4L593.5 426.9ZM629.5 409.7L629.5 409.7ZM602.8 385.8L602.8 385.8ZM607.1 386.4L607.5 386.1L607.1 386.4ZM603.1 388.3L603.1 388.3ZM614.2 416.7L614.3 416.2L614.2 416.7ZM619.2 425.4L619.2 425.4ZM628.6 418.0L628.6 418.0ZM621.8 415.9L621.8 415.9ZM630.0 414.5L630.0 414.5ZM618.7 387.8L619.3 387.7L618.7 387.8ZM625.5 420.0L625.5 420.0ZM613.2 420.4L613.2 420.4ZM618.5 428.1L618.5 428.1ZM617.6 413.4L617.6 413.4ZM635.0 413.2L635.0 413.2ZM616.3 415.6L616.3 415.6ZM618.7 409.9L618.7 409.9ZM629.0 414.4L629.0 414.4ZM596.2 425.6L597.0 425.4L596.2 425.6ZM601.6 423.7L601.6 423.7ZM621.7 423.8L621.7 423.8ZM610.9 425.8L610.9 425.8ZM615.4 412.4L615.4 412.4ZM632.3 415.3L632.3 415.3ZM616.1 388.4L616.7 388.4L616.1 388.4ZM597.0 426.1L597.0 426.1ZM623.0 423.9L623.0 423.9ZM602.0 428.3L602.0 428.3ZM602.6 423.0L602.6 423.0ZM596.2 427.1L596.2 427.1ZM606.2 421.8L606.2 421.8ZM628.1 417.7L628.1 417.7ZM604.0 425.8L604.0 425.8ZM617.4 390.5L617.4 390.5ZM620.2 411.7L620.2 411.7ZM615.6 388.6L615.6 388.6ZM625.8 416.3L625.8 416.3ZM632.3 413.5L633.1 413.5L632.3 413.5ZM619.5 429.7L619.5 429.7ZM608.8 421.9L608.8 421.9ZM602.7 427.8L602.7 427.8ZM605.5 422.3L605.5 422.3ZM607.2 436.5L607.2 436.5ZM618.2 422.2L618.2 422.2ZM619.6 426.3L619.6 426.3ZM609.4 424.2L609.4 424.2ZM612.9 431.0L612.9 431.0ZM629.3 387.0L629.3 387.0ZM632.7 416.4L632.7 416.4ZM617.4 388.4L617.4 388.4ZM607.8 439.8L607.8 439.8ZM602.5 426.6L602.5 426.6ZM605.7 422.1L605.7 422.1ZM609.1 426.9L609.1 426.9ZM607.5 437.6L607.5 437.6ZM607.2 437.2L607.2 437.2ZM622.2 398.2L622.2 398.2ZM612.9 415.7L612.9 415.7ZM614.3 391.1L614.3 391.1ZM609.2 440.3L609.2 440.3ZM607.4 439.7L607.4 439.7ZM606.3 437.3L606.3 437.3ZM605.6 385.0L605.6 385.0ZM605.6 390.0L605.6 390.0ZM607.6 438.5L607.6 438.5ZM606.9 436.8L606.9 436.8ZM610.9 434.1L610.9 434.1ZM626.4 418.8L626.4 418.8ZM620.0 428.5L620.0 428.5ZM602.0 427.1L602.0 427.1ZM614.7 389.4L614.7 389.4ZM619.9 388.4L619.9 388.4ZM629.6 421.2L629.6 421.2ZM607.8 386.8L607.8 386.8ZM624.3 414.6L624.3 414.6ZM632.0 413.3L632.0 413.3ZM608.0 387.1L608.0 387.1ZM624.4 414.2L624.4 414.2ZM607.1 418.9L607.1 418.9ZM618.2 390.3L618.2 390.3ZM632.5 411.7L632.5 411.7ZM634.6 411.9L634.6 411.9ZM615.9 419.7L615.9 419.7ZM618.8 418.0L618.8 418.0ZM607.3 435.7L607.3 435.7ZM660.1 353.6L661.6 348.3L660.1 353.6ZM653.0 366.0L656.9 361.8L653.0 366.0ZM644.0 379.2L646.9 374.3L644.0 379.2ZM641.9 393.1L641.8 388.4L641.9 393.1ZM639.8 411.2L639.0 412.5L641.4 407.4L639.8 411.2ZM623.2 430.2L626.9 426.2L623.2 430.2ZM606.0 447.1L603.2 447.8L608.9 446.1L606.0 447.1ZM584.6 435.1L584.4 430.5L584.6 435.1ZM594.5 410.4L594.1 411.0L595.2 409.2L595.5 406.2L594.5 410.4ZM592.9 392.2L590.1 387.6L592.9 392.2Z";
 var CP_INSET={x:562,y:344,w:106,h:108};
 var CP_FILL_SCALE=["#a9c6ee","#7ea9e4","#4f86d4","#2f6fd0","#1d5fd6"];
-var CP_PILL_OFF={"新疆":[-52,-64],"西藏":[-64,-16],"云南":[-76,-58],"广西":[-30,34],"广东":[20,-60],"江西":[18,-54],"黑龙江":[12,-58],"重庆":[24,-50]};
+var CP_PILL_OFF={"新疆":[-52,-64],"西藏":[-64,-16],"云南":[-76,-58],"广西":[-100,44],"广东":[20,-60],"江西":[18,-54],"黑龙江":[12,-58],"重庆":[24,-50]};
 var CP_SMALL_LBL={"北京":1,"天津":1,"上海":1,"香港":1,"澳门":1,"海南":1,"台湾":1,"宁夏":1};
 function cpPal(){
   var dark=document.documentElement.getAttribute("data-theme")==="dark";
-  if(dark) return {lightA:"#22334f",lightB:"#1d2c46",stroke:"#41608f",label:"#9db6d9",halo:"#0d1624",city:"#dbe6f7",pillFill:"#1c2a44",pillStroke:"#41608f",pillInk:"#e8edf6",pillSub:"#b3c0d8",insetBg:"#131f33",note:"#63799c",track:"#263650",aggLabel:"#cfe0f7"};
-  return {lightA:"#dce8f4",lightB:"#c9daf0",stroke:"#7e97b8",label:"#546e92",halo:"#eef3f9",city:"#33415c",pillFill:"#ffffff",pillStroke:"#c3d2e8",pillInk:"#16233a",pillSub:"#43536e",insetBg:"#eef3f9",note:"#8494b0",track:"#e3eaf3",aggLabel:"#33507a"};
+  if(dark) return {lightA:"#26382c",lightB:"#213228",stroke:"#55755f",label:"#a9c4ae",halo:"#101713",city:"#ddefdd",pillFill:"#1c2a21",pillStroke:"#55755f",pillInk:"#e9f2ea",pillSub:"#b3c8b8",insetBg:"#182720",note:"#75907c",track:"#2a3d31",aggLabel:"#cfe7d2",islandFill:"#3d6b4a",islandStroke:"#9fd0ab",scsLine:"#e08a6d"};
+  return {lightA:"#dce8f4",lightB:"#c9daf0",stroke:"#7e97b8",label:"#546e92",halo:"#eef6ee",city:"#33415c",pillFill:"#ffffff",pillStroke:"#c3d2e8",pillInk:"#16233a",pillSub:"#43536e",insetBg:"#ffffff",note:"#8494b0",track:"#e3eaf3",aggLabel:"#33507a",islandFill:"#9dbfe8",islandStroke:"#3f6391",scsLine:"#b04a32"};
 }
 function renderCpViz(list){
   var box=document.getElementById("cpViz"); if(!box) return;
@@ -1056,23 +1070,37 @@ function renderCpViz(list){
     agg[r].n++; agg[r].prog+=p.progress; agg[r].lng+=lng; agg[r].lat+=lat;
   });
   var s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
-  s+='<defs><filter id="cpPillSh" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0b2a5b" flood-opacity="0.22"/></filter></defs>';
-  /* 标准省界：34 个省级行政区（DataV GeoJSON），项目省份按项目数着色，其余浅色 */
+  s+='<defs><filter id="cpPillSh" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#2f5240" flood-opacity="0.22"/></filter></defs>';
+  /* 标准省界：34 个省级行政区（DataV GeoJSON），项目省份按项目数着色，其余浅色；
+     台湾、海南为海岛省份，单独用更深的岛屿填色 + 加粗描边，避免与海面底色混在一起看不见 */
   CP_GEO.forEach(function(pv,i){
     var a=agg[pv.n];
-    var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:(i%2?pal.lightA:pal.lightB);
-    s+='<path d="'+pv.d+'" fill="'+fill+'" stroke="'+(a?"#ffffff":pal.stroke)+'" stroke-width="'+(a?"1.1":"0.7")+'" stroke-linejoin="round"/>';
+    var isl=(pv.n==="台湾"||pv.n==="海南");
+    var fill=a?CP_FILL_SCALE[Math.min(a.n,5)-1]:(isl?pal.islandFill:(i%2?pal.lightA:pal.lightB));
+    var stk=a?"#ffffff":(isl?pal.islandStroke:pal.stroke);
+    var sw=a?"1.1":(isl?"1.4":"0.7");
+    s+='<path d="'+pv.d+'" fill="'+fill+'" stroke="'+stk+'" stroke-width="'+sw+'" stroke-linejoin="round"/>';
   });
-  /* 南海诸岛附图（标准地图附图框：九段线与南海岛礁，DataV 同源数据） */
-  s+='<g><rect x="'+CP_INSET.x+'" y="'+CP_INSET.y+'" width="'+CP_INSET.w+'" height="'+CP_INSET.h+'" fill="'+pal.insetBg+'" stroke="'+pal.stroke+'" stroke-width="1"/>'
-    +'<path d="'+CP_SCS_D+'" fill="'+pal.lightB+'" stroke="'+pal.stroke+'" stroke-width="0.8" stroke-linejoin="round"/>'
-    +'<text x="'+(CP_INSET.x+CP_INSET.w/2)+'" y="'+(CP_INSET.y+CP_INSET.h-6)+'" font-size="9" fill="'+pal.label+'" text-anchor="middle">南海诸岛</text></g>';
-  /* 省名标注 */
+  /* 南海诸岛附图框（标准地图附图）：白底描边框 + 九段线（断续线，走向据 DataV 同源南海断续线数据点）+ 岛礁点 + 标题 */
+  (function(){
+    var ix=CP_INSET.x, iy=CP_INSET.y, iw=CP_INSET.w, ih=CP_INSET.h;
+    s+='<g><rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" fill="'+pal.insetBg+'" stroke="'+pal.islandStroke+'" stroke-width="1.4"/>'
+      +'<path d="M659 358 L652 370 L645 382 L642 396 L640 412 L625 431 L608 446 L589 439 L592 421 L594 403 L591 389" fill="none" stroke="'+pal.scsLine+'" stroke-width="1.8" stroke-dasharray="6 3.2" stroke-linecap="round"/>'
+      +'<g fill="'+pal.islandFill+'" stroke="'+pal.islandStroke+'" stroke-width="0.9">'
+      +'<ellipse cx="604" cy="388" rx="3.4" ry="2.1"/><circle cx="617" cy="390" r="1.8"/><circle cx="630" cy="391" r="1.8"/>'
+      +'<circle cx="636" cy="413" r="1.6"/><circle cx="619" cy="417" r="2.1"/><circle cx="629" cy="421" r="1.6"/>'
+      +'<ellipse cx="614" cy="428" rx="3.2" ry="2"/><circle cx="603" cy="430" r="1.7"/><circle cx="623" cy="426" r="1.5"/><circle cx="608" cy="419" r="1.4"/>'
+      +'</g>'
+      +'<text x="'+(ix+iw/2)+'" y="'+(iy+14)+'" font-size="10.5" font-weight="700" fill="'+pal.city+'" text-anchor="middle">南海诸岛</text>'
+      +'<text x="605" y="380" font-size="7.5" fill="'+pal.label+'" text-anchor="middle">西沙群岛</text>'
+      +'<text x="618" y="442" font-size="7.5" fill="'+pal.label+'" text-anchor="middle">南沙群岛</text></g>';
+  })();
+  /* 省名标注（带底色描边光晕，海岛小字也不糊） */
   CP_GEO.forEach(function(pv){
     var a=agg[pv.n];
     var fs=CP_SMALL_LBL[pv.n]?8.8:10.5;
     var fill=(a&&a.n>=3)?"#ffffff":(a?pal.aggLabel:pal.label);
-    s+='<text x="'+pv.cx+'" y="'+pv.cy+'" font-size="'+fs+'" font-weight="'+(a?"700":"400")+'" fill="'+fill+'" text-anchor="middle">'+pv.n+'</text>';
+    s+='<text x="'+pv.cx+'" y="'+pv.cy+'" font-size="'+fs+'" font-weight="'+(a?"700":"400")+'" fill="'+fill+'" text-anchor="middle" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3px">'+pv.n+'</text>';
   });
   /* 项目点位（经纬度投影 + 簇内错位） */
   var pts=list.map(function(p,i){
@@ -1149,8 +1177,17 @@ function renderCpViz(list){
     if(p&&typeof p.catch==="function"){ p.catch(function(){ enterPseudo(); }); }
   });
   document.addEventListener("fullscreenchange",sync);
+  document.addEventListener("webkitfullscreenchange",sync);
   document.addEventListener("fullscreenerror",function(){ enterPseudo(); });
-  document.addEventListener("keydown",function(e){ if((e.key==="Escape"||e.key==="Esc")&&isPseudo()) exitPseudo(); });
+  /* Esc 退出：捕获阶段监听，伪全屏与原生全屏都处理——原生全屏时主动调用 exitFullscreen，
+     不依赖浏览器自身的 Esc 退出（宿主页面拦截按键或自动化环境下原生退出不触发） */
+  document.addEventListener("keydown",function(e){
+    if(!(e.key==="Escape"||e.key==="Esc"||e.keyCode===27)) return;
+    if(isPseudo()){ exitPseudo(); return; }
+    if(document.fullscreenElement&&document.exitFullscreen){
+      try{ var r=document.exitFullscreen(); if(r&&typeof r.catch==="function") r.catch(function(){}); }catch(err){}
+    }
+  },true);
   sync();
 })();
 
