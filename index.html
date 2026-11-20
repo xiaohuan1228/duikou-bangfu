@@ -438,6 +438,16 @@ body.cp-locked{overflow:hidden}
 .cp-shell.cp-pseudo .cp-detail{max-height:30vh;overflow-y:auto;scrollbar-width:thin}
 .cp-shell.cp-pseudo .cp-col{overflow-y:auto;scrollbar-width:thin}
 .cp-shell.cp-pseudo .cp-col-map{overflow:hidden}
+/* 全屏项目信息防裁切：中栏网格行高必须受外壳剩余高度约束（minmax(0,1fr)），
+   否则行高按内容撑开、地图列底部（图例 / 目的地 / 项目信息面板 / 口径注）被 overflow:hidden 裁掉；
+   地图列内除地图本体外全部 flex:none 不参与挤压，项目信息面板按自身高度（上限 30vh 内滚）完整呈现，
+   地图本体 flex 收缩让位，保证全屏一屏内项目信息看得全。 */
+.cp-shell:fullscreen .cp-main,.cp-shell.cp-pseudo .cp-main{grid-template-rows:minmax(0,1fr)}
+.cp-shell:fullscreen .cp-col,.cp-shell.cp-pseudo .cp-col{min-height:0}
+.cp-shell:fullscreen .cp-map-tools,.cp-shell.cp-pseudo .cp-map-tools,
+.cp-shell:fullscreen .cp-citybar,.cp-shell.cp-pseudo .cp-citybar,
+.cp-shell:fullscreen .cp-detail,.cp-shell.cp-pseudo .cp-detail,
+.cp-shell:fullscreen .cp-viz-wrap>p.small,.cp-shell.cp-pseudo .cp-viz-wrap>p.small{flex:none}
 /* 窄屏全屏：整列可滚动，地图保持自然比例在最前，不做高度压缩 */
 @media(max-width:1020px){
   .cp-shell:fullscreen .cp-col-map,.cp-shell.cp-pseudo .cp-col-map{display:block;overflow:visible}
@@ -1108,6 +1118,15 @@ function cpApplyVB(){
   var vb=cpVB||cpFullVB();
   svg.setAttribute("viewBox",vb.x+" "+vb.y+" "+vb.w+" "+vb.h);
   svg.style.cursor=(cpVB&&cpVB.w<CP_W-1)?"grab":"default";
+  /* 省份数量小卡反向缩放：小卡画在地图坐标系里，放大时会被同步放大；
+     按当前 viewBox 宽度比给小卡加反向 scale，使其屏幕尺寸恒定，不随缩放变大 */
+  var k=vb.w/CP_W;
+  svg.querySelectorAll(".cp-pill").forEach(function(g){
+    var ax=parseFloat(g.getAttribute("data-ax")), ay=parseFloat(g.getAttribute("data-ay"));
+    if(isNaN(ax)||isNaN(ay)) return;
+    if(k<0.999){ g.setAttribute("transform","translate("+ax+" "+ay+") scale("+k.toFixed(3)+") translate("+(-ax)+" "+(-ay)+")"); }
+    else{ g.removeAttribute("transform"); }
+  });
 }
 function cpZoomBy(f,cx,cy){
   var vb=cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:cpFullVB();
@@ -1120,7 +1139,7 @@ function cpZoomBy(f,cx,cy){
   cpVB=(vb.w>=CP_W-1&&!cpDrill)?null:vb;
   cpApplyVB();
   /* 缩放跨过小卡显示阈值时重绘一次，让省份小卡随缩放收起 / 恢复 */
-  var wantPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.72);
+  var wantPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.55);
   if(wantPills!==CP_PILLS_SHOWN){ renderCpViz(CP_LAST_LIST); }
 }
 function cpClampVB(vb){
@@ -1362,7 +1381,7 @@ function renderCpViz(list){
   /* 省份数据小卡（项目数 / 均进度，随筛选联动，点击下钻）：
      仅在全国总览态显示；已下钻、已选中项目或放大超过阈值时收起，
      避免小卡压住圆点与地名标签（省份信息改由详情面板与下钻条承载） */
-  var showPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.72);
+  var showPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.55);
   CP_PILLS_SHOWN=showPills;
   Object.keys(agg).forEach(function(r){
     var a=agg[r]; if(!a||!showPills) return;
@@ -1370,7 +1389,7 @@ function renderCpViz(list){
     var xy=cpXY(a.lng/a.n,a.lat/a.n);
     var off=CP_PILL_OFF[r]||[-48,-58];
     var px=Math.max(4,Math.min(W-102,xy[0]+off[0])), py=Math.max(4,Math.min(H-44,xy[1]+off[1]));
-    s+='<g class="cp-pill" data-prov="'+r+'" filter="url(#cpPillSh)"><title>'+r+' · '+a.n+' 个项目 · 点击下钻到城市</title><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
+    s+='<g class="cp-pill" data-prov="'+r+'" data-ax="'+px.toFixed(0)+'" data-ay="'+py.toFixed(0)+'" filter="url(#cpPillSh)"><title>'+r+' · '+a.n+' 个项目 · 点击下钻到城市</title><rect x="'+px.toFixed(0)+'" y="'+py.toFixed(0)+'" width="98" height="39" rx="8" fill="'+pal.pillFill+'" stroke="'+pal.pillStroke+'"/>'
       +'<text x="'+(px+10).toFixed(0)+'" y="'+(py+16).toFixed(0)+'" font-size="12" font-weight="700" fill="'+pal.pillInk+'">'+r+' · '+a.n+' 个项目</text>'
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="52" height="5" rx="2.5" fill="'+pal.track+'"/>'
       +'<rect x="'+(px+10).toFixed(0)+'" y="'+(py+24).toFixed(0)+'" width="'+(52*avg/100).toFixed(0)+'" height="5" rx="2.5" fill="'+pal.acc+'"/>'
