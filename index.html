@@ -302,9 +302,6 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-donut-wrap{gap:14px}
 .cp-legend{font-size:12.5px;line-height:2.05}
 .cp-legend b{color:var(--ink)}
-#cpRank .cp-rank:nth-child(1) .no{background:#e8a33d;color:#fff}
-#cpRank .cp-rank:nth-child(2) .no{background:#8fa5c0;color:#fff}
-#cpRank .cp-rank:nth-child(3) .no{background:#cf8a4e;color:#fff}
 .cp-rank .no{width:22px;height:22px;font-size:12.5px}
 /* 地图工具条：面包屑下钻 + 缩放控制 */
 .cp-map-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px}
@@ -327,8 +324,10 @@ footer{margin-top:44px;border-top:1px solid var(--line);padding-top:16px;color:v
 .cp-citybar button b{color:var(--blue)}
 .cp-citybar button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
 .cp-citybar button[aria-pressed="true"] b{color:#fff}
-/* 地图详情面板：重点项目与点选项目都在地图内呈现，不再单独成列 */
+/* 重点项目详情面板：位于右栏（替代原右下地区排行），与地图点选双向联动 */
 .cp-detail{margin-top:8px;border:1px solid var(--blue-line);background:var(--card);border-radius:10px;padding:10px 12px;box-shadow:0 2px 8px rgba(22,45,90,.07)}
+/* 重点项目面板移至右栏后：右栏本身已是卡片，面板去掉嵌套边框 / 阴影，改以分隔线衔接，全屏时随右栏滚动完整呈现 */
+.cp-col>.cp-detail{margin-top:16px;border:none;border-top:1px solid var(--line);border-radius:0;box-shadow:none;background:transparent;padding:12px 0 0}
 .cp-detail:empty{display:none}
 .cp-detail .dh{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
 .cp-detail h4{margin:0;font-size:14px}
@@ -549,7 +548,6 @@ body.cp-locked{overflow:hidden}
             <div id="cpViz" role="img" aria-label="全国对口帮扶项目分布地图：项目所在省份着色并标注项目数与平均进度，北京为技术策源、深圳为结算中枢、成都为数据验证，圆点为各项目落点，支持缩放与省份下钻"></div>
             <div class="legend" id="cpLegend"></div>
             <div class="cp-dest" id="cpDest"></div>
-            <div class="cp-detail" id="cpDetail" aria-live="polite"></div>
             <p class="small" style="margin:8px 0 2px">口径：3 个「运营中」为深农科创在营真实样本，其余 13 个为演示管理流程的示例项目。地图边界采用阿里 DataV 公开 GeoJSON 数据，含台湾、海南及南海诸岛附图；项目点位为所在地示意，无坐标项目按所属省份示意落位。</p>
           </div>
           <p class="cp-map-note">标准中国地图 · 边界：阿里 DataV GeoJSON · 含南海诸岛附图 · 着色深浅 = 项目数 · ★ = 重点项目</p>
@@ -558,9 +556,7 @@ body.cp-locked{overflow:hidden}
           <h3>技术对接构成</h3>
           <p class="sub2">当前筛选范围内全部对接项状态构成。</p>
           <div class="cp-donut-wrap"><div id="cpDonut"></div><div class="cp-legend" id="cpDonutLegend"></div></div>
-          <h3 style="margin-top:14px">地区排行 · 项目与进度</h3>
-          <p class="sub2">按项目数排序，同数按平均进度排序。</p>
-          <div id="cpRank"></div>
+          <div class="cp-detail" id="cpDetail" aria-live="polite"></div>
         </div>
       </div>
     </div>
@@ -1064,16 +1060,8 @@ function renderCockpit(){
   var counts=DOCK_CATS.map(function(c){var n=0;list.forEach(function(p){p.techs.forEach(function(d){if(d.s===c[0])n++;});});return n;});
   document.getElementById("cpDonut").innerHTML=cpDonutSVG(counts,dockTotal);
   document.getElementById("cpDonutLegend").innerHTML=DOCK_CATS.map(function(c,i){var pct=dockTotal?Math.round(counts[i]/dockTotal*100):0;return '<div><i style="background:'+c[1]+'"></i>'+c[0]+' <b>'+counts[i]+' 项 · '+pct+'%</b></div>';}).join("");
-  /* 右：地区排行（筛选范围内） */
-  var rank={};
-  list.forEach(function(p){var r=cpProvince(p);rank[r]=rank[r]||{n:0,prog:0};rank[r].n++;rank[r].prog+=p.progress;});
-  var rankKeys=Object.keys(rank).sort(function(a,b){return rank[b].n-rank[a].n||(rank[b].prog/rank[b].n)-(rank[a].prog/rank[a].n);});
-  document.getElementById("cpRank").innerHTML=rankKeys.length?rankKeys.map(function(r,i){
-    var avgp=Math.round(rank[r].prog/rank[r].n);
-    return '<div class="cp-rank"><div class="r1"><span class="no">'+(i+1)+'</span><b>'+r+'</b><span style="margin-left:auto">'+rank[r].n+' 个项目 · '+avgp+'%</span></div><div class="cp-bar"><i style="width:'+avgp+'%;background:var(--blue)"></i></div></div>';
-  }).join(""):'<div class="empty">当前筛选下暂无项目</div>';
-  /* 重点项目（筛选范围内按阶段优先级 + 进度排序，最多 6 个）：不再单独成列，
-     改为在地图上以 ★ 金标呈现，并在地图详情面板中列出，点选与地图双向联动 */
+  /* 重点项目（筛选范围内按阶段优先级 + 进度排序，最多 6 个）：在地图上以 ★ 金标呈现，
+     并在右栏详情面板中列出（原右下地区排行已删除），点选与地图双向联动 */
   var stageRank={"运营中":0,"试点实施":1,"绩效评估":2,"技术对接":3,"方案论证":4,"需求诊断":5};
   CP_FOCUS=list.slice().sort(function(a,b){return (stageRank[a.status]-stageRank[b.status])||(b.progress-a.progress);}).slice(0,6);
   CP_KEYSET={}; CP_FOCUS.forEach(function(p){CP_KEYSET[p.id]=1;});
@@ -1119,6 +1107,11 @@ var cpDrill=null;       /* 已下钻省份名，null = 全国层级 */
 var cpSel=null;         /* 选中的项目 id */
 var cpCityHi=null;      /* 下钻后高亮的城市名 */
 function cpFullVB(){ return {x:0,y:0,w:CP_W,h:CP_H}; }
+/* 省份小卡（图内 pill + 图下省份条）统一显隐口径：仅全国总览且未明显放大时显示；
+   已下钻、已选中项目或放大超过阈值（viewBox 宽 < 92% 全图）一律收起 */
+function cpPillsOn(){
+  return !cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.92);
+}
 function cpApplyVB(){
   var svg=document.querySelector("#cpViz svg"); if(!svg) return;
   var vb=cpVB||cpFullVB();
@@ -1133,6 +1126,11 @@ function cpApplyVB(){
     if(k<0.999){ g.setAttribute("transform","translate("+ax+" "+ay+") scale("+k.toFixed(3)+") translate("+(-ax)+" "+(-ay)+")"); }
     else{ g.removeAttribute("transform"); }
   });
+  /* 地图下方那排省份小卡（#cpDest）与图内小卡同口径收起 / 恢复：
+     它是 HTML 元素、不在 SVG 内，必须在这里按当前缩放状态直接同步显隐，
+     否则放大后它仍留在图下，与已收起的图内小卡口径不一致 */
+  var dest=document.getElementById("cpDest");
+  if(dest) dest.style.display=cpPillsOn()?"":"none";
 }
 function cpZoomBy(f,cx,cy){
   var vb=cpVB?{x:cpVB.x,y:cpVB.y,w:cpVB.w,h:cpVB.h}:cpFullVB();
@@ -1142,15 +1140,43 @@ function cpZoomBy(f,cx,cy){
   var rx=(px-vb.x)/vb.w, ry=(py-vb.y)/vb.h;
   vb.x=px-rx*nw; vb.y=py-ry*nh; vb.w=nw; vb.h=nh;
   cpClampVB(vb);
+  cpContainPoints(vb);
   cpVB=(vb.w>=CP_W-1&&!cpDrill)?null:vb;
   cpApplyVB();
-  /* 缩放跨过小卡显示阈值时重绘一次，让省份小卡随缩放收起 / 恢复 */
-  var wantPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.55);
-  if(wantPills!==CP_PILLS_SHOWN){ renderCpViz(CP_LAST_LIST); }
+  /* 缩放跨过小卡显示阈值时重绘一次，让图内省份小卡随缩放收起 / 恢复（图下省份条已在 cpApplyVB 同步） */
+  if(cpPillsOn()!==CP_PILLS_SHOWN){ renderCpViz(CP_LAST_LIST); }
 }
 function cpClampVB(vb){
-  vb.x=Math.max(-60,Math.min(CP_W-vb.w+60,vb.x));
-  vb.y=Math.max(-40,Math.min(CP_H-vb.h+40,vb.y));
+  /* 严格钳制在地图画布内，不再留越界余量：视窗不得滑出画布，
+     避免一端露出空白、另一端点位被推出可视区 */
+  if(vb.w>=CP_W){ vb.x=0; vb.y=0; vb.w=CP_W; vb.h=CP_H; return; }
+  vb.x=Math.max(0,Math.min(CP_W-vb.w,vb.x));
+  vb.y=Math.max(0,Math.min(CP_H-vb.h,vb.y));
+}
+/* 缩放 / 平移边界约束（全国层级）：视窗必须始终完整包含当前全部项目点位（含圆半径余量），
+   放大时自动扩到刚好容纳全部点位的尺寸、平移时自动回正，
+   保证连点「＋」或拖拽后南北两端点位不被推出可视区、不被裁切；
+   下钻 / 选中态是主动聚焦单一区域，不受此约束（由省份框 / 点位居中负责） */
+function cpContainPoints(vb){
+  if(cpDrill||cpSel) return;
+  var ks=Object.keys(CP_PT_POS); if(!ks.length) return;
+  var minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;
+  ks.forEach(function(k){
+    var q=CP_PT_POS[k];
+    if(q.x<minx)minx=q.x; if(q.x>maxx)maxx=q.x;
+    if(q.y<miny)miny=q.y; if(q.y>maxy)maxy=q.y;
+  });
+  var pad=16, needW=(maxx-minx)+pad*2, needH=(maxy-miny)+pad*2, ar=CP_W/CP_H;
+  if(vb.w<needW||vb.h<needH){
+    var nw=Math.max(vb.w,needW,needH*ar); if(nw>CP_W)nw=CP_W;
+    var cx=vb.x+vb.w/2, cy=vb.y+vb.h/2;
+    vb.w=nw; vb.h=nw/ar; vb.x=cx-vb.w/2; vb.y=cy-vb.h/2;
+  }
+  if(vb.x>minx-pad) vb.x=minx-pad;
+  if(vb.y>miny-pad) vb.y=miny-pad;
+  if(vb.x+vb.w<maxx+pad) vb.x=maxx+pad-vb.w;
+  if(vb.y+vb.h<maxy+pad) vb.y=maxy+pad-vb.h;
+  cpClampVB(vb);
 }
 function cpProvBBox(name){
   for(var i=0;i<CP_GEO.length;i++){
@@ -1164,7 +1190,7 @@ function cpProvBBox(name){
     var pad=26, w=(maxx-minx)+pad*2, h=(maxy-miny)+pad*2;
     var ar=CP_W/CP_H;
     if(w/h<ar){ var nw=h*ar; minx-=(nw-w)/2; w=nw; } else { var nh=w/ar; miny-=(nh-h)/2; h=nh; }
-    return {x:minx,y:miny,w:w,h:h};
+    var bb={x:minx,y:miny,w:w,h:h}; cpClampVB(bb); return bb;
   }
   return null;
 }
@@ -1210,7 +1236,8 @@ function cpSelectProject(id,focusView){
   renderCpViz(CP_LAST_LIST);
   cpRenderDetail();
 }
-/* 地图下方详情面板：未选中时列重点项目（★），下钻时列该省项目，选中时显示项目全量详情 */
+/* 右栏详情面板（重点项目已移至右栏，原地图下方位置与右下地区排行均已取消）：
+   未选中时列重点项目（★），下钻时列该省项目，选中时显示项目全量详情 */
 function cpProjRow(p,on){
   return '<button type="button" class="cp-prow'+(on?" on":"")+'" data-sel="'+p.id+'">'
     +(CP_KEYSET[p.id]?'<span class="star">★</span>':'')
@@ -1341,16 +1368,32 @@ function renderCpViz(list){
     var fill=(a&&a.n>=3)?"#ffffff":(a?pal.aggLabel:pal.label);
     s+='<text x="'+pv.cx+'" y="'+pv.cy+'" font-size="'+fs+'" font-weight="'+(a?"700":"400")+'" fill="'+fill+'" text-anchor="middle" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3px">'+pv.n+'</text>';
   });
-  /* 项目点位（经纬度投影 + 簇内错位） */
-  var pts=list.map(function(p,i){
+  /* 项目点位（经纬度投影 + 近邻避让）：先以真实投影为锚点，再做迭代斥力错位——
+     任意两点圆心距不足 30（圆直径约 23–26 加间隙）时沿连线对称推开，
+     解决文山 / 红河 / 建水、乐业 / 田阳 / 巴马等地理相邻点圆圈相交重叠的问题；
+     此前按列表序号的固定抖动与地理距离无关，近邻点必然相撞。避让后仍钳制在画布内，
+     CP_PT_POS 记录避让后坐标，点选定位与缩放包含约束都以此为准 */
+  var pts=list.map(function(p){
     var lng=p.lng,lat=p.lat;
     if(typeof lng!=="number"||typeof lat!=="number"){var fb=CP_FALLBACK_POS[p.id]||[108,28]; lng=fb[0]; lat=fb[1];}
     var xy=cpXY(lng,lat);
-    var jx=((i%3)-1)*13, jy=((Math.floor(i/3)%3)-1)*11;
-    if(p.id==="P01"){jx=-17;jy=11;} if(p.id==="P03"){jx=15;jy=-9;} if(p.id==="P13"){jx=17;jy=15;}
-    if(p.id==="P05"){jx=-13;} if(p.id==="P06"){jx=13;jy=13;}
-    return {p:p,x:Math.max(24,Math.min(W-24,xy[0]+jx)),y:Math.max(20,Math.min(H-16,xy[1]+jy))};
+    return {p:p,x:Math.max(30,Math.min(W-30,xy[0])),y:Math.max(26,Math.min(H-24,xy[1]))};
   });
+  (function(){
+    var MIN_D=30;
+    for(var it=0;it<160;it++){
+      var moved=false;
+      for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){
+        var a=pts[i],b=pts[j],dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d>=MIN_D) continue;
+        if(d<0.01){ dx=0.6; dy=0.8; d=1; }
+        var push=(MIN_D-d)/2, ux=dx/d, uy=dy/d;
+        a.x-=ux*push; a.y-=uy*push; b.x+=ux*push; b.y+=uy*push; moved=true;
+      }
+      pts.forEach(function(pt){ pt.x=Math.max(30,Math.min(W-30,pt.x)); pt.y=Math.max(26,Math.min(H-24,pt.y)); });
+      if(!moved) break;
+    }
+  })();
   CP_PT_POS={}; pts.forEach(function(pt){ CP_PT_POS[pt.p.id]={x:pt.x,y:pt.y}; });
   /* 枢纽飞线：北京技术输出（蓝）+ 深圳结算连接（橙虚线） */
   var bj=cpXY(116.4,39.9), sz=cpXY(114.05,22.55), cd=cpXY(104.07,30.67);
@@ -1381,13 +1424,22 @@ function renderCpViz(list){
       +(isKey?'<text x="'+(pt.x+11).toFixed(0)+'" y="'+(pt.y-9).toFixed(0)+'" font-size="12" fill="#d97706" stroke="#fff" stroke-width="0.6" style="paint-order:stroke">★</text>':'')
       +'</g>';
     var rightSide=pt.x>W-120;
+    /* 城市名标签防撞：默认侧有同高近邻点时改贴另一侧，避免避让后标签压住相邻圆点 */
+    var clashR=false,clashL=false;
+    pts.forEach(function(q){
+      if(q===pt) return;
+      var ddx=q.x-pt.x, ddy=Math.abs(q.y-pt.y);
+      if(ddy<15){ if(ddx>0&&ddx<46)clashR=true; if(ddx<0&&ddx>-46)clashL=true; }
+    });
+    if(!rightSide&&clashR&&!clashL) rightSide=true;
+    else if(rightSide&&clashL&&!clashR) rightSide=false;
     s+='<text x="'+(rightSide?pt.x-16:pt.x+16).toFixed(0)+'" y="'+(pt.y+3.5).toFixed(0)+'" font-size="10" font-weight="600" fill="'+pal.city+'" text-anchor="'+(rightSide?"end":"start")+'" style="paint-order:stroke;stroke:'+pal.halo+';stroke-width:3.5px"'+dim+'>'+esc(short)+'</text>';
   });
   if(!pts.length) s+='<text x="340" y="225" font-size="14" fill="'+pal.label+'" text-anchor="middle">当前筛选下暂无项目落点</text>';
   /* 省份数据小卡（项目数 / 均进度，随筛选联动，点击下钻）：
      仅在全国总览态显示；已下钻、已选中项目或放大超过阈值时收起，
      避免小卡压住圆点与地名标签（省份信息改由详情面板与下钻条承载） */
-  var showPills=!cpDrill&&!cpSel&&(!cpVB||cpVB.w>CP_W*0.55);
+  var showPills=cpPillsOn();
   CP_PILLS_SHOWN=showPills;
   Object.keys(agg).forEach(function(r){
     var a=agg[r]; if(!a||!showPills) return;
@@ -1446,7 +1498,7 @@ function renderCpViz(list){
       if(!drag.moved||!drag.vb) return;
       svg.classList.add("cp-grabbing");
       var vb={x:drag.vb.x-dx*drag.sx, y:drag.vb.y-dy*drag.sy, w:drag.vb.w, h:drag.vb.h};
-      cpClampVB(vb); cpVB=vb; cpApplyVB();
+      cpClampVB(vb); cpContainPoints(vb); cpVB=vb; cpApplyVB();
     });
     var endDrag=function(e){
       if(drag&&!drag.moved&&drag.prov&&drag.prov!==cpDrill){ var pv=drag.prov; drag=null; svg.classList.remove("cp-grabbing"); cpDrillTo(pv); return; }
